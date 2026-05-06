@@ -238,6 +238,72 @@
       color: #8b949e;
     }
 
+    /* ── TABS ── */
+    .tab-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 36px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .tab-btn {
+      flex: 1; padding: 8px 0; border: none; border-radius: 7px;
+      background: transparent; color: #8b949e; font-size: 13px;
+      font-weight: 500; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .tab-btn:hover { background: rgba(255,255,255,0.06); color: #e6edf3; }
+    .tab-btn.active { background: rgba(88,166,255,0.12); color: #58a6ff; font-weight: 700; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── SOLID TAB ── */
+    .solid-title {
+      font-size: 10px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: #8b949e;
+      margin: 0 0 12px; padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 8px; margin-bottom: 28px;
+    }
+    .vocab-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 9px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .vocab-emoji { font-size: 20px; flex-shrink: 0; }
+    .vocab-node { font-size: 10px; font-weight: 700; color: #58a6ff; letter-spacing: 1px; display: block; }
+    .vocab-desc { font-size: 11px; color: #8b949e; margin-top: 2px; display: block; }
+
+    .ref-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 28px; }
+    .ref-table th {
+      text-align: left; padding: 7px 12px; color: #8b949e;
+      font-weight: 600; font-size: 10px; letter-spacing: 1px;
+      text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .ref-table td {
+      padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: #e6edf3; vertical-align: top;
+    }
+    .ref-table tr:last-child td { border-bottom: none; }
+    .ref-table td:first-child { font-weight: 700; color: #58a6ff; white-space: nowrap; }
+    .ok  { color: #3fb950; font-weight: 700; }
+    .bad { color: #f85149; font-weight: 700; }
+
+    .dag-flow {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 20px 24px;
+      font-family: 'Consolas', monospace; font-size: 13px;
+      line-height: 2.1; color: #e6edf3;
+    }
+
     /* ── TOAST ── */
     #toast {
       position: fixed;
@@ -261,9 +327,19 @@
 <body>
 
 <div class="scene">
-  <div class="page-title">Ecosystem — Claire</div>
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+    <a href="/specs/" style="font-size:11px; color:#8b949e; text-decoration:none; padding:4px 10px; border-radius:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">← Specs</a>
+    <div class="page-title" style="margin:0;">Ecosystem — Claire</div>
+    <div style="width:70px;"></div>
+  </div>
   <p class="page-sub">Cliquer sur un chemin pour copier · Cliquer sur un lien pour ouvrir</p>
 
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('ecosystem')">🗺️ Ecosystem</button>
+    <button class="tab-btn" onclick="switchTab('solid')">📐 SOLID &amp; Pipeline</button>
+  </div>
+
+  <div id="tab-ecosystem" class="tab-content active">
   <div class="grid-top">
 
     <!-- ══════════════════════════════════════
@@ -510,6 +586,75 @@
     .ops-val { font-size:11px; color:#e6edf3; flex-shrink:0; width:160px; text-align:right; }
   </style>
 
+  </div><!-- /tab-ecosystem -->
+
+  <!-- ══════════════════════════════════════
+       📐 ONGLET SOLID & PIPELINE
+  ══════════════════════════════════════ -->
+  <div id="tab-solid" class="tab-content">
+
+    <!-- VOCABULAIRE INVARIANT -->
+    <p class="solid-title">🔤 Vocabulaire invariant — Emojis DAG</p>
+    <div class="vocab-grid">
+      <div class="vocab-card"><span class="vocab-emoji">📱</span><span><span class="vocab-node">SOURCE</span><span class="vocab-desc">Ce qui entre dans le système</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🚚</span><span><span class="vocab-node">TRANSPORT</span><span class="vocab-desc">Déplace sans transformer</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🪨</span><span><span class="vocab-node">STORE RAW</span><span class="vocab-desc">Persiste brut — intouchable</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">⚙️</span><span><span class="vocab-node">TRANSFORM</span><span class="vocab-desc">Change la forme, dérive la valeur</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🗄️</span><span><span class="vocab-node">STORE STRUCT.</span><span class="vocab-desc">Persiste organisé</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🎯</span><span><span class="vocab-node">SERVE</span><span class="vocab-desc">Expose au consommateur</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🧠</span><span><span class="vocab-node">CONSUME</span><span class="vocab-desc">Reçoit et utilise</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🔑</span><span><span class="vocab-node">IAM</span><span class="vocab-desc">Secrets, accès, identités</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🎼</span><span><span class="vocab-node">ORCHESTRATION</span><span class="vocab-desc">Rituels qui lancent la chaîne</span></span></div>
+      <div class="vocab-card"><span class="vocab-emoji">🏗️</span><span><span class="vocab-node">INFRA</span><span class="vocab-desc">Cross-cutting — invisible</span></span></div>
+    </div>
+
+    <!-- SOLID → DAG -->
+    <p class="solid-title">🏗️ SOLID traduit en DAG</p>
+    <table class="ref-table" style="margin-bottom:28px;">
+      <thead><tr><th>Principe</th><th>Règle</th><th>Traduction DAG</th></tr></thead>
+      <tbody>
+        <tr><td>S — Single Responsibility</td><td>Un fichier = un nœud</td><td>scoring.ts = ⚙️ uniquement. Pas ⚙️ + 🎯 dans le même fichier</td></tr>
+        <tr><td>O — Open / Closed</td><td>Étendre sans modifier</td><td>ε₀ n'ouvre pas φ₀ — deux ⚙️ séparés</td></tr>
+        <tr><td>L — Liskov</td><td>Sous-types substituables</td><td>5 personas PSPO = même interface Validator</td></tr>
+        <tr><td>I — Interface Segregation</td><td>Petites interfaces ciblées</td><td>ScrumMasterValidator ≠ DevValidator</td></tr>
+        <tr><td>D — Dependency Inversion</td><td>Dépendre des abstractions</td><td>route.ts → LLMProvider, pas Anthropic SDK</td></tr>
+      </tbody>
+    </table>
+
+    <!-- AUDIT CLAIRE-APP -->
+    <p class="solid-title">🔍 Audit claire-app — état 2026-05-06</p>
+    <table class="ref-table" style="margin-bottom:28px;">
+      <thead><tr><th>Fichier</th><th>Nœud</th><th>SOLID</th><th>Status</th><th>Détail</th></tr></thead>
+      <tbody>
+        <tr><td>lib/scoring.ts</td><td>⚙️</td><td>S</td><td><span class="ok">✅</span></td><td>Fait une seule chose</td></tr>
+        <tr><td>lib/types.ts</td><td>⚙️</td><td>S</td><td><span class="ok">✅</span></td><td>Interfaces uniquement</td></tr>
+        <tr><td>lib/prompts.ts</td><td>⚙️</td><td>S</td><td><span class="ok">✅</span></td><td>Prompts uniquement</td></tr>
+        <tr><td>app/api/generate/route.ts</td><td>⚙️+🎯</td><td>S + D</td><td><span class="bad">🔴</span></td><td>Trop de responsabilités + SDK câblé en dur</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ARCHITECTURE CIBLE -->
+    <p class="solid-title">🎯 Architecture cible Sprint 2</p>
+    <div class="dag-flow">
+      <div>📱 &nbsp;<strong>SOURCE</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ route.ts &nbsp;<span style="color:#484f58">(orchestration seule)</span></div>
+      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
+      <div>⚙️ &nbsp;<strong>φ₀</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/generate.ts &nbsp;<span style="color:#484f58">(appel LLM abstrait)</span></div>
+      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
+      <div>⚙️ &nbsp;<strong>𝕍</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/scoring.ts &nbsp;<span style="color:#3fb950">(déjà propre ✅)</span></div>
+      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
+      <div>⚙️ &nbsp;<strong>ε₀</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/diagnostics.ts &nbsp;<span style="color:#484f58">(nouveau — O)</span></div>
+      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
+      <div>⚙️ &nbsp;<strong>κ₀</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/refine.ts &nbsp;<span style="color:#484f58">(nouveau — O)</span></div>
+      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
+      <div>🎯 &nbsp;<strong>SERVE</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ route.ts &nbsp;<span style="color:#484f58">(response uniquement)</span></div>
+      <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
+        <div>⊕ &nbsp;🔑 &nbsp;lib/llm.ts &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ interface LLMProvider &nbsp;<span style="color:#484f58">(D — abstraire le SDK)</span></div>
+        <div>⊕ &nbsp;🎼 &nbsp;lib/personas/ &nbsp;→ un fichier par persona PSPO &nbsp;<span style="color:#484f58">(L + I)</span></div>
+      </div>
+    </div>
+
+  </div><!-- /tab-solid -->
+
   <div class="legend">
     <div class="legend-item"><span class="chip chip-pwf" style="margin:0">PWF</span> Planning files → 📐 Claire uniquement</div>
     <div class="legend-item"><span class="chip chip-code" style="margin:0">code</span> App TypeScript → ⚙️ claire-app</div>
@@ -521,6 +666,13 @@
 <div id="toast">✅ Chemin copié !</div>
 
 <script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
 function copy(text) {
   navigator.clipboard.writeText(text).then(() => {
     const t = document.getElementById('toast');

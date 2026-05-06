@@ -20,6 +20,44 @@
 
 ---
 
+## 📅 Session du : 2026-05-06
+
+### Suivi des Phases (Chronologique)
+
+#### Phase 2 : Specs Viewer
+- **Status :** complete
+- **Actions réalisées :**
+    - Créé specs/index.html — viewer VSCode-like, 21 fiches clear-sky + 15 saas-traduction
+    - Déployé sur Vercel (vercel.json static + redirect root → /specs/)
+    - Rétro-ingénierie cs-000 via fmaths Décodeur + nilpotence-cognitive
+    - Bouton 🗺️ Ecosystem ajouté (même onglet, pas target="_blank")
+- **Fichiers modifiés/créés :**
+    - `specs/index.html`
+    - `vercel.json`
+    - `index.html` (redirect)
+
+#### Phase 3 : Ecosystem Dashboard
+- **Status :** in_progress
+- **Actions réalisées :**
+    - ecosystem.html créé : 3 cartes 3D (📐 Claire / ⚙️ claire-app / 🗄️ vault)
+    - Copy-to-clipboard sur les chemins locaux
+    - Section PWF Tracker — refreshPWF() GitHub API commits implémentée
+    - Section Ops & Coûts Vercel Hobby
+- **Restant :**
+    - Bouton retour ← Specs
+    - Onglet SOLID & Pipeline
+
+#### Formalisation — DAG + SOLID
+- **Status :** complete
+- **Actions réalisées :**
+    - Vocabulaire invariant DAG établi (10 emojis → nœuds + cross-cutting)
+    - Décodeur fmaths appliqué : structure Next.js transmutée en narration DAG
+    - SOLID → DAG traduit : chaque principe mappé sur les nœuds
+    - Audit claire-app : route.ts viole S + D, les 3 lib/ sont propres
+    - Architecture cible Sprint 2 documentée dans findings.md
+
+---
+
 ## 🧪 Résultats des Tests
 | Test | Entrée | Attendu | Réel | Status |
 | :--- | :--- | :--- | :--- | :--- |
