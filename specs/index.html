@@ -429,7 +429,87 @@ const SECTIONS = [
     id: 'clear-sky',
     label: '📐 clear-sky',
     files: [
-      { id: 'cs-000', num: '000', symbol: '',    label: 'CANONICAL PIPELINE EQUATION',          type: 'meta',      status: 'unread', content: '' },
+      { id: 'cs-000', num: '000', symbol: '',    label: 'CANONICAL PIPELINE EQUATION',          type: 'meta',      status: 'done', content: `
+# 000 — CANONICAL PIPELINE EQUATION
+
+> Fiche maître. Constitution formelle du système CPE.
+
+---
+
+## Décodeur (fmaths Passe 2) — sans symboles
+
+### Le décor
+
+Le système CPE met en scène sept états et un arbitre.
+
+Les états : une intention brute (ce que l'humain veut, avant toute clarification), un contrat de sprint (ce que l'humain et la machine ont négocié), un sprint (la période d'exécution réelle), un artefact publiable (ce qui sort du sprint et peut être montré au monde), une archive gelée (les preuves de ce qui s'est passé), une mémoire de sprint (la distillation de ce qui vaut d'être retenu), et la vision globale (l'horizon produit une seule fois au départ et qui ancre tous les cycles).
+
+L'arbitre, c'est le référentiel invariant. Pas un personnage — une loi. Il ne produit rien. Il contraint tout. Sans lui, le système fonctionne, mais dérive.
+
+### Les règles du jeu
+
+Règle 1 : l'intention brute ne devient jamais directement un sprint. Elle doit d'abord être clarifiée — transformée simultanément en contrat, en vision globale, et en capteurs anti-dérive.
+
+Règle 2 : le contrat passe une validation binaire avant toute exécution. PASS ou FAIL. Pas de nuance.
+
+Règle 3 : le sprint n'est jamais créé à partir du seul contrat. Il intègre aussi la mémoire du sprint précédent, l'artefact du sprint précédent, la vision globale et les capteurs — sous filtre du référentiel. La différence entre le premier sprint et les suivants, c'est précisément ce contexte accumulé.
+
+Règle 4 : l'exécution produit deux choses simultanément — l'artefact publiable (vers l'extérieur) et l'archive gelée (vers l'intérieur).
+
+Règle 5 : la mémoire se construit par distillation — archive + artefact + vision de sprint → ce qui mérite d'être retenu.
+
+Règle 6 : la boucle se ferme par évolution contractuelle — contrat actuel + archive + mémoire + vision globale → contrat suivant ET vision du sprint suivant.
+
+### Le socle immuable
+
+La vision globale est produite au départ et ne change jamais. Elle contraint chaque cycle. Si elle change, c'est un projet différent.
+
+Le référentiel est un filtre, pas une étape. Tout ce que le système produit hors filtre est non-conforme.
+
+La mémoire de sprint est le seul pont entre deux cycles. Sans elle, chaque sprint recommence à zéro. La probabilité de reprise correcte augmente exactement dans la mesure où le référentiel a forcé l'écriture des décisions.
+
+### Ce qui change selon l'angle
+
+Le système est le même quel que soit le domaine. Ce qui change : ce qu'on met dans la vision globale (PRD pour un SaaS, plan de livre pour un auteur, roadmap pour une startup), la granularité de la mémoire, la rigueur du référentiel.
+
+### Les points de rupture
+
+Si vision + capteurs + référentiel sont trop détaillés dès le départ : surcharge cognitive, abandon prématuré. Le système se grippe sous son propre poids.
+
+Si trop faibles : dérive progressive, illusion de progrès. Les sprints produisent des artefacts, mais sans cohérence globale. On avance vers nulle part.
+
+### La forme globale
+
+La structure est une spirale, pas un cercle et pas une ligne droite.
+
+L'arc principal : clarification → instanciation → exécution → distillation → évolution contractuelle. Chaque cycle produit un contrat versionné et une vision de sprint qui servent d'entrée au cycle suivant. À chaque tour, le système dispose de plus de contexte qu'au tour précédent.
+
+---
+
+## Analyse nilpotence-cognitive
+
+CPE est conçu pour être nilpotent — il doit converger vers la vision globale comme vers un noyau invariant. Mais il peut dégénérer.
+
+| Condition | Comportement | Diagnostic |
+|---|---|---|
+| Référentiel absent (pas d'écriture des décisions) | Mémoire vide → contrat identique à chaque cycle | Identité — illusion de travail |
+| Vision globale absente ou trop vague | Pas d'attracteur → pas de direction de convergence | Circulaire — on avance vers nulle part |
+| Référentiel + vision globale + capteurs actifs | Mémoire s'enrichit → contrats genuinement meilleurs | Nilpotent — vrai apprentissage |
+
+**L'insight clé :** la différence entre nilpotent et circulaire, c'est la qualité de la mémoire de sprint. Si le référentiel force l'écriture des décisions, la mémoire s'enrichit vraiment à chaque cycle. Si le référentiel est faible, la mémoire est creuse — les contrats semblent évoluer mais reprennent le même espace d'incertitude.
+
+Les capteurs anti-dérive sont le détecteur de dégénérescence. C'est eux qui distinguent la spirale convergente de la boucle déguisée en spirale.
+
+---
+
+## Implications pour Claire
+
+| Décision | Rationnel |
+|---|---|
+| Référentiel = PWF → Claire automatise task_plan / findings / progress | Sans écriture automatique, la mémoire reste vide — pipeline identité |
+| Capteurs = filtre per-prompt | À chaque message humain, Claire évalue si la question est dans le sprint actuel. Si non : flagué hors-sprint |
+| Vision globale = objet contraint (pas string libre) | Le champ globalAttractor doit devenir un type structuré pour que l'évolution contractuelle puisse s'appuyer dessus |
+` },
       { id: 'cs-010', num: '010', symbol: 'ℜ',   label: 'Référentiel invariant',                type: 'objet',     status: 'unread', content: '' },
       { id: 'cs-020', num: '020', symbol: '𝕀',   label: 'Intention brute',                      type: 'objet',     status: 'unread', content: '' },
       { id: 'cs-030', num: '030', symbol: 'φ₀',  label: 'Morphisme de clarification initiale',  type: 'morphisme', status: 'unread', content: '' },
