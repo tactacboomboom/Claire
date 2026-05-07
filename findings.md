@@ -122,8 +122,48 @@
     ⊕  🔑  lib/llm.ts       → interface LLMProvider  (D — abstraire le SDK)
     ⊕  🎼  lib/personas/    → un fichier par persona PSPO (L + I)
 
-### Décision technique : Décodeur fmaths appliqué au projet
+### Décision technique : Décodeur fmaths appliqué au projet (session 2026-05-06)
 
 Le pipeline next.js = DAG invariant. Ce qui change d'un projet à l'autre = uniquement 📱 → ⚙️ → 🧠.
 Le 🪨 🚚 🗄️ 🎯 = infrastructure invariante. On installe, on oublie.
 𝕽 (PWF) correspond au cross-cutting ⊕ IAM+ORCHESTRATION — il conditionne μₙ et εₙ sans être dans le flux de données.
+
+---
+
+## Session 2026-05-07 — fmaths × POO × Design Patterns
+
+### fmaths appliqué : POO — ensemble minimal fermé
+
+**Résultat** : {Classe, Objet, Méthode, Interface} est FERMÉ et GÉNÉRATEUR.
+
+| Primitif | Irréductible ? |
+| :--- | :--- |
+| Classe | ✅ — sans elle, aucun Objet ne naît |
+| Objet | ✅ — sans lui, la Classe est vide |
+| Méthode | ✅ — sans elle, les Objets sont inertes |
+| Interface | ⚠️ — sous-cas de Classe, mais sémantique distincte |
+
+Tout le reste est dérivé : Attribut = Méthode triviale, Héritage = morphisme entre Classes, Polymorphisme = Méthode sur Interface, etc.
+
+DTO / VO / Entity / DAO = **couche secondaire** (spécialisations de Objet selon axe identité + axe rôle) — pas de nouveaux primitifs.
+
+### fmaths appliqué : Design Patterns — 3 familles exhaustives
+
+| Famille | Question couverte | Nb GoF | Nb essentiels |
+| :--- | :--- | :--- | :--- |
+| Création | Comment naissent les objets ? | 5 | 3 |
+| Structure | Comment sont-ils assemblés ? | 7 | 5 |
+| Comportement | Comment interagissent-ils ? | 11 | 6 |
+
+**14 essentiels** : Factory Method, Builder, Singleton / Adapter, Decorator, Facade, Proxy, Composite / Observer, Strategy, Template Method, Command, State, Iterator
+
+Pas de 4ème famille possible — Concurrence = runtime, Persistance = infrastructure, Méta-programmation = mécanisme du langage.
+
+### Vault — Artifacts créés
+
+| Fichier | Type |
+| :--- | :--- |
+| `vault/1 - CONVERSATIONS/poo-design-patterns-fmaths/raw.md` | Analyse fmaths complète (Passe 1 + Passe 2) |
+| `vault/2 - CONCEPTS/ontologie-poo-minimale.md` | Concept — preuve de fermeture de l'ontologie POO |
+| `vault/2 - CONCEPTS/design-patterns-essentiels.md` | Concept — 14 patterns essentiels + fermeture |
+| `vault/REF/tags.md` | Ajout : `ontologie_poo_minimale` + `design_patterns_essentiels` dans #STRUCT |

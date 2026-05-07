@@ -8,7 +8,7 @@ Créer le repo de documentation Claire qui formalise la méthode CPE (Canonical 
 
 ## 📍 Current Phase
 
-**Phase 1 — en cours**
+**Phase 4 — Rétro-ingénierie CPE**
 
 ## 🗓 Phases
 
@@ -28,9 +28,11 @@ Créer le repo de documentation Claire qui formalise la méthode CPE (Canonical 
 - [x] Copy-to-clipboard sur les chemins locaux
 - [x] PWF Tracker — GitHub API commits (refreshPWF)
 - [x] Ops & Coûts — Vercel Hobby bandwidth
-- [ ] Bouton retour "← Specs" depuis ecosystem.html
-- [ ] Onglet SOLID & Pipeline — vocabulaire DAG + audit claire-app
-- **Status:** in_progress
+- [x] Bouton retour "← Specs" depuis ecosystem.html
+- [x] Onglet SOLID & Pipeline — vocabulaire DAG + audit claire-app
+- [x] POO — ontologie minimale (vérifié fmaths)
+- [x] Design Patterns — 14 essentiels sur 3 familles exhaustives (vérifié fmaths)
+- **Status:** complete
 
 ### Phase 4: Rétro-ingénierie CPE (multi-sessions)
 Sources : clear-sky (21 fiches) + saas-traduction (15 templates)

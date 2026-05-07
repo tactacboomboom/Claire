@@ -58,6 +58,28 @@
 
 ---
 
+---
+
+## 📅 Session du : 2026-05-07
+
+### Suivi des Phases (Chronologique)
+
+#### Phase 3 : Ecosystem Dashboard — complétion
+- **Status :** complete
+- **Actions réalisées :**
+    - fmaths appliqué à POO : {Classe/Objet/Méthode/Interface} vérifié comme ensemble fermé minimal
+    - fmaths appliqué à Design Patterns : 3 familles GoF exhaustives, réduction aux 14 essentiels
+    - Sections POO + Design Patterns ajoutées à l'onglet SOLID & Pipeline d'ecosystem.html
+    - Commit + push GitHub → Vercel déployé
+- **Fichiers modifiés/créés :**
+    - `ecosystem.html` — 2 nouvelles sections (POO ontologie + Design Patterns 14 essentiels)
+    - `vault/1 - CONVERSATIONS/poo-design-patterns-fmaths/raw.md` — analyse fmaths archivée
+    - `vault/2 - CONCEPTS/ontologie-poo-minimale.md` — concept note
+    - `vault/2 - CONCEPTS/design-patterns-essentiels.md` — concept note
+    - `vault/REF/tags.md` — `ontologie_poo_minimale` + `design_patterns_essentiels` ajoutés
+
+---
+
 ## 🧪 Résultats des Tests
 | Test | Entrée | Attendu | Réel | Status |
 | :--- | :--- | :--- | :--- | :--- |
