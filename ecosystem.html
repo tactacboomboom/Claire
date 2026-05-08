@@ -654,6 +654,30 @@
     </div>
 
 
+    <!-- ZONES ORTHOGONALES FERMÉES -->
+    <p class="solid-title">⊕ Zones orthogonales — C_clos fermé (vérifié fmaths)</p>
+    <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">7 zones irréductibles + 1 conditionnelle. Orthogonales à la logique métier — présentes dans tout projet logiciel quelle que soit sa nature.</div>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Zone</th><th>Rôle</th><th>Couche DDD</th><th>Vercel</th><th>Shopify</th></tr></thead>
+      <tbody>
+        <tr><td>🗄️ ÉTAT</td><td>Persistance et lecture des données</td><td>infrastructure/persistence</td><td>KV · Postgres</td><td>✅ natif</td></tr>
+        <tr><td>🔑 IDENTITÉ</td><td>Authentification et autorisation</td><td>infrastructure/auth</td><td>Auth (add-on)</td><td>✅ natif</td></tr>
+        <tr><td>⚡ EXÉCUTION</td><td>Traitement des requêtes / calcul</td><td>interfaces/http</td><td>✅ Functions</td><td>—</td></tr>
+        <tr><td>🚚 TRANSIT</td><td>Échanges inter-systèmes (files, events)</td><td>infrastructure/external</td><td>—</td><td>✅ Stripe</td></tr>
+        <tr><td>👁️ VISIBILITÉ</td><td>Logs, métriques, traces</td><td>infrastructure/observability</td><td>Analytics</td><td>✅ Dashboard</td></tr>
+        <tr><td>⚙️ PARAMÈTRES</td><td>Config, feature flags, secrets</td><td>infrastructure/config</td><td>Env vars</td><td>—</td></tr>
+        <tr><td>🛡️ ROBUSTESSE</td><td>Retry, circuit breaker, tolérance</td><td>infrastructure/resilience</td><td>—</td><td>—</td></tr>
+        <tr style="opacity:0.6;"><td>⏱️ TEMPO <em>(conditionnel)</em></td><td>Scheduling, time-based triggers</td><td>interfaces/scheduler</td><td>Cron (pro)</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:16px; font-size:12px;">
+      <strong style="color:#c9d1d9;">NC4 = zones résolues par le framework</strong> <span style="color:#58a6ff;">→ {ÉTAT · IDENTITÉ · EXÉCUTION}</span> — câblées une fois, ne changent plus (🧱 Figées)<br>
+      <span style="color:#8b949e;">Δ = zones à gérer manuellement → {TRANSIT · VISIBILITÉ · PARAMÈTRES · ROBUSTESSE}</span>
+    </div>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
+      <strong style="color:#c9d1d9;">Règle :</strong> plateforme spécialisée (Shopify) = plus de zones couvertes mais domain/ partiellement contraint &nbsp;·&nbsp; Vercel = zéro contrainte sur domain/ mais Δ à gérer
+    </div>
+
     <!-- POO — ONTOLOGIE MINIMALE -->
     <p class="solid-title">🧬 POO — Ontologie minimale (vérifié fmaths)</p>
     <table class="ref-table" style="margin-bottom:16px;">
