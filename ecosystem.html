@@ -695,6 +695,117 @@
       </tbody>
     </table>
 
+
+    <!-- STRUCTURE DDD ONTOLOGIQUE -->
+    <p class="solid-title">🏗️ Structure DDD — Ontologie des couches</p>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Couche</th><th>Question</th><th>Contenu essentiel</th><th>Paradigme naturel</th></tr></thead>
+      <tbody>
+        <tr><td>domain/</td><td>POURQUOI métier</td><td>entities · value-objects · aggregates · repositories (interfaces) · services · events</td><td>POO — obligatoire</td></tr>
+        <tr><td>application/</td><td>QUOI (cas d'usage)</td><td>commands · queries · handlers · dto</td><td>POO + fonctionnel</td></tr>
+        <tr><td>infrastructure/</td><td>COMMENT technique</td><td>persistence · external APIs · config DI</td><td>Fonctionnel privilégié</td></tr>
+        <tr><td>interfaces/</td><td>QUI communique</td><td>http/controllers · schedulers · REST/GraphQL</td><td>Fonctionnel majoritaire</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
+      <strong style="color:#c9d1d9;">Règle absolue :</strong> <span style="color:#f85149;">domain/ ne dépend d'aucune autre couche.</span> Tout import de framework dans une entité = dette architecturale majeure.
+      <div style="margin-top:8px; color:#8b949e;">domain/ + application/ = identiques entre tous les projets de même nature &nbsp;·&nbsp; infrastructure/ + interfaces/ = adaptés au contexte</div>
+    </div>
+
+    <!-- VOLATILITÉ DU CODE — 3 CLASSES -->
+    <p class="solid-title">⏱️ Volatilité du code — 3 classes</p>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Classe</th><th>Fréquence</th><th>Exemples</th><th>Principe SOLID</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>🧱 Figé</td>
+          <td>S'écrit une fois, ne change plus jamais</td>
+          <td>repositories (interfaces) · value-objects primitifs · Entity&lt;T&gt; · config DI</td>
+          <td>I + D</td>
+        </tr>
+        <tr>
+          <td>🔌 Extensible</td>
+          <td>Ne se modifie pas — s'étend par ajout</td>
+          <td>entities · aggregates · events · handlers (use cases)</td>
+          <td>O (Open/Closed)</td>
+        </tr>
+        <tr>
+          <td>🌊 Vivant</td>
+          <td>Change constamment — normal</td>
+          <td>services domaine · persistence (requêtes) · controllers HTTP · APIs tierces</td>
+          <td>S (SRP)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
+      Signal d'alarme : un fichier <span style="color:#f85149;">🧱 Figé modifié</span> = architecture remise en question &nbsp;·&nbsp; un fichier <span style="color:#d29922;">🌊 Vivant qui grossit</span> = violation SRP à découper
+    </div>
+
+    <!-- PARADIGMES PROGRAMMATION — TRIANGLE FERMÉ -->
+    <p class="solid-title">△ Paradigmes — Triangle fermé</p>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Famille</th><th>Paradigmes</th><th>Unité première</th><th>Rapport à l'état</th></tr></thead>
+      <tbody>
+        <tr><td>Impérative</td><td>POO · procédural</td><td>Objet / Instruction</td><td>Central, encapsulé</td></tr>
+        <tr><td>Déclarative</td><td>Fonctionnel · logique</td><td>Fonction / Fait</td><td>Absent ou interdit</td></tr>
+        <tr><td>Concurrente</td><td>Acteur · réactif · dataflow</td><td>Message / Flux</td><td>Local et propagé</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
+      <strong style="color:#c9d1d9;">Cohabitation dans src/ :</strong>
+      <span style="color:#8b949e;"> domain/ → POO (identité + état) &nbsp;·&nbsp; infrastructure/ → fonctionnel (pipelines purs) &nbsp;·&nbsp; interfaces/ → fonctionnel (parsing/sérialisation)</span>
+      <div style="margin-top:8px; color:#d29922;">Saine si intentionnelle. Problème si accidentelle — objet mutable dans un pipeline fonctionnel = source de bugs subtils.</div>
+    </div>
+
+    <!-- 8 NATURES DE PROJETS -->
+    <p class="solid-title">🧬 8 Natures de projets — Axes générateurs</p>
+    <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">3 axes : Acteur (Humain / Machine / Hybride) × Transaction (Échange / Transformation / Accès / Coordination) × Temps (Réel / Différé / Périodique)</div>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Nature</th><th>Acteur</th><th>Transaction</th><th>Temps</th><th>Exemples</th></tr></thead>
+      <tbody>
+        <tr><td>Marketplace</td><td>Humain</td><td>Échange</td><td>Réel</td><td>E-commerce, Airbnb, Uber</td></tr>
+        <tr><td>Plateforme de contenu</td><td>Humain</td><td>Accès</td><td>Réel</td><td>Netflix, blog</td></tr>
+        <tr><td>Outil de productivité</td><td>Humain</td><td>Transformation</td><td>Réel</td><td>Notion, Figma, <strong style="color:#3fb950;">claire-app ✅</strong></td></tr>
+        <tr><td>Réseau social</td><td>Humain</td><td>Coordination</td><td>Réel</td><td>Twitter, WhatsApp</td></tr>
+        <tr><td>Application utilitaire</td><td>Humain</td><td>Transformation</td><td>Périodique</td><td>Réveil, prières</td></tr>
+        <tr><td>Système de reporting</td><td>Hybride</td><td>Accès</td><td>Différé</td><td>Dashboards, BI</td></tr>
+        <tr><td>Pipeline de données</td><td>Machine</td><td>Transformation</td><td>Différé / Périodique</td><td>ETL, batch, ML</td></tr>
+        <tr><td>API / Intégration</td><td>Machine</td><td>Coordination</td><td>Réel</td><td>BFF, gateway</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
+      <strong style="color:#c9d1d9;">Formulaire ontologique</strong> avant la première ligne de code : Qui initie ? → Que fait le système fondamentalement ? → Dans quel rapport au temps ? → La combinaison désigne la nature → le template architectural.
+    </div>
+
+    <!-- PROCESSUS DE DÉCOUPE UNIVERSEL -->
+    <p class="solid-title">🔀 Processus de découpe universel</p>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Composante</th><th>Rôle</th><th>Ce qu'elle résout</th></tr></thead>
+      <tbody>
+        <tr><td>SOLID</td><td>Règles de décomposition fichier</td><td>Responsabilité, extension, substitution, interface, dépendance</td></tr>
+        <tr><td>GoF (14 patterns)</td><td>Patterns de collaboration entre classes</td><td>Création, structure, comportement récurrents</td></tr>
+        <tr><td>DDD</td><td>Ontologie des couches + vocabulaire métier</td><td>Frontières, identité, cycle de vie, cohérence transactionnelle</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
+      <strong style="color:#c9d1d9;">Propriété :</strong> <span style="color:#8b949e;">SOLID+GoF+DDD est universel et invariant — seul le vocabulaire AMOA change entre domaines. La posture Dev = appliquer ce processus au vocabulaire donné par l'AMOA.</span>
+    </div>
+
+    <!-- DIVISION COGNITIVE AMOA / DEV -->
+    <p class="solid-title">👥 Division cognitive — AMOA / Dev / IA</p>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Posture</th><th>Rôle</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr><td>AMOA</td><td>Écoute ouverte — extraction sémantique sans contamination technique</td><td>Ubiquitous language (riche, parfois ambigu)</td></tr>
+        <tr><td>Dev</td><td>Questionnement structurant — applique SOLID+GoF+DDD au vocabulaire AMOA</td><td>Architecture de classes qui préserve la sémantique</td></tr>
+        <tr><td>IA</td><td>Implémentation — prend la structure produite par le Dev</td><td>Code conforme à l'architecture</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:0; font-size:12px; color:#8b949e;">
+      Boucle : Métier → AMOA → Dev → AMOA → Métier → AMOA → Dev<br>
+      <span style="color:#c9d1d9;">Le Dev = révélateur d'implicites</span> — ses questions forcent l'émergence de décisions métier non encore formulées.
+    </div>
+
   </div><!-- /tab-solid -->
 
   <div class="legend">
