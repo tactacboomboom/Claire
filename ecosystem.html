@@ -345,6 +345,52 @@
       font-weight: 600; border-radius: 9px; cursor: pointer; transition: background 0.15s; margin-top: 8px;
     }
     .compute-btn:hover { background: rgba(88,166,255,0.22); }
+
+    /* ── ATLAS THÉORÈMES (inline, scoped) ── */
+    #atlas-mindmap { background:#07090F; border-radius:10px; overflow:hidden; font-family:'Georgia',serif; color:#D8D8E8; }
+    #atlas-mindmap .mm-header { padding:16px 20px 12px; background:#090B14; border-bottom:1px solid #12142A; text-align:center; }
+    #atlas-mindmap .header-sup { font-family:monospace; font-size:9px; letter-spacing:.3em; color:#2A2A4A; margin-bottom:6px; }
+    #atlas-mindmap .header-title { font-size:18px; font-style:italic; color:#E8E4DC; margin-bottom:4px; }
+    #atlas-mindmap .header-sub { font-size:11px; color:#3A3A6A; }
+    #atlas-mindmap .mm-legend { display:flex; justify-content:center; gap:20px; padding:10px 16px; background:#090B14; border-bottom:1px solid #12142A; flex-wrap:wrap; }
+    #atlas-mindmap .mm-legend-item { display:flex; align-items:center; gap:6px; font-size:10px; font-family:monospace; color:#5A5A7A; }
+    #atlas-mindmap .legend-dot { width:8px; height:8px; border-radius:50%; }
+    #atlas-mindmap .canvas { padding:20px 16px 40px; }
+    #atlas-mindmap .act { margin-bottom:32px; }
+    #atlas-mindmap .act-header { padding:10px 16px; border-radius:6px 6px 0 0; margin-bottom:2px; display:flex; align-items:center; gap:10px; }
+    #atlas-mindmap .act-glyph { font-size:22px; }
+    #atlas-mindmap .act-title { font-size:15px; font-style:italic; font-weight:700; }
+    #atlas-mindmap .act-sub { font-size:11px; opacity:.7; margin-top:1px; }
+    #atlas-mindmap .disc-grid { display:grid; gap:2px; grid-template-columns:1fr 1fr; }
+    @media(min-width:1100px) { #atlas-mindmap .disc-grid { grid-template-columns:1fr 1fr 1fr 1fr; } }
+    #atlas-mindmap .disc { overflow:hidden; }
+    #atlas-mindmap .disc-header { padding:8px 12px; font-size:11px; font-family:monospace; letter-spacing:.08em; }
+    #atlas-mindmap .disc-body { padding:6px 8px; display:flex; flex-direction:column; gap:4px; background:#080A12; }
+    #atlas-mindmap .th { padding:8px 10px; border-radius:5px; border-left:3px solid; background:#0D1018; }
+    #atlas-mindmap .th-name { font-size:12px; font-style:italic; color:#E8E4DC; margin-bottom:3px; line-height:1.3; }
+    #atlas-mindmap .th-narrative { font-size:11px; color:#6A6A8A; line-height:1.5; }
+    #atlas-mindmap .count { font-family:monospace; font-size:9px; opacity:.5; margin-left:6px; }
+    #atlas-mindmap .l1 .act-header { background:rgba(91,143,212,0.1); border:1px solid rgba(91,143,212,0.2); }
+    #atlas-mindmap .l1 .act-title { color:#5B8FD4; }
+    #atlas-mindmap .l1 .disc-header { background:rgba(91,143,212,0.08); color:#5B8FD4; border-bottom:1px solid rgba(91,143,212,0.15); }
+    #atlas-mindmap .d11 .th { border-left-color:#5B8FD4; } #atlas-mindmap .d11 .th-name { color:#8BB0E8; }
+    #atlas-mindmap .d12 .th { border-left-color:#6EC4D4; } #atlas-mindmap .d12 .th-name { color:#8ECFDF; }
+    #atlas-mindmap .d13 .th { border-left-color:#7ED4B8; } #atlas-mindmap .d13 .th-name { color:#9ADDC8; }
+    #atlas-mindmap .d14 .th { border-left-color:#8EE4A0; } #atlas-mindmap .d14 .th-name { color:#A4EAB0; }
+    #atlas-mindmap .l2 .act-header { background:rgba(212,164,91,0.1); border:1px solid rgba(212,164,91,0.2); }
+    #atlas-mindmap .l2 .act-title { color:#D4A45B; }
+    #atlas-mindmap .l2 .disc-header { background:rgba(212,164,91,0.08); color:#D4A45B; border-bottom:1px solid rgba(212,164,91,0.15); }
+    #atlas-mindmap .d21 .th { border-left-color:#D4A45B; } #atlas-mindmap .d21 .th-name { color:#E0BC80; }
+    #atlas-mindmap .d22 .th { border-left-color:#D4C05B; } #atlas-mindmap .d22 .th-name { color:#E0CE80; }
+    #atlas-mindmap .d23 .th { border-left-color:#C4D45B; } #atlas-mindmap .d23 .th-name { color:#D4E080; }
+    #atlas-mindmap .d24 .th { border-left-color:#A4D47A; } #atlas-mindmap .d24 .th-name { color:#B8E09A; }
+    #atlas-mindmap .l3 .act-header { background:rgba(212,91,143,0.1); border:1px solid rgba(212,91,143,0.2); }
+    #atlas-mindmap .l3 .act-title { color:#D45B8F; }
+    #atlas-mindmap .l3 .disc-header { background:rgba(212,91,143,0.08); color:#D45B8F; border-bottom:1px solid rgba(212,91,143,0.15); }
+    #atlas-mindmap .d31 .th { border-left-color:#D45B8F; } #atlas-mindmap .d31 .th-name { color:#E08AB0; }
+    #atlas-mindmap .d32 .th { border-left-color:#D47B5B; } #atlas-mindmap .d32 .th-name { color:#E0A880; }
+    #atlas-mindmap .d33 .th { border-left-color:#B45BD4; } #atlas-mindmap .d33 .th-name { color:#CC88E8; }
+    #atlas-mindmap .d34 .th { border-left-color:#7B5BD4; } #atlas-mindmap .d34 .th-name { color:#A888E8; }
   </style>
 </head>
 <body>
@@ -1001,11 +1047,155 @@
   ══════════════════════════════════════ -->
   <div id="tab-theoremes" class="tab-content">
     <p class="solid-title">🔬 Atlas des 53 Théorèmes</p>
-    <iframe
-      src="../../vault/5 - OUTILS/mindmap-atlas-50-theoremes.html"
-      style="width:100%; height:820px; border:none; border-radius:10px; background:#07090F;"
-      title="Atlas des 53 Théorèmes — Vue d'ensemble">
-    </iframe>
+    <div id="atlas-mindmap">
+      <div class="mm-header">
+        <div class="header-sup">ATLAS MATHÉMATIQUE · SCIENCE DES DONNÉES</div>
+        <div class="header-title">53 Théorèmes — Vue d'ensemble</div>
+        <div class="header-sub">3 niveaux · 12 disciplines · Noms formels + résumé narratif</div>
+      </div>
+      <div class="mm-legend">
+        <div class="mm-legend-item"><div class="legend-dot" style="background:#5B8FD4"></div>N1 — Matière</div>
+        <div class="mm-legend-item"><div class="legend-dot" style="background:#D4A45B"></div>N2 — Mouvement</div>
+        <div class="mm-legend-item"><div class="legend-dot" style="background:#D45B8F"></div>N3 — Jonction</div>
+      </div>
+      <div class="canvas">
+
+        <!-- N1 MATIÈRE -->
+        <div class="act l1">
+          <div class="act-header"><span class="act-glyph">◈</span><div><div class="act-title">N1 — La Matière <span class="count">15 théorèmes</span></div><div class="act-sub">Ce que la donnée est, avant d'être transformée</div></div></div>
+          <div class="disc-grid">
+            <div class="disc d11">
+              <div class="disc-header">Ensembles &amp; Logique</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Axiomes ZFC</div><div class="th-narrative">Les règles fondamentales de tout rangement : une collection est définie par ses membres, on peut toujours créer des sous-ensembles, on peut toujours choisir un élément.</div></div>
+                <div class="th"><div class="th-name">Théorème de Cantor</div><div class="th-narrative">L'espace de toutes les sous-requêtes sur n colonnes est toujours plus grand que n. Avec 10 colonnes, des milliers de filtres possibles — d'où la complexité des optimiseurs.</div></div>
+                <div class="th"><div class="th-name">Complétude de Gödel</div><div class="th-narrative">SQL tient cette promesse : si l'information existe et que la question est bien formée, il existe toujours une requête pour l'obtenir. Ce n'est pas évident — d'autres langages ne peuvent pas le garantir.</div></div>
+                <div class="th"><div class="th-name">Algèbre de Boole</div><div class="th-narrative">Chaque condition WHERE est un interrupteur — allumé ou éteint. ET, OU, PAS. Pas de demi-mesure. C'est ce qui rend SQL à la fois simple et universel.</div></div>
+              </div>
+            </div>
+            <div class="disc d12">
+              <div class="disc-header">Algèbre Linéaire</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Décomposition SVD</div><div class="th-narrative">Toute table numérique peut être décomposée en couches ordonnées par importance. La première couche capture l'essentiel, les dernières sont du bruit. Fondement de PCA, des embeddings, de la recommandation.</div></div>
+                <div class="th"><div class="th-name">Théorème Spectral</div><div class="th-narrative">Dans tout jeu de données structuré, il existe des axes naturels d'indépendance. Trouver ces axes, c'est le fondement du clustering spectral et de PCA.</div></div>
+                <div class="th"><div class="th-name">Théorème d'Eckart-Young</div><div class="th-narrative">La meilleure façon de résumer une matrice en k dimensions est mathématiquement unique — c'est la SVD tronquée. Aucune autre compression ne peut être plus précise. Justifie chaque embedding réduit.</div></div>
+                <div class="th"><div class="th-name">Conditionnement κ(A)</div><div class="th-narrative">Mesure si une transformation amplifie les erreurs. Un système mal conditionné : +1% de bruit en entrée → résultat inutilisable. À vérifier avant d'inverser une matrice de features.</div></div>
+              </div>
+            </div>
+            <div class="disc d13">
+              <div class="disc-header">Théorie de l'Information</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Entropie de Shannon H(X)</div><div class="th-narrative">Une information prévisible ne vaut rien. L'entropie mesure la surprise moyenne d'une source. Moteur des splits dans les arbres de décision : quelle feature supprime le plus d'incertitude ?</div></div>
+                <div class="th"><div class="th-name">Théorème de Codage Source</div><div class="th-narrative">Il existe un plancher en dessous duquel on ne peut pas compresser sans perte. Parquet, ORC, Snappy s'en approchent. Si un fichier CSV est 10× plus lourd, c'est de la redondance réelle, pas du hasard.</div></div>
+                <div class="th"><div class="th-name">Information Mutuelle I(X;Y)</div><div class="th-narrative">Mesure combien connaître X réduit l'incertitude sur Y. L'outil de sélection de features le plus honnête : il capte les dépendances non-linéaires que la corrélation classique rate.</div></div>
+                <div class="th"><div class="th-name">Divergence KL</div><div class="th-narrative">Mesure à quel point deux distributions diffèrent. Si tes données d'avril ressemblent à mars, KL ≈ 0. Si elles s'éloignent : alerte data drift. Fondement de la détection de dérive de modèle.</div></div>
+              </div>
+            </div>
+            <div class="disc d14">
+              <div class="disc-header">Topologie &amp; Géométrie</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Lemme de Johnson-Lindenstrauss</div><div class="th-narrative">1 million de points en 1000 dimensions peuvent être projetés en bien moins de dimensions en conservant les distances à une erreur contrôlée. Fondement mathématique d'UMAP, LSH, Random Projections.</div></div>
+                <div class="th"><div class="th-name">Malédiction de la Dimension</div><div class="th-narrative">En haute dimension, tous les points deviennent équidistants. Les distances cessent de discriminer. C'est pourquoi les embeddings existent : réduire jusqu'à une dimension où les distances retrouvent du sens.</div></div>
+                <div class="th"><div class="th-name">Homologie Persistante (TDA)</div><div class="th-narrative">Compte les "trous" structurels dans un nuage de points à travers les échelles. Les structures qui persistent longtemps sont réelles, celles qui disparaissent vite sont du bruit. Détection d'anomalies sans hypothèse de forme.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- N2 MOUVEMENT -->
+        <div class="act l2">
+          <div class="act-header"><span class="act-glyph">⟳</span><div><div class="act-title">N2 — Le Mouvement <span class="count">18 théorèmes</span></div><div class="act-sub">Comment la donnée circule, se transforme, s'optimise</div></div></div>
+          <div class="disc-grid">
+            <div class="disc d21">
+              <div class="disc-header">Graphes &amp; Ordonnancement</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Tri Topologique (Kahn)</div><div class="th-narrative">Trouve automatiquement le bon ordre d'exécution des tâches d'un pipeline. Détecte les dépendances circulaires — et s'arrête immédiatement. Tourne derrière Airflow, dbt, Spark.</div></div>
+                <div class="th"><div class="th-name">Théorème de Dilworth</div><div class="th-narrative">Le nombre maximum de tâches parallélisables dans un pipeline = la largeur de son graphe. Au-delà, ajouter des workers ne change rien. C'est le plafond théorique du parallélisme.</div></div>
+                <div class="th"><div class="th-name">Algorithme de Dijkstra</div><div class="th-narrative">Trouve le chemin critique d'un pipeline — la séquence qui fixe la durée totale. Optimiser hors de ce chemin ne fait rien gagner. Peindre les murs sans réparer les fondations.</div></div>
+                <div class="th"><div class="th-name">Théorème de Menger</div><div class="th-narrative">Nombre de routes alternatives si un composant tombe = taille du point de blocage minimal. Si cette valeur est 1, une seule panne bloque tout. C'est la mesure mathématique de la résilience d'un pipeline.</div></div>
+                <div class="th"><div class="th-name">Ford-Fulkerson / Max-flow Min-cut</div><div class="th-narrative">Le débit maximum dans un réseau = la capacité du goulot le plus étroit. Identifie précisément où ton pipeline est limité — et où il est inutile d'ajouter des ressources.</div></div>
+              </div>
+            </div>
+            <div class="disc d22">
+              <div class="disc-header">Algèbre Rel. &amp; Réécriture</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Complétude de Codd</div><div class="th-narrative">L'algèbre relationnelle et le calcul tuple sont équivalents. Ce que tu peux exprimer, tu peux l'exécuter. Le moteur peut réécrire ta requête librement — en une forme algébriquement identique mais structurellement plus rapide.</div></div>
+                <div class="th"><div class="th-name">Formes Normales (1NF→BCNF)</div><div class="th-narrative">Chaque information doit avoir un seul endroit de référence. Sinon, une mise à jour crée une contradiction silencieuse. Fondement de la modélisation dimensionnelle dans les entrepôts de données.</div></div>
+                <div class="th"><div class="th-name">Pushdown de Prédicats</div><div class="th-narrative">Filtrer 10M lignes puis joindre est catastrophique. Joindre 1000 lignes filtrées est trivial. Spark Catalyst, BigQuery, PostgreSQL appliquent cette règle automatiquement.</div></div>
+                <div class="th"><div class="th-name">Semi-anneau Tropical</div><div class="th-narrative">Un monde algébrique où "additionner" signifie "prendre le minimum". Moteur des bases déductives et des systèmes de provenance de données — qui tracent automatiquement d'où vient chaque résultat.</div></div>
+              </div>
+            </div>
+            <div class="disc d23">
+              <div class="disc-header">Analyse Fonctionnelle</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Transformée de Fourier (FFT)</div><div class="th-narrative">Décompose une série temporelle en ses rythmes constituants — comme un égaliseur audio sépare les graves des aigus. Révèle les cycles cachés : journalier, hebdomadaire, saisonnier.</div></div>
+                <div class="th"><div class="th-name">Théorème de Nyquist-Shannon</div><div class="th-narrative">Pour ne rater aucune variation, il faut mesurer au minimum 2× plus vite que la variation la plus rapide. En dessous : le signal se replie sur lui-même.</div></div>
+                <div class="th"><div class="th-name">Transformation en Ondelettes</div><div class="th-narrative">Fourier dit quelles fréquences sont présentes. Les ondelettes ajoutent : à quel moment. Pour des séries non-stationnaires (métriques applicatives, données financières), c'est fondamentalement plus adapté.</div></div>
+                <div class="th"><div class="th-name">Convolution</div><div class="th-narrative">Faire glisser un filtre sur un signal pour mesurer sa ressemblance avec un pattern à chaque position. La moyenne mobile est une convolution. Les CNN sont des convolutions.</div></div>
+              </div>
+            </div>
+            <div class="disc d24">
+              <div class="disc-header">Probabilités &amp; Statistiques</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Théorème Central Limite</div><div class="th-narrative">La moyenne d'un grand nombre de mesures suit toujours une distribution en cloche — quelle que soit la distribution d'origine. Fondement mathématique des tests A/B.</div></div>
+                <div class="th"><div class="th-name">Loi des Grands Nombres (forte)</div><div class="th-narrative">Avec assez de données sur un phénomène stable, la moyenne converge vers la vraie valeur — pas probablement, certainement. La justification profonde du big data.</div></div>
+                <div class="th"><div class="th-name">Inégalité de Chebyshev</div><div class="th-narrative">Quelle que soit la distribution, au maximum 25% des valeurs peuvent être à plus de 2 écarts-types de la moyenne. Une alarme universelle — sans hypothèse sur la forme des données.</div></div>
+                <div class="th"><div class="th-name">Théorème de Bayes</div><div class="th-narrative">Comment mettre à jour sa croyance à chaque nouvelle observation. Moteur du machine learning en ligne, de la détection d'anomalies adaptative, des tests A/B bayésiens.</div></div>
+                <div class="th"><div class="th-name">Borne de Cramér-Rao</div><div class="th-narrative">Il existe un plancher d'erreur en dessous duquel aucun algorithme ne peut descendre. Si ton modèle atteint ce plancher, il est optimal. Chercher mieux est inutile.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- N3 JONCTION -->
+        <div class="act l3">
+          <div class="act-header"><span class="act-glyph">⬡</span><div><div class="act-title">N3 — La Jonction <span class="count">20 théorèmes</span></div><div class="act-sub">Comment le système tient en production — le niveau discriminant de séniorité</div></div></div>
+          <div class="disc-grid">
+            <div class="disc d31">
+              <div class="disc-header">Théorie des Files d'Attente</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Modèle M/M/1</div><div class="th-narrative">1 worker, arrivées et traitements aléatoires. Si l'occupation est 90%, la file moyenne est 9 messages — pas 1. Traduit pour Kafka : lag = 9× le temps de traitement. Une loi, pas une estimation.</div></div>
+                <div class="th"><div class="th-name">Modèle M/M/c (Erlang-C)</div><div class="th-narrative">Combien de workers ouvrir pour que 99% des messages soient traités en moins d'1 seconde ? Erlang-C répond avec précision. L'outil de dimensionnement le plus rigoureux — il précède Kafka de 60 ans.</div></div>
+                <div class="th"><div class="th-name">Loi de Little (L = λ·W)</div><div class="th-narrative">Lag ÷ débit = latence. Universel, sans hypothèse de distribution. 10 000 messages en attente, 1 000/s d'entrée : 10 secondes de latence. Le premier calcul à faire quand un pipeline dérive.</div></div>
+                <div class="th"><div class="th-name">Théorème de Burke</div><div class="th-narrative">La sortie d'une file bien dimensionnée est un flux aussi régulier que son entrée. Les étapes d'un pipeline Kafka se chaînent : chaque sortie est une entrée valide pour l'étape suivante.</div></div>
+                <div class="th"><div class="th-name">M/G/1 (Pollaczek-Khinchine)</div><div class="th-narrative">La variance du temps de traitement coûte autant que sa durée moyenne. Un batch job à durée très variable crée une file bien plus longue qu'un traitement uniforme de même durée moyenne.</div></div>
+                <div class="th"><div class="th-name">Files à Priorité (HOL)</div><div class="th-narrative">Les messages critiques voient une file virtuelle composée uniquement des messages aussi prioritaires. Fondement mathématique des DLQ, SLA tiered, et systèmes de priorité Kafka.</div></div>
+                <div class="th"><div class="th-name">Théorème PASTA</div><div class="th-narrative">Un monitoring qui échantillonne de façon aléatoire voit l'état moyen réel du système — pas un état biaisé. La justification mathématique du scraping Prometheus.</div></div>
+              </div>
+            </div>
+            <div class="disc d32">
+              <div class="disc-header">Systèmes Distribués &amp; Consensus</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Théorème CAP (Brewer)</div><div class="th-narrative">Dans un système distribué, on ne peut garantir simultanément que 2 parmi : cohérence, disponibilité, résistance aux partitions. Kafka choisit la cohérence. Cassandra choisit la disponibilité.</div></div>
+                <div class="th"><div class="th-name">Théorème FLP</div><div class="th-narrative">Dans un réseau asynchrone, une seule panne potentielle suffit à rendre impossible tout consensus qui garantit à la fois terminaison et cohérence. Pourquoi tous les systèmes réels utilisent des timeouts.</div></div>
+                <div class="th"><div class="th-name">Algorithme de Raft</div><div class="th-narrative">Élection de leader + réplication de log. Garantit la cohérence tant qu'une majorité de machines est vivante. Tourne derrière Kafka KRaft, etcd (Kubernetes), CockroachDB.</div></div>
+                <div class="th"><div class="th-name">CRDTs</div><div class="th-narrative">Structures dont les opérations commutent et sont idempotentes : peu importe l'ordre d'application, le résultat converge. Fondement des compteurs distribués, scores temps-réel, états partagés sans coordination.</div></div>
+                <div class="th"><div class="th-name">Exactly-once Semantics</div><div class="th-narrative">Chaque message traité exactement une fois, même si le réseau coupe au pire moment. Repose sur idempotence + transactions. Kafka Transactions l'implémente. Non-négociable pour les pipelines financiers.</div></div>
+              </div>
+            </div>
+            <div class="disc d33">
+              <div class="disc-header">Théorie du Contrôle</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Fonction de Transfert (Laplace)</div><div class="th-narrative">La "personnalité dynamique" d'un système : comment il répond à une perturbation soudaine. Modéliser un autoscaler comme fonction de transfert permet de prédire ses oscillations avant de le déployer.</div></div>
+                <div class="th"><div class="th-name">Critère de Nyquist (Stabilité)</div><div class="th-narrative">Teste si un autoscaler convergera vers un équilibre ou oscillera indéfiniment. Le diagnostic à faire avant de déployer — pas après avoir observé les oscillations en production.</div></div>
+                <div class="th"><div class="th-name">Régulateur PID</div><div class="th-narrative">Combine 3 signaux : l'écart actuel (P), son accumulation dans le temps (I), sa vitesse de changement (D). KEDA — l'autoscaler Kubernetes basé sur les événements — est une forme de PID appliqué au nombre de replicas.</div></div>
+                <div class="th"><div class="th-name">Stabilité de Lyapunov</div><div class="th-narrative">Preuve formelle qu'un système revient toujours à l'équilibre après toute perturbation — comme une bille dans un bol. La certitude mathématique, pas juste la confiance empirique.</div></div>
+              </div>
+            </div>
+            <div class="disc d34">
+              <div class="disc-header">Fiabilité &amp; SLO</div>
+              <div class="disc-body">
+                <div class="th"><div class="th-name">Processus de Poisson (Défaillances)</div><div class="th-narrative">Les erreurs arrivent comme la pluie : aléatoires, indépendantes. Le taux d'erreur par heure définit ce processus. Ton budget d'erreur SLO est directement un paramètre de ce modèle.</div></div>
+                <div class="th"><div class="th-name">Distribution de Weibull</div><div class="th-narrative">3 régimes de défaillance avec un seul paramètre : défauts de jeunesse (β&lt;1), hasard pur (β=1), usure progressive (β&gt;1). Identifier le régime de tes composants critiques calibre la maintenance préventive.</div></div>
+                <div class="th"><div class="th-name">Disponibilité Série/Parallèle</div><div class="th-narrative">5 composants à 99% en série = 95% de dispo globale. En parallèle : 99,99%. L'architecture compte autant que la qualité individuelle des composants — c'est l'arithmétique de la redondance.</div></div>
+                <div class="th"><div class="th-name">Inégalités de Markov &amp; Cantelli</div><div class="th-narrative">Bornes universelles sur la probabilité qu'une latence dépasse un seuil — sans hypothèse sur la distribution. Les alarmes conservatives par excellence : elles sur-estiment légèrement le risque, mais ne mentent jamais.</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /canvas -->
+    </div><!-- /atlas-mindmap -->
   </div><!-- /tab-theoremes -->
 
   <div class="legend">
