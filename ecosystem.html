@@ -976,8 +976,21 @@ const VN = {f:'Pilote', e:'Ossature', l:'Substance'};
 const PARA_E = {i:'🏛️', d:'💠', c:'🌀'};
 const PARA_L = {i:'Impérative (POO)', d:'Déclarative (fonctionnel)', c:'Concurrente (acteur/réactif)'};
 const PARA_MAP = {
-  'domain/':['i'],'application/':['i','d'],'infrastructure/':['d'],'interfaces/':['d'],
-  'realtime/':['c'],'websocket/':['c'],'streaming/':['c'],'consumers/':['c'],
+  // domain/ — OOP (identité + état)
+  'entities/':['i'],'value-objects/':['i'],'aggregates/':['i'],'repositories/':['i'],'services/':['i'],
+  'events/':['d'],
+  // application/ — orchestration OO + data fonctionnel
+  'handlers/':['i','d'],'commands/':['d'],'queries/':['d'],'dto/':['d'],
+  // infrastructure/ — déclaratif
+  'persistence/':['d'],'external/':['d'],'config/':['d'],'cdn/':['d'],
+  'search/':['d'],'payment/':['d'],'export/':['d'],'sources/':['d'],
+  'sinks/':['d'],'datawarehouse/':['d'],'monitoring/':['d'],
+  'orchestration/':['d'],'scheduler/':['d'],'schedulers/':['d'],
+  // interfaces/ — déclaratif
+  'http/':['d'],'grpc/':['d'],'ratelimiting/':['d'],'downstream/':['d'],
+  // concurrent (réactif/acteur)
+  'realtime/':['c'],'websocket/':['c'],'streaming/':['c'],
+  'consumers/':['c'],'triggers/':['c'],'notifications/':['c'],
 };
 
 const SOLID_E = {S:'🪙',O:'🌱',L:'🪆',I:'✂️',D:'🧲'};
