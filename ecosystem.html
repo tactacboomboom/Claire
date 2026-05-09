@@ -322,6 +322,29 @@
       z-index: 100;
     }
     #toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── QUESTIONNAIRE NATURE ── */
+    .q-block {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 18px 22px; margin-bottom: 14px;
+    }
+    .q-title { font-size: 14px; font-weight: 600; color: #e6edf3; margin-bottom: 4px; }
+    .q-hint { font-size: 11px; color: #8b949e; margin-bottom: 12px; }
+    .q-options { display: flex; flex-direction: column; gap: 5px; }
+    .q-option {
+      display: flex; align-items: flex-start; gap: 10px; font-size: 13px;
+      color: #e6edf3; cursor: pointer; padding: 7px 12px; border-radius: 7px;
+      transition: background 0.15s;
+    }
+    .q-option:hover { background: rgba(255,255,255,0.05); }
+    .q-option input { margin-top: 2px; flex-shrink: 0; accent-color: #58a6ff; }
+    .q-ex { color: #8b949e; font-size: 11px; margin-left: 5px; }
+    .compute-btn {
+      width: 100%; padding: 13px; background: rgba(88,166,255,0.12);
+      border: 1px solid rgba(88,166,255,0.3); color: #58a6ff; font-size: 14px;
+      font-weight: 600; border-radius: 9px; cursor: pointer; transition: background 0.15s; margin-top: 8px;
+    }
+    .compute-btn:hover { background: rgba(88,166,255,0.22); }
   </style>
 </head>
 <body>
@@ -337,6 +360,7 @@
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('ecosystem')">🗺️ Ecosystem</button>
     <button class="tab-btn" onclick="switchTab('solid')">📐 SOLID &amp; Pipeline</button>
+    <button class="tab-btn" onclick="switchTab('nature')">🧬 Nature</button>
   </div>
 
   <div id="tab-ecosystem" class="tab-content active">
@@ -832,6 +856,54 @@
 
   </div><!-- /tab-solid -->
 
+  <!-- ══════════════════════════════════════
+       🧬 ONGLET NATURE
+  ══════════════════════════════════════ -->
+  <div id="tab-nature" class="tab-content">
+    <p class="solid-title">🧬 Formulaire ontologique — Quelle est la nature de mon projet ?</p>
+    <div id="nature-form">
+      <div class="q-block">
+        <div class="q-title">1 · Qui utilise principalement l'application ?</div>
+        <div class="q-hint">Pas qui la construit — qui l'utilise au quotidien</div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="actor" value="human"> Des personnes <span class="q-ex">Netflix, Amazon, WhatsApp</span></label>
+          <label class="q-option"><input type="radio" name="actor" value="machine"> D'autres logiciels <span class="q-ex">Stripe API, Twilio, Airflow</span></label>
+          <label class="q-option"><input type="radio" name="actor" value="both"> Les deux <span class="q-ex">Google Analytics, Power BI, Datadog</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <div class="q-title">2 · Qu'est-ce que l'application fait concrètement ?</div>
+        <div class="q-hint">Choisir tout ce qui s'applique</div>
+        <div class="q-options">
+          <label class="q-option"><input type="checkbox" name="action" value="exchange"> Faire acheter / vendre <span class="q-ex">Amazon, Airbnb, Leboncoin</span></label>
+          <label class="q-option"><input type="checkbox" name="action" value="transform"> Faire faire quelque chose <span class="q-ex">Notion, Figma, Google Docs</span></label>
+          <label class="q-option"><input type="checkbox" name="action" value="access"> Donner accès à du contenu <span class="q-ex">Netflix, Spotify, YouTube</span></label>
+          <label class="q-option"><input type="checkbox" name="action" value="coordinate"> Mettre des gens en relation <span class="q-ex">WhatsApp, Discord, LinkedIn</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <div class="q-title">3 · Quand l'application répond-elle ?</div>
+        <div class="q-hint">Du point de vue de l'utilisateur ou du système qui la déclenche</div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="timing" value="immediate"> Tout de suite <span class="q-ex">Je clique, ça répond — Google, WhatsApp, Uber</span></label>
+          <label class="q-option"><input type="radio" name="timing" value="background"> En arrière-plan <span class="q-ex">Je n'attends pas — export PDF, email auto, recommandations Netflix</span></label>
+          <label class="q-option"><input type="radio" name="timing" value="scheduled"> À heure fixe <span class="q-ex">Déclenché par une heure — réveil, rapport hebdo</span></label>
+        </div>
+      </div>
+      <div class="q-block">
+        <div class="q-title">4 · Les règles métier vont-elles évoluer souvent ?</div>
+        <div class="q-hint">Ex : les règles de prix d'Amazon changent tous les jours — celles d'un réveil, jamais</div>
+        <div class="q-options">
+          <label class="q-option"><input type="radio" name="evolution" value="stable"> Non, elles sont stables <span class="q-ex">Calculatrice, réveil, horaires de prières</span></label>
+          <label class="q-option"><input type="radio" name="evolution" value="growing"> On va en ajouter <span class="q-ex">Notion, LinkedIn — nouvelles fonctions sans toucher l'existant</span></label>
+          <label class="q-option"><input type="radio" name="evolution" value="changing"> Oui, elles changent <span class="q-ex">Amazon pricing, règles fiscales, algorithme TikTok</span></label>
+        </div>
+      </div>
+      <button class="compute-btn" onclick="computeNature()">→ Déterminer la structure DDD</button>
+    </div>
+    <div id="nature-result" style="display:none; margin-top:24px;"></div>
+  </div><!-- /tab-nature -->
+
   <div class="legend">
     <div class="legend-item"><span class="chip chip-pwf" style="margin:0">PWF</span> Planning files → 📐 Claire uniquement</div>
     <div class="legend-item"><span class="chip chip-code" style="margin:0">code</span> App TypeScript → ⚙️ claire-app</div>
@@ -896,6 +968,333 @@ async function refreshPWF() {
 }
 
 refreshPWF();
+
+// ── NATURE QUESTIONNAIRE ──────────────────────────────────────────────
+const VL = {f:'🧱', e:'🔌', l:'🌊'};
+const VN = {f:'Figé', e:'Extensible', l:'Vivant'};
+
+const NATURES_DATA = {
+  productivity: {
+    label:'Outil de productivité', emoji:'🛠️', rgb:'88,166,255',
+    examples:'Notion, Figma, Google Docs, claire-app',
+    desc:"L'utilisateur crée ou modifie des choses. Nouvelles fonctionnalités sans casser l'existant — chaque ajout = nouveau fichier.",
+    patterns:['⚡ Command — chaque action utilisateur = objet → Ctrl+Z possible','📸 Memento — capture état pour retour arrière sans exposer les internals','🔀 Strategy — interchanger les algorithmes de traitement','🔌 Open/Closed — nouveau type de bloc = nouveau fichier, jamais une modification'],
+    dag:['📱','⚙️','🗄️','🎯','🧠'],
+    zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (sync temps réel)'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Document, Workspace, Block'],
+      [2,'f','value-objects/','','BlockContent, Position, Permission'],
+      [2,'f','aggregates/','','DocumentAggregate (racine de cohérence)'],
+      [2,'e','events/','','BlockCreated, DocumentShared, ActionUndone'],
+      [2,'f','repositories/','','IDocumentRepository (interface uniquement)'],
+      [2,'l','services/','','CollaborationService, HistoryService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','⚡','CreateBlock, MoveBlock, ShareDocument'],
+      [2,'e','queries/','','GetDocument, GetWorkspaceMembers'],
+      [2,'e','handlers/','','un handler par cas d\'usage'],
+      [2,'f','dto/','','objets de transfert entre couches'],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','implémentation des repositories'],
+      [2,'l','realtime/','🚚','WebSocket, sync collaborative'],
+      [2,'l','external/','🔑','auth provider'],
+      [2,'f','config/','⚙️','DI wiring — Figé une fois câblé'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','controllers REST / GraphQL'],
+      [2,'e','consumers/','🚚','événements entrants'],
+    ]
+  },
+  marketplace: {
+    label:'Marketplace', emoji:'🏪', rgb:'163,113,247',
+    examples:'Amazon, Airbnb, Leboncoin, Vinted',
+    desc:"Échange de valeur entre acteurs. Règles de prix, de matching et de confiance constamment ajustées.",
+    patterns:['🔀 Strategy — algorithmes de pricing dynamiques','👁️ Observer — événements commande (OrderPlaced, PaymentConfirmed)','⚡ Command — actions acheteur/vendeur','🚪 Facade — passerelle paiement (Stripe)','📐 Template Method — flow de checkout'],
+    dag:['📱','⚙️','🗄️','🚚','🎯','🧠'],
+    zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (paiement)','👁️ VISIBILITÉ'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Product, Order, Seller, Buyer'],
+      [2,'f','value-objects/','','Price, Address, Rating, SKU'],
+      [2,'f','aggregates/','','OrderAggregate, ListingAggregate'],
+      [2,'e','events/','','OrderPlaced, PaymentConfirmed, ProductListed'],
+      [2,'f','repositories/','','IOrderRepository, IProductRepository'],
+      [2,'l','services/','','PricingService, MatchingService, FraudService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','PlaceOrder, ListProduct, ProcessRefund'],
+      [2,'e','queries/','','SearchProducts, GetOrderHistory'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','OrderRepository, ProductRepository'],
+      [2,'l','payment/','🚚','StripeAdapter — TRANSIT'],
+      [2,'l','external/','👁️','NotificationService, ShippingAPI'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','REST controllers'],
+      [2,'e','consumers/','🚚','WebhookConsumer (Stripe events)'],
+    ]
+  },
+  content: {
+    label:'Plateforme de contenu', emoji:'🎬', rgb:'63,185,80',
+    examples:'Netflix, Spotify, YouTube, Medium',
+    desc:"Accès à du contenu. Recommandations et personnalisation évoluent en permanence.",
+    patterns:['🔀 Strategy — algorithmes de recommandation','👁️ Observer — événements analytics (ContentViewed)','🎨 Decorator — enrichissement de contenu','🚪 Facade — CDN / streaming abstrait'],
+    dag:['📱','🪨','⚙️','🗄️','🎯','🧠'],
+    zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (streaming)','👁️ VISIBILITÉ'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Content, Creator, Playlist, Category'],
+      [2,'f','value-objects/','','MediaUrl, Duration, License'],
+      [2,'f','aggregates/','','ContentAggregate, PlaylistAggregate'],
+      [2,'e','events/','','ContentPublished, ContentViewed, ContentLiked'],
+      [2,'f','repositories/','','IContentRepository, ICreatorRepository'],
+      [2,'l','services/','','RecommendationService, SearchService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','PublishContent, CreatePlaylist'],
+      [2,'e','queries/','','GetFeed, SearchContent, GetRecommendations'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','ContentRepository'],
+      [2,'l','cdn/','🗄️','MediaStorageAdapter — fichiers media'],
+      [2,'l','search/','🗄️','ElasticSearchAdapter'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','REST/GraphQL controllers'],
+      [2,'l','streaming/','🚚','WebSocket / HLS handlers'],
+    ]
+  },
+  social: {
+    label:'Réseau social', emoji:'🌐', rgb:'56,189,248',
+    examples:'WhatsApp, Discord, Twitter, LinkedIn',
+    desc:"Coordination entre personnes. Algorithme de feed et règles de modération en évolution constante.",
+    patterns:['👁️ Observer — feed events, notifications temps réel','⚡ Command — posts, messages, interactions','🔀 Strategy — algorithme de ranking du feed','🔗 Chain of Responsibility — modération du contenu'],
+    dag:['📱','🚚','⚙️','🗄️','🎯','🧠'],
+    zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (messages RT)','👁️ VISIBILITÉ'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','User, Post, Connection, Message, Group'],
+      [2,'f','value-objects/','','Bio, Handle, MediaContent, Reaction'],
+      [2,'f','aggregates/','','UserAggregate, ConversationAggregate'],
+      [2,'e','events/','','PostCreated, ConnectionMade, MessageSent'],
+      [2,'f','repositories/','','IUserRepository, IPostRepository'],
+      [2,'l','services/','','FeedService, NotificationService, ModerationService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','CreatePost, SendMessage, Connect'],
+      [2,'e','queries/','','GetFeed, GetConversation, GetProfile'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','UserRepository, PostRepository'],
+      [2,'l','realtime/','🚚','WebSocket — messages temps réel'],
+      [2,'l','notifications/','👁️','PushAdapter'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','REST/GraphQL controllers'],
+      [2,'l','websocket/','🚚','Connexions temps réel'],
+    ]
+  },
+  utility: {
+    label:'Application utilitaire', emoji:'⏰', rgb:'251,191,36',
+    examples:'Réveil, rappel de prières, calculatrice, compteur de calories',
+    desc:"Fonctionnalité simple et stable. Les règles métier ne changent presque jamais — la fiabilité prime.",
+    patterns:['📐 Template Method — algorithme de scheduling fixe','⚡ Command — gestion des alarmes','🔀 Strategy — canal de notification (son, vibration, push)'],
+    dag:['🎼','⚙️','🎯','🧠'],
+    zones:['🗄️ ÉTAT','⚡ EXÉCUTION','⏱️ TEMPO (conditionnel)','👁️ VISIBILITÉ'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Alarm, Schedule, Reminder, Preference'],
+      [2,'f','value-objects/','','Time, Location, RecurrenceRule, Timezone'],
+      [2,'f','aggregates/','','AlarmAggregate, ScheduleAggregate'],
+      [2,'e','events/','','AlarmTriggered, ReminderFired'],
+      [2,'f','repositories/','','IAlarmRepository, IPreferenceRepository'],
+      [2,'f','services/','','ScheduleService — rarement modifié'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','CreateAlarm, SetPreference'],
+      [2,'e','queries/','','GetUpcomingAlarms, GetPreferences'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','LocalStorage / SQLite'],
+      [2,'l','scheduler/','⏱️','CronAdapter — TEMPO conditionnel'],
+      [2,'l','notifications/','👁️','PushAdapter'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','REST controllers'],
+      [2,'e','schedulers/','⏱️','CronTrigger'],
+    ]
+  },
+  reporting: {
+    label:'Système de reporting', emoji:'📊', rgb:'234,179,8',
+    examples:'Datadog, Power BI, Google Analytics, Mixpanel',
+    desc:"Accès différé à des données agrégées. Nouvelles métriques et dashboards s'ajoutent en continu.",
+    patterns:['🏗️ Builder — construction de requêtes complexes','🔀 Strategy — format d\'export (PDF, CSV, JSON)','📐 Template Method — génération de rapport','👁️ Observer — refresh déclenché par événement'],
+    dag:['🪨','⚙️','🗄️','🎯','🧠'],
+    zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','⏱️ TEMPO','👁️ VISIBILITÉ'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Report, Dashboard, DataSource, Widget'],
+      [2,'f','value-objects/','','Metric, DateRange, Filter, Threshold'],
+      [2,'f','aggregates/','','DashboardAggregate, ReportAggregate'],
+      [2,'e','events/','','ReportGenerated, DataRefreshed, AlertTriggered'],
+      [2,'f','repositories/','','IReportRepository, IDataSourceRepository'],
+      [2,'l','services/','','AggregationService, ExportService, AlertService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','CreateDashboard, RefreshData'],
+      [2,'e','queries/','','GetReport, GetMetrics, GetAlerts'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','ReportRepository'],
+      [2,'l','datawarehouse/','🗄️','BigQueryAdapter, SnowflakeAdapter'],
+      [2,'l','export/','🚚','PDFExporter, CSVExporter'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','REST / GraphQL API'],
+      [2,'e','schedulers/','⏱️','ReportScheduler — TEMPO'],
+    ]
+  },
+  pipeline: {
+    label:'Pipeline de données', emoji:'🔄', rgb:'248,113,113',
+    examples:'Airflow, Spark, ETL maison, batch ML',
+    desc:"Transformation de données entre machines. Règles de transformation et optimisations évoluent souvent.",
+    patterns:['📐 Template Method — exécution des stages','🔀 Strategy — algorithme de transformation par stage','🔗 Chain of Responsibility — chaîne de stages','⚡ Command — contrôle du pipeline (start, abort, rerun)'],
+    dag:['📱','🚚','🪨','⚙️','🗄️'],
+    zones:['🗄️ ÉTAT','⚡ EXÉCUTION','🚚 TRANSIT (sources/sinks)','⏱️ TEMPO','🛡️ ROBUSTESSE','👁️ VISIBILITÉ'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Pipeline, Stage, DataRecord, Checkpoint'],
+      [2,'f','value-objects/','','Schema, TransformRule, Partition, BatchSize'],
+      [2,'f','aggregates/','','PipelineAggregate, BatchAggregate'],
+      [2,'e','events/','','PipelineStarted, StageCompleted, ErrorOccurred'],
+      [2,'f','repositories/','','IPipelineRepository, ICheckpointRepository'],
+      [2,'l','services/','','TransformationService, ValidationService, RetryService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','StartPipeline, RerunStage, AbortPipeline'],
+      [2,'e','queries/','','GetPipelineStatus, GetStageMetrics'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','sources/','🚚','S3Adapter, KafkaAdapter — TRANSIT entrant'],
+      [2,'l','sinks/','🗄️','DatabaseSink, S3Sink'],
+      [2,'l','orchestration/','⚡','AirflowAdapter'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'e','triggers/','⏱️','CronTrigger, EventTrigger'],
+      [2,'l','monitoring/','👁️','MetricsEndpoint — VISIBILITÉ'],
+    ]
+  },
+  api: {
+    label:'API / Intégration', emoji:'🔌', rgb:'167,243,208',
+    examples:'BFF, API Gateway, webhook hub, Stripe API interne',
+    desc:"Coordination entre systèmes. Contrats d'API et règles de routage évoluent avec les clients.",
+    patterns:['🚪 Facade — gateway unifié vers plusieurs services','🔀 Strategy — routage dynamique','🔵 Proxy — rate limiting, caching, auth','🔌 Adapter — adaptation des interfaces downstream'],
+    dag:['📱','⚙️','🎯'],
+    zones:['🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT','🛡️ ROBUSTESSE','⚙️ PARAMÈTRES'],
+    tree:[
+      [0,'','src/','',''],
+      [1,'','domain/','',''],
+      [2,'e','entities/','','Request, Integration, Client, Route'],
+      [2,'f','value-objects/','','ApiKey, RateLimit, Endpoint, Version'],
+      [2,'f','aggregates/','','IntegrationAggregate, ClientAggregate'],
+      [2,'e','events/','','RequestReceived, IntegrationFailed, QuotaExceeded'],
+      [2,'f','repositories/','','IClientRepository, IIntegrationRepository'],
+      [2,'l','services/','','RoutingService, TransformationService, AuthService'],
+      [1,'','application/','',''],
+      [2,'e','commands/','','RegisterClient, CreateIntegration'],
+      [2,'e','queries/','','GetClientUsage, GetRoutes'],
+      [2,'e','handlers/','',''],
+      [2,'f','dto/','',''],
+      [1,'','infrastructure/','',''],
+      [2,'l','persistence/','🗄️','ClientRepository'],
+      [2,'l','downstream/','🚚','ServiceAdapters — TRANSIT vers APIs tierces'],
+      [2,'l','ratelimiting/','🛡️','RedisRateLimiter — ROBUSTESSE'],
+      [2,'f','config/','⚙️','DI wiring'],
+      [1,'','interfaces/','',''],
+      [2,'l','http/','⚡','REST / GraphQL gateway'],
+      [2,'e','grpc/','⚡','gRPC service definitions'],
+    ]
+  },
+};
+
+function computeNature() {
+  const actor = document.querySelector('input[name="actor"]:checked')?.value;
+  const timing = document.querySelector('input[name="timing"]:checked')?.value;
+  const evolution = document.querySelector('input[name="evolution"]:checked')?.value;
+  const actions = [...document.querySelectorAll('input[name="action"]:checked')].map(i => i.value);
+  if (!actor || !timing || !evolution || !actions.length) {
+    alert('Répondez à toutes les questions avant de continuer.'); return;
+  }
+  const key = detectNatureKey(actor, actions, timing, evolution);
+  renderNatureResult(NATURES_DATA[key]);
+  document.getElementById('nature-result').style.display = 'block';
+  setTimeout(() => document.getElementById('nature-result').scrollIntoView({ behavior:'smooth', block:'start' }), 50);
+}
+
+function detectNatureKey(actor, actions, timing, evolution) {
+  if (actor === 'machine' && !actions.includes('coordinate')) return 'pipeline';
+  if (actor === 'machine') return 'api';
+  if (actor === 'both') return 'reporting';
+  if (actions.includes('exchange')) return 'marketplace';
+  if (actions.includes('access') && !actions.includes('transform')) return 'content';
+  if (actions.includes('coordinate') && !actions.includes('transform') && !actions.includes('exchange')) return 'social';
+  if (timing === 'scheduled' || evolution === 'stable') return 'utility';
+  return 'productivity';
+}
+
+function renderNatureResult(d) {
+  let treeHtml = '<div class="dag-flow" style="font-family:Consolas,monospace;font-size:12px;line-height:1.9;">';
+  d.tree.forEach(([depth, vol, name, zone, comment]) => {
+    const pad = '&nbsp;'.repeat(depth * 4);
+    const volBadge = vol ? `<span title="${VN[vol]}">${VL[vol]}</span>&nbsp;` : (depth > 0 ? '&nbsp;&nbsp;&nbsp;' : '');
+    const nc = depth === 0 ? '#e6edf3' : depth === 1 ? '#58a6ff' : '#c9d1d9';
+    const fw = depth <= 1 ? 700 : 400;
+    const zHtml = zone ? `&nbsp;<span style="opacity:.65;font-size:11px;">${zone}</span>` : '';
+    const cHtml = comment ? `&nbsp;<span style="color:#484f58;">← ${comment}</span>` : '';
+    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${zHtml}${cHtml}</div>`;
+  });
+  treeHtml += '</div>';
+
+  const patternsHtml = d.patterns.map(p =>
+    `<div style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;">${p}</div>`
+  ).join('');
+
+  const dagHtml = d.dag.join('<span style="color:#484f58;padding:0 6px;">→</span>');
+  const zonesHtml = d.zones.map(z => `<span class="chip chip-gray" style="font-size:12px;padding:4px 10px;">${z}</span>`).join('');
+
+  document.getElementById('nature-result').innerHTML = `
+    <div style="background:rgba(${d.rgb},.07);border:1px solid rgba(${d.rgb},.3);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
+      <div style="font-size:28px;margin-bottom:8px;">${d.emoji}</div>
+      <div style="font-size:17px;font-weight:700;color:#e6edf3;margin-bottom:4px;">Nature détectée : ${d.label}</div>
+      <div style="font-size:11px;color:#8b949e;margin-bottom:8px;">comme ${d.examples}</div>
+      <div style="font-size:13px;color:#c9d1d9;">${d.desc}</div>
+    </div>
+    <p class="solid-title">📁 Structure src/ recommandée</p>
+    <div style="margin-bottom:10px;display:flex;gap:18px;font-size:11px;color:#8b949e;">
+      <span>🧱 Figé — jamais modifié</span><span>🔌 Extensible — ajout seulement</span><span>🌊 Vivant — change souvent</span>
+    </div>
+    ${treeHtml}
+    <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
+    <div class="dag-flow" style="margin-bottom:24px;">${patternsHtml}</div>
+    <p class="solid-title">🗺️ DAG type</p>
+    <div class="dag-flow" style="margin-bottom:24px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
+    <p class="solid-title">⊕ Zones orthogonales actives</p>
+    <div class="files-wrap" style="margin-bottom:28px;">${zonesHtml}</div>
+    <button onclick="resetNatureForm()" style="width:100%;padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#8b949e;font-size:13px;border-radius:8px;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">← Recommencer</button>
+  `;
+}
+
+function resetNatureForm() {
+  document.getElementById('nature-result').style.display = 'none';
+  document.getElementById('nature-form').scrollIntoView({ behavior:'smooth' });
+}
 </script>
 </body>
 </html>
