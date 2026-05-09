@@ -726,20 +726,20 @@
     <table class="ref-table" style="margin-bottom:28px;">
       <thead><tr><th>Famille</th><th>Pattern</th><th>Problème résolu</th><th>Exemple claire-app</th></tr></thead>
       <tbody>
-        <tr><td>🌱 Création</td><td>Factory Method</td><td>Créer sans connaître la classe exacte</td><td>Choisir le bon LLMProvider</td></tr>
-        <tr><td>🌱 Création</td><td>Builder</td><td>Construire des objets complexes</td><td>Construire le prompt par étapes</td></tr>
-        <tr><td>🌱 Création</td><td>Singleton</td><td>Une seule instance partagée</td><td>Config ANTHROPIC_API_KEY</td></tr>
-        <tr><td>🔩 Structure</td><td>Adapter</td><td>Brancher deux interfaces incompatibles</td><td>lib/llm.ts → LLMProvider (D)</td></tr>
-        <tr><td>🔩 Structure</td><td>Decorator</td><td>Ajouter un comportement sans modifier</td><td>Middleware logging sur route.ts</td></tr>
-        <tr><td>🔩 Structure</td><td>Facade</td><td>Une porte simple sur un système complexe</td><td>route.ts = façade de φ₀+𝕍+ε₀+κ₀</td></tr>
-        <tr><td>🔩 Structure</td><td>Proxy</td><td>Contrôler l'accès, lazy loading</td><td>Memoization sur lib/generate.ts</td></tr>
-        <tr><td>🔩 Structure</td><td>Composite</td><td>Traiter un arbre comme un seul objet</td><td>Personas PSPO composées</td></tr>
-        <tr><td>⚡ Comportement</td><td>Observer</td><td>Notifier des abonnés d'un état</td><td>useEffect React sur la réponse LLM</td></tr>
-        <tr><td>⚡ Comportement</td><td>Strategy</td><td>Interchanger des algorithmes</td><td>Swap Claude → GPT via LLMProvider</td></tr>
-        <tr><td>⚡ Comportement</td><td>Template Method</td><td>Squelette d'algo, sous-classes remplissent</td><td>BaseValidator → ScrumMasterValidator</td></tr>
-        <tr><td>⚡ Comportement</td><td>Command</td><td>Encapsuler une action comme objet</td><td>File d'attente de génération</td></tr>
-        <tr><td>⚡ Comportement</td><td>State</td><td>Comportement selon l'état courant</td><td>idle / loading / done</td></tr>
-        <tr><td>⚡ Comportement</td><td>Iterator</td><td>Parcourir sans connaître la structure</td><td>Map sur la liste de personas</td></tr>
+        <tr><td>🐣 Création</td><td>🏭 Factory Method</td><td>Créer sans connaître la classe exacte</td><td>Choisir le bon LLMProvider</td></tr>
+        <tr><td>🐣 Création</td><td>🪵 Builder</td><td>Construire des objets complexes</td><td>Construire le prompt par étapes</td></tr>
+        <tr><td>🐣 Création</td><td>🔐 Singleton</td><td>Une seule instance partagée</td><td>Config ANTHROPIC_API_KEY</td></tr>
+        <tr><td>🕸️ Structure</td><td>🔁 Adapter</td><td>Brancher deux interfaces incompatibles</td><td>lib/llm.ts → LLMProvider (D)</td></tr>
+        <tr><td>🕸️ Structure</td><td>🎀 Decorator</td><td>Ajouter un comportement sans modifier</td><td>Middleware logging sur route.ts</td></tr>
+        <tr><td>🕸️ Structure</td><td>🪟 Facade</td><td>Une porte simple sur un système complexe</td><td>route.ts = façade de φ₀+𝕍+ε₀+κ₀</td></tr>
+        <tr><td>🕸️ Structure</td><td>🪞 Proxy</td><td>Contrôler l'accès, lazy loading</td><td>Memoization sur lib/generate.ts</td></tr>
+        <tr><td>🕸️ Structure</td><td>🌳 Composite</td><td>Traiter un arbre comme un seul objet</td><td>Personas PSPO composées</td></tr>
+        <tr><td>🎭 Comportement</td><td>👂 Observer</td><td>Notifier des abonnés d'un état</td><td>useEffect React sur la réponse LLM</td></tr>
+        <tr><td>🎭 Comportement</td><td>♟️ Strategy</td><td>Interchanger des algorithmes</td><td>Swap Claude → GPT via LLMProvider</td></tr>
+        <tr><td>🎭 Comportement</td><td>🗒️ Template Method</td><td>Squelette d'algo, sous-classes remplissent</td><td>BaseValidator → ScrumMasterValidator</td></tr>
+        <tr><td>🎭 Comportement</td><td>📨 Command</td><td>Encapsuler une action comme objet</td><td>File d'attente de génération</td></tr>
+        <tr><td>🎭 Comportement</td><td>🔘 State</td><td>Comportement selon l'état courant</td><td>idle / loading / done</td></tr>
+        <tr><td>🎭 Comportement</td><td>➿ Iterator</td><td>Parcourir sans connaître la structure</td><td>Map sur la liste de personas</td></tr>
       </tbody>
     </table>
 
@@ -993,6 +993,17 @@ const PARA_MAP = {
   'consumers/':['c'],'triggers/':['c'],'notifications/':['c'],
 };
 
+const GOF_NAMES = {
+  '🏭':'Factory Method','🪵':'Builder','🔐':'Singleton',
+  '🔁':'Adapter','🎀':'Decorator','🪟':'Facade','🪞':'Proxy','🌳':'Composite',
+  '👂':'Observer','♟️':'Strategy','🗒️':'Template Method','📨':'Command','🔘':'State','➿':'Iterator',
+};
+const GOF_MAP = {
+  'external/':['🔁'],'persistence/':['🔁'],'sources/':['🔁'],'sinks/':['🔁'],
+  'downstream/':['🔁'],'handlers/':['📨'],'consumers/':['👂'],
+  'notifications/':['👂'],'config/':['🏭'],
+};
+
 const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
 const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
 const OOP_MAP = {
@@ -1028,7 +1039,7 @@ const NATURES_DATA = {
     label:'Outil de productivité', emoji:'🛠️', rgb:'88,166,255',
     examples:'Notion, Figma, Google Docs, claire-app',
     desc:"L'utilisateur crée ou modifie des choses. Nouvelles fonctionnalités sans casser l'existant — chaque ajout = nouveau fichier.",
-    patterns:['⚡ Command — chaque action utilisateur = objet → Ctrl+Z possible','📸 Memento — capture état pour retour arrière sans exposer les internals','🔀 Strategy — interchanger les algorithmes de traitement','🔌 Open/Closed — nouveau type de bloc = nouveau fichier, jamais une modification'],
+    patterns:['📨 Command — chaque action = objet → undo/redo possible','♟️ Strategy — interchanger les algorithmes de traitement','🗒️ Template Method — workflow fixe avec variations','🎀 Decorator — couches de validation/transformation'],
     dag:['📱','⚙️','🗄️','🎯','🧠'],
     zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (sync temps réel)'],
     tree:[
@@ -1059,7 +1070,7 @@ const NATURES_DATA = {
     label:'Marketplace', emoji:'🏪', rgb:'163,113,247',
     examples:'Amazon, Airbnb, Leboncoin, Vinted',
     desc:"Échange de valeur entre acteurs. Règles de prix, de matching et de confiance constamment ajustées.",
-    patterns:['🔀 Strategy — algorithmes de pricing dynamiques','👁️ Observer — événements commande (OrderPlaced, PaymentConfirmed)','⚡ Command — actions acheteur/vendeur','🚪 Facade — passerelle paiement (Stripe)','📐 Template Method — flow de checkout'],
+    patterns:['♟️ Strategy — algorithmes de pricing dynamiques','👂 Observer — OrderPlaced, PaymentConfirmed','📨 Command — actions acheteur/vendeur','🪟 Facade — passerelle paiement (Stripe)','🗒️ Template Method — flow de checkout'],
     dag:['📱','⚙️','🗄️','🚚','🎯','🧠'],
     zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (paiement)','👁️ VISIBILITÉ'],
     tree:[
@@ -1090,7 +1101,7 @@ const NATURES_DATA = {
     label:'Plateforme de contenu', emoji:'🎬', rgb:'63,185,80',
     examples:'Netflix, Spotify, YouTube, Medium',
     desc:"Accès à du contenu. Recommandations et personnalisation évoluent en permanence.",
-    patterns:['🔀 Strategy — algorithmes de recommandation','👁️ Observer — événements analytics (ContentViewed)','🎨 Decorator — enrichissement de contenu','🚪 Facade — CDN / streaming abstrait'],
+    patterns:['♟️ Strategy — algorithmes de recommandation','👂 Observer — analytics (ContentViewed)','🎀 Decorator — enrichissement de contenu','🪟 Facade — CDN / streaming abstrait'],
     dag:['📱','🪨','⚙️','🗄️','🎯','🧠'],
     zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (streaming)','👁️ VISIBILITÉ'],
     tree:[
@@ -1121,7 +1132,7 @@ const NATURES_DATA = {
     label:'Réseau social', emoji:'🌐', rgb:'56,189,248',
     examples:'WhatsApp, Discord, Twitter, LinkedIn',
     desc:"Coordination entre personnes. Algorithme de feed et règles de modération en évolution constante.",
-    patterns:['👁️ Observer — feed events, notifications temps réel','⚡ Command — posts, messages, interactions','🔀 Strategy — algorithme de ranking du feed','🔗 Chain of Responsibility — modération du contenu'],
+    patterns:['👂 Observer — feed events, notifications temps réel','📨 Command — posts, messages, interactions','♟️ Strategy — algorithme de ranking du feed','🔘 State — idle/active/suspended/moderated'],
     dag:['📱','🚚','⚙️','🗄️','🎯','🧠'],
     zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT (messages RT)','👁️ VISIBILITÉ'],
     tree:[
@@ -1152,7 +1163,7 @@ const NATURES_DATA = {
     label:'Application utilitaire', emoji:'⏰', rgb:'251,191,36',
     examples:'Réveil, rappel de prières, calculatrice, compteur de calories',
     desc:"Fonctionnalité simple et stable. Les règles métier ne changent presque jamais — la fiabilité prime.",
-    patterns:['📐 Template Method — algorithme de scheduling fixe','⚡ Command — gestion des alarmes','🔀 Strategy — canal de notification (son, vibration, push)'],
+    patterns:['🗒️ Template Method — algorithme de scheduling fixe','📨 Command — gestion des alarmes','♟️ Strategy — canal de notification (son, vibration, push)'],
     dag:['🎼','⚙️','🎯','🧠'],
     zones:['🗄️ ÉTAT','⚡ EXÉCUTION','⏱️ TEMPO (conditionnel)','👁️ VISIBILITÉ'],
     tree:[
@@ -1183,7 +1194,7 @@ const NATURES_DATA = {
     label:'Système de reporting', emoji:'📊', rgb:'234,179,8',
     examples:'Datadog, Power BI, Google Analytics, Mixpanel',
     desc:"Accès différé à des données agrégées. Nouvelles métriques et dashboards s'ajoutent en continu.",
-    patterns:['🏗️ Builder — construction de requêtes complexes','🔀 Strategy — format d\'export (PDF, CSV, JSON)','📐 Template Method — génération de rapport','👁️ Observer — refresh déclenché par événement'],
+    patterns:['🪵 Builder — construction de requêtes complexes','♟️ Strategy — format d\'export (PDF, CSV, JSON)','🗒️ Template Method — génération de rapport','👂 Observer — refresh déclenché par événement'],
     dag:['🪨','⚙️','🗄️','🎯','🧠'],
     zones:['🗄️ ÉTAT','🔑 IDENTITÉ','⚡ EXÉCUTION','⏱️ TEMPO','👁️ VISIBILITÉ'],
     tree:[
@@ -1214,7 +1225,7 @@ const NATURES_DATA = {
     label:'Pipeline de données', emoji:'🔄', rgb:'248,113,113',
     examples:'Airflow, Spark, ETL maison, batch ML',
     desc:"Transformation de données entre machines. Règles de transformation et optimisations évoluent souvent.",
-    patterns:['📐 Template Method — exécution des stages','🔀 Strategy — algorithme de transformation par stage','🔗 Chain of Responsibility — chaîne de stages','⚡ Command — contrôle du pipeline (start, abort, rerun)'],
+    patterns:['🗒️ Template Method — exécution des stages','♟️ Strategy — algorithme de transformation par stage','🔁 Adapter — adaptation sources/sinks (S3, Kafka, DB)','📨 Command — contrôle du pipeline (start, abort, rerun)'],
     dag:['📱','🚚','🪨','⚙️','🗄️'],
     zones:['🗄️ ÉTAT','⚡ EXÉCUTION','🚚 TRANSIT (sources/sinks)','⏱️ TEMPO','🛡️ ROBUSTESSE','👁️ VISIBILITÉ'],
     tree:[
@@ -1245,7 +1256,7 @@ const NATURES_DATA = {
     label:'API / Intégration', emoji:'🔌', rgb:'167,243,208',
     examples:'BFF, API Gateway, webhook hub, Stripe API interne',
     desc:"Coordination entre systèmes. Contrats d'API et règles de routage évoluent avec les clients.",
-    patterns:['🚪 Facade — gateway unifié vers plusieurs services','🔀 Strategy — routage dynamique','🔵 Proxy — rate limiting, caching, auth','🔌 Adapter — adaptation des interfaces downstream'],
+    patterns:['🪟 Facade — gateway unifié vers plusieurs services','♟️ Strategy — routage dynamique','🪞 Proxy — rate limiting, caching, auth','🔁 Adapter — adaptation des interfaces downstream'],
     dag:['📱','⚙️','🎯'],
     zones:['🔑 IDENTITÉ','⚡ EXÉCUTION','🚚 TRANSIT','🛡️ ROBUSTESSE','⚙️ PARAMÈTRES'],
     tree:[
@@ -1312,7 +1323,8 @@ function renderNatureResult(d) {
     const oopBadge = oopKey ? `<span title="${OOP_L[oopKey]}" style="margin-left:4px;font-size:10px;opacity:.7;">${OOP_E[oopKey]}</span>` : '';
     const paraBadges = (PARA_MAP[name]||[]).map(p=>`<span title="${PARA_L[p]}" style="margin-left:4px;font-size:10px;opacity:.65;">${PARA_E[p]}</span>`).join('');
     const solidBadges = (SOLID_MAP[name]||[]).map(p=>`<span title="${p} — ${SOLID_L[p]}" style="margin-left:4px;font-size:10px;opacity:.75;">${SOLID_E[p]}</span>`).join('');
-    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${oopBadge}${paraBadges}${solidBadges}${zHtml}${cHtml}</div>`;
+    const gofBadges = (GOF_MAP[name]||[]).map(e=>`<span title="${GOF_NAMES[e]}" style="margin-left:4px;font-size:10px;opacity:.7;">${e}</span>`).join('');
+    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${oopBadge}${paraBadges}${solidBadges}${gofBadges}${zHtml}${cHtml}</div>`;
   });
   treeHtml += '</div>';
 
@@ -1342,6 +1354,9 @@ function renderNatureResult(d) {
     </div>
     <div style="margin-bottom:20px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
       <span>📦 Classe (porteur d'état)</span><span>📋 Interface (contrat)</span><span>💎 Record (valeur immuable)</span><span>🔩 Implémentation (adaptateur)</span>
+    </div>
+    <div style="margin-bottom:20px;display:flex;gap:14px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
+      <span>🏭 Factory</span><span>🪵 Builder</span><span>🔐 Singleton</span><span>🔁 Adapter</span><span>🎀 Decorator</span><span>🪟 Facade</span><span>🪞 Proxy</span><span>🌳 Composite</span><span>👂 Observer</span><span>♟️ Strategy</span><span>🗒️ Template</span><span>📨 Command</span><span>🔘 State</span><span>➿ Iterator</span>
     </div>
     ${treeHtml}
     <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
