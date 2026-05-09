@@ -1007,14 +1007,14 @@ const GOF_MAP = {
 const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
 const ZONES_ORDER = ['ÉTAT','IDENTITÉ','EXÉCUTION','TRANSIT','VISIBILITÉ','PARAMÈTRES','ROBUSTESSE','TEMPO'];
 const ZONES_META = {
-  'ÉTAT':       {e:'🗄️', role:'Persistance et lecture',           folder:'infrastructure/persistence/', vercel:'KV · Postgres',  shopify:'✅ natif'},
-  'IDENTITÉ':   {e:'🔑', role:'Authentification et autorisation', folder:'infrastructure/auth/',        vercel:'Auth (add-on)',   shopify:'✅ natif'},
-  'EXÉCUTION':  {e:'⚡', role:'Calcul / traitement des requêtes', folder:'interfaces/http/',            vercel:'✅ Functions',    shopify:'—'},
-  'TRANSIT':    {e:'🚚', role:'Échanges inter-systèmes',          folder:'infrastructure/external/',    vercel:'—',              shopify:'✅ Stripe'},
-  'VISIBILITÉ': {e:'👁️', role:'Logs, métriques, traces',          folder:'infrastructure/monitoring/',  vercel:'Analytics',      shopify:'✅ Dashboard'},
-  'PARAMÈTRES': {e:'⚙️', role:'Config, feature flags, secrets',   folder:'infrastructure/config/',      vercel:'Env vars',       shopify:'—'},
-  'ROBUSTESSE': {e:'🛡️', role:'Retry, circuit breaker, tolérance',folder:'infrastructure/resilience/',  vercel:'—',              shopify:'—'},
-  'TEMPO':      {e:'⏱️', role:'Scheduling, triggers temporels',   folder:'interfaces/scheduler/',       vercel:'Cron (pro)',      shopify:'—', cond:true},
+  'ÉTAT':       {e:'🗄️', role:'Persistance et lecture',           folder:'infrastructure/persistence/',            vercel:'KV · Postgres',  shopify:'✅ natif'},
+  'IDENTITÉ':   {e:'🔑', role:'Authentification et autorisation', folder:'infrastructure/auth/',                   vercel:'Auth (add-on)',   shopify:'✅ natif'},
+  'EXÉCUTION':  {e:'⚡', role:'Calcul / traitement des requêtes', folder:'interfaces/http/',                       vercel:'✅ Functions',    shopify:'—'},
+  'TRANSIT':    {e:'🚚', role:'Échanges inter-systèmes (queues, webhooks, paiement)', folder:'infrastructure/messaging/ · payment/ · sources/',vercel:'—', shopify:'✅ Stripe'},
+  'VISIBILITÉ': {e:'👁️', role:'Logs, métriques, traces',          folder:'infrastructure/monitoring/',             vercel:'Analytics',      shopify:'✅ Dashboard'},
+  'PARAMÈTRES': {e:'⚙️', role:'Config, feature flags, secrets',   folder:'infrastructure/config/',                 vercel:'Env vars',       shopify:'—'},
+  'ROBUSTESSE': {e:'🛡️', role:'Retry, circuit breaker, tolérance',folder:'infrastructure/resilience/',             vercel:'—',              shopify:'—'},
+  'TEMPO':      {e:'⏱️', role:'Scheduling, triggers temporels',   folder:'interfaces/scheduler/',                  vercel:'Cron (pro)',      shopify:'—', cond:true},
 };
 
 const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
