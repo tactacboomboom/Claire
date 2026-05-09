@@ -1004,7 +1004,7 @@ const GOF_MAP = {
   'notifications/':['👂'],'config/':['🏭'],
 };
 
-const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
+const OOP_E = {c:'📦', o:'🧩', m:'🔧', i:'📋'};
 const ZONES_ORDER = ['ÉTAT','IDENTITÉ','EXÉCUTION','TRANSIT','VISIBILITÉ','PARAMÈTRES','ROBUSTESSE','TEMPO'];
 const ZONES_META = {
   'ÉTAT':       {e:'💾', role:'Persistance et lecture',           folder:'infrastructure/persistence/',            vercel:'KV · Postgres',  shopify:'✅ natif'},
@@ -1028,18 +1028,19 @@ const ROOT_ZONE_MAP = {
   'proto/':             ['📬'],
 };
 
-const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
+const OOP_L = {c:'Classe', o:'Objet', m:'Méthode', i:'Interface'};
 const OOP_MAP = {
-  'entities/':'c','aggregates/':'c','services/':'c','handlers/':'c',
+  'entities/':'c','aggregates/':'c',
+  'services/':'m','handlers/':'m',
   'repositories/':'i',
-  'value-objects/':'r','events/':'r','commands/':'r','queries/':'r','dto/':'r',
-  'persistence/':'impl','external/':'impl','realtime/':'impl','websocket/':'impl',
-  'http/':'impl','grpc/':'impl','streaming/':'impl','consumers/':'impl',
-  'triggers/':'impl','notifications/':'impl','payment/':'impl',
-  'search/':'impl','cdn/':'impl','monitoring/':'impl','datawarehouse/':'impl',
-  'export/':'impl','sources/':'impl','sinks/':'impl',
-  'downstream/':'impl','orchestration/':'impl','scheduler/':'impl',
-  'schedulers/':'impl','ratelimiting/':'impl',
+  'value-objects/':'o','events/':'o','commands/':'o','queries/':'o','dto/':'o',
+  'persistence/':'c','external/':'c','realtime/':'c','websocket/':'c',
+  'http/':'c','grpc/':'c','streaming/':'c','consumers/':'c',
+  'triggers/':'c','notifications/':'c','payment/':'c',
+  'search/':'c','cdn/':'c','monitoring/':'c','datawarehouse/':'c',
+  'export/':'c','sources/':'c','sinks/':'c',
+  'downstream/':'c','orchestration/':'c','scheduler/':'c',
+  'schedulers/':'c','ratelimiting/':'c',
 };
 
 // ROOT_BASE: [name, isFolder, tier, role, para, solid, gof]
@@ -1399,7 +1400,7 @@ function renderNatureResult(d, natureKey) {
   const th = (label, tip) => `<th style="text-align:center;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);" title="${tip}">${label}</th>`;
   let treeHtml = `<div style="overflow-x:auto;margin-bottom:8px;"><table style="width:100%;border-collapse:collapse;font-family:Consolas,monospace;font-size:12px;"><thead><tr>
     <th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">Dossier</th>
-    ${th('OOP','Construit POO : 📦 Classe · 📋 Interface · 💎 Record · 🔩 Implémentation')}
+    ${th('OOP','OOP : 📦 Classe · 🧩 Objet · 🔧 Méthode · 📋 Interface')}
     ${th('Para','Paradigme : 🏛️ Impérative · 💠 Déclarative · 🌀 Concurrente')}
     ${th('SOLID','🪙 S · 🌱 O · 🪆 L · ✂️ I · 🧲 D')}
     ${th('GoF','Pattern GoF (maille fichier) : 🔁 Adapter · 📨 Command · 👂 Observer · 🏭 Factory...')}
@@ -1468,22 +1469,22 @@ function renderNatureResult(d, natureKey) {
       <div style="font-size:11px;color:#8b949e;margin-bottom:8px;">comme ${d.examples}</div>
       <div style="font-size:13px;color:#c9d1d9;">${d.desc}</div>
     </div>
-    <p class="solid-title">📦 Repo structure</p>
-    ${rootHtml}
+    <p class="solid-title">🗺️ DAG — ${(DAG_PATTERNS[natureKey]||[]).join(' · ')}</p>
+    <div class="dag-flow" style="margin-bottom:24px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
     <p class="solid-title" style="margin-top:20px;">📁 Structure src/ recommandée</p>
-    <div style="margin-bottom:8px;display:grid;grid-template-columns:70px 1fr;gap:3px 8px;font-size:11px;color:#8b949e;">
+    <div style="margin-bottom:8px;display:grid;grid-template-columns:100px 1fr;gap:3px 8px;font-size:11px;color:#8b949e;">
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">Volatilité</span><span>🧱 Pilote — copié, jamais rouvert &nbsp; 🔌 Ossature — étendu par ajout &nbsp; 🌊 Substance — écrit de zéro, porte le domaine</span>
-      <span style="color:#6e7681;font-weight:600;padding-top:1px;">OOP</span><span>📦 Classe &nbsp; 📋 Interface &nbsp; 💎 Record immuable &nbsp; 🔩 Implémentation</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">OOP</span><span>📦 Classe &nbsp; 🧩 Objet &nbsp; 🔧 Méthode &nbsp; 📋 Interface</span>
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">Para</span><span>🏛️ Impérative (état) &nbsp; 💠 Déclarative (transformation) &nbsp; 🌀 Concurrente (message)</span>
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">SOLID</span><span>🪙 Cohésion &nbsp; 🌱 Extensibilité &nbsp; 🪆 Substituabilité &nbsp; ✂️ Spécialisation &nbsp; 🧲 Inversion</span>
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">GoF</span><span>🏭 Factory &nbsp; 🪵 Builder &nbsp; 🔐 Singleton &nbsp; 🔁 Adapter &nbsp; 🎀 Decorator &nbsp; 🪟 Facade &nbsp; 🪞 Proxy &nbsp; 🌳 Composite &nbsp; 👂 Observer &nbsp; ♟️ Strategy &nbsp; 🗒️ Template &nbsp; 📨 Command &nbsp; 🔘 State &nbsp; ➿ Iterator</span>
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">DAG</span><span>📱 SOURCE &nbsp; 🚚 TRANSPORT &nbsp; 🪨 STORE RAW &nbsp; ⚙️ TRANSFORM &nbsp; 🗄️ STORE STRUCTURED &nbsp; 🎯 SERVE &nbsp; 🧠 CONSUME &nbsp; <span style="color:#484f58;">·</span> &nbsp; 🔑 IAM &nbsp; 🎼 ORCHESTRATION &nbsp; 🏗️ INFRA</span>
-      <span style="color:#6e7681;font-weight:600;padding-top:1px;">Zones</span><span>💾 ÉTAT &nbsp; 🪪 IDENTITÉ &nbsp; 🖥️ EXÉCUTION &nbsp; 📬 TRANSIT &nbsp; 📊 VISIBILITÉ &nbsp; 🎛️ PARAMÈTRES &nbsp; 🦺 ROBUSTESSE &nbsp; 🕰️ TEMPO</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">Zones ortho.</span><span>💾 ÉTAT &nbsp; 🪪 IDENTITÉ &nbsp; 🖥️ EXÉCUTION &nbsp; 📬 TRANSIT &nbsp; 📊 VISIBILITÉ &nbsp; 🎛️ PARAMÈTRES &nbsp; 🦺 ROBUSTESSE &nbsp; 🕰️ TEMPO</span>
     </div>
     ${treeHtml}
-    <p class="solid-title">🗺️ DAG — ${(DAG_PATTERNS[natureKey]||[]).join(' · ')}</p>
-    <div class="dag-flow" style="margin-bottom:24px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
-    <p class="solid-title">⊕ Zones orthogonales actives</p>
+    <p class="solid-title" style="margin-top:24px;">📦 Repo structure</p>
+    ${rootHtml}
+    <p class="solid-title" style="margin-top:24px;">⊕ Zones orthogonales actives</p>
     <div style="margin-bottom:28px;">${zonesHtml}</div>
     <button onclick="resetNatureForm()" style="width:100%;padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#8b949e;font-size:13px;border-radius:8px;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">← Recommencer</button>
   `;
