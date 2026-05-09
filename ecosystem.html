@@ -1007,14 +1007,25 @@ const GOF_MAP = {
 const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
 const ZONES_ORDER = ['ÉTAT','IDENTITÉ','EXÉCUTION','TRANSIT','VISIBILITÉ','PARAMÈTRES','ROBUSTESSE','TEMPO'];
 const ZONES_META = {
-  'ÉTAT':       {e:'🗄️', role:'Persistance et lecture',           folder:'infrastructure/persistence/',            vercel:'KV · Postgres',  shopify:'✅ natif'},
-  'IDENTITÉ':   {e:'🔑', role:'Authentification et autorisation', folder:'infrastructure/auth/',                   vercel:'Auth (add-on)',   shopify:'✅ natif'},
-  'EXÉCUTION':  {e:'⚡', role:'Calcul / traitement des requêtes', folder:'interfaces/http/',                       vercel:'✅ Functions',    shopify:'—'},
-  'TRANSIT':    {e:'🚚', role:'Échanges inter-systèmes (queues, webhooks, paiement)', folder:'infrastructure/messaging/ · payment/ · sources/',vercel:'—', shopify:'✅ Stripe'},
-  'VISIBILITÉ': {e:'👁️', role:'Logs, métriques, traces',          folder:'infrastructure/monitoring/',             vercel:'Analytics',      shopify:'✅ Dashboard'},
-  'PARAMÈTRES': {e:'⚙️', role:'Config, feature flags, secrets',   folder:'infrastructure/config/',                 vercel:'Env vars',       shopify:'—'},
-  'ROBUSTESSE': {e:'🛡️', role:'Retry, circuit breaker, tolérance',folder:'infrastructure/resilience/',             vercel:'—',              shopify:'—'},
-  'TEMPO':      {e:'⏱️', role:'Scheduling, triggers temporels',   folder:'interfaces/scheduler/',                  vercel:'Cron (pro)',      shopify:'—', cond:true},
+  'ÉTAT':       {e:'💾', role:'Persistance et lecture',           folder:'infrastructure/persistence/',            vercel:'KV · Postgres',  shopify:'✅ natif'},
+  'IDENTITÉ':   {e:'🪪', role:'Authentification et autorisation', folder:'infrastructure/auth/',                   vercel:'Auth (add-on)',   shopify:'✅ natif'},
+  'EXÉCUTION':  {e:'🖥️', role:'Calcul / traitement des requêtes', folder:'interfaces/http/',                       vercel:'✅ Functions',    shopify:'—'},
+  'TRANSIT':    {e:'📬', role:'Échanges inter-systèmes (queues, webhooks, paiement)', folder:'infrastructure/messaging/ · payment/ · sources/',vercel:'—', shopify:'✅ Stripe'},
+  'VISIBILITÉ': {e:'📊', role:'Logs, métriques, traces',          folder:'infrastructure/monitoring/',             vercel:'Analytics',      shopify:'✅ Dashboard'},
+  'PARAMÈTRES': {e:'🎛️', role:'Config, feature flags, secrets',   folder:'infrastructure/config/',                 vercel:'Env vars',       shopify:'—'},
+  'ROBUSTESSE': {e:'🦺', role:'Retry, circuit breaker, tolérance',folder:'infrastructure/resilience/',             vercel:'—',              shopify:'—'},
+  'TEMPO':      {e:'🕰️', role:'Scheduling, triggers temporels',   folder:'interfaces/scheduler/',                  vercel:'Cron (pro)',      shopify:'—', cond:true},
+};
+const ROOT_ZONE_MAP = {
+  '.env.example':       ['🎛️'],
+  'Dockerfile':         ['🖥️'],
+  'docker-compose.yml': ['🖥️'],
+  'tests/':             ['🦺'],
+  'scripts/':           ['💾','🎛️'],
+  '.github/':           ['🖥️'],
+  'infra/':             ['💾','🪪','🖥️','🎛️','🦺'],
+  'dags/':              ['🕰️'],
+  'proto/':             ['📬'],
 };
 
 const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
@@ -1372,14 +1383,16 @@ function renderNatureResult(d, natureKey) {
   const thL = (label) => `<th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">${label}</th>`;
   const rootRows = [...ROOT_BASE, ...(ROOT_EXTRA[natureKey]||[])];
   const rootHtml = `<div style="overflow-x:auto;margin-bottom:8px;"><table style="width:100%;border-collapse:collapse;font-family:Consolas,monospace;font-size:12px;"><thead><tr>
-    ${thL('Fichier / Dossier')}${thC('OOP','Construit POO')}${thC('Para','Paradigme')}${thC('SOLID','Principes SOLID')}${thC('GoF','GoF (maille fichier)')}${thL('Tier')}${thL('Rôle')}
+    ${thL('Fichier / Dossier')}${thC('OOP','Construit POO')}${thC('Para','Paradigme')}${thC('SOLID','Principes SOLID')}${thC('GoF','GoF (maille fichier)')}${thC('Zone','Zone orthogonale : 💾 ÉTAT · 🪪 IDENTITÉ · 🖥️ EXÉCUTION · 📬 TRANSIT · 📊 VISIBILITÉ · 🎛️ PARAMÈTRES · 🦺 ROBUSTESSE · 🕰️ TEMPO')}${thL('Tier')}${thL('Rôle')}
   </tr></thead><tbody>${rootRows.map(([name,isDir,tier,role,para,solid,gof])=>{
     const nc = isDir ? '#58a6ff' : '#c9d1d9'; const fw = isDir ? 700 : 400;
+    const zoneBadges = (ROOT_ZONE_MAP[name]||[]).map(e=>`<span title="${ZONES_ORDER.find(z=>ZONES_META[z].e===e)||''}">${e}</span>`).join('&nbsp;');
     return `<tr><td style="padding:2px 10px;"><span style="color:${nc};font-weight:${fw};">${name}</span></td>
       <td style="text-align:center;padding:2px 8px;font-size:11px;"></td>
       <td style="text-align:center;padding:2px 8px;font-size:11px;">${para}</td>
       <td style="text-align:center;padding:2px 8px;font-size:11px;">${solid}</td>
       <td style="text-align:center;padding:2px 8px;font-size:11px;">${gof}</td>
+      <td style="text-align:center;padding:2px 8px;font-size:11px;">${zoneBadges}</td>
       <td style="padding:2px 10px;color:#8b949e;font-size:11px;">${tier}</td>
       <td style="padding:2px 10px;color:#484f58;font-size:11px;">${role}</td></tr>`;
   }).join('')}</tbody></table></div>`;
@@ -1465,6 +1478,7 @@ function renderNatureResult(d, natureKey) {
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">SOLID</span><span>🪙 Cohésion &nbsp; 🌱 Extensibilité &nbsp; 🪆 Substituabilité &nbsp; ✂️ Spécialisation &nbsp; 🧲 Inversion</span>
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">GoF</span><span>🏭 Factory &nbsp; 🪵 Builder &nbsp; 🔐 Singleton &nbsp; 🔁 Adapter &nbsp; 🎀 Decorator &nbsp; 🪟 Facade &nbsp; 🪞 Proxy &nbsp; 🌳 Composite &nbsp; 👂 Observer &nbsp; ♟️ Strategy &nbsp; 🗒️ Template &nbsp; 📨 Command &nbsp; 🔘 State &nbsp; ➿ Iterator</span>
       <span style="color:#6e7681;font-weight:600;padding-top:1px;">DAG</span><span>📱 SOURCE &nbsp; 🚚 TRANSPORT &nbsp; 🪨 STORE RAW &nbsp; ⚙️ TRANSFORM &nbsp; 🗄️ STORE STRUCTURED &nbsp; 🎯 SERVE &nbsp; 🧠 CONSUME &nbsp; <span style="color:#484f58;">·</span> &nbsp; 🔑 IAM &nbsp; 🎼 ORCHESTRATION &nbsp; 🏗️ INFRA</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">Zones</span><span>💾 ÉTAT &nbsp; 🪪 IDENTITÉ &nbsp; 🖥️ EXÉCUTION &nbsp; 📬 TRANSIT &nbsp; 📊 VISIBILITÉ &nbsp; 🎛️ PARAMÈTRES &nbsp; 🦺 ROBUSTESSE &nbsp; 🕰️ TEMPO</span>
     </div>
     ${treeHtml}
     <p class="solid-title">🗺️ DAG — ${(DAG_PATTERNS[natureKey]||[]).join(' · ')}</p>
