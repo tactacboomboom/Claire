@@ -993,6 +993,21 @@ const PARA_MAP = {
   'consumers/':['c'],'triggers/':['c'],'notifications/':['c'],
 };
 
+const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
+const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
+const OOP_MAP = {
+  'entities/':'c','aggregates/':'c','services/':'c','handlers/':'c',
+  'repositories/':'i',
+  'value-objects/':'r','events/':'r','commands/':'r','queries/':'r','dto/':'r',
+  'persistence/':'impl','external/':'impl','realtime/':'impl','websocket/':'impl',
+  'http/':'impl','grpc/':'impl','streaming/':'impl','consumers/':'impl',
+  'triggers/':'impl','notifications/':'impl','payment/':'impl',
+  'search/':'impl','cdn/':'impl','monitoring/':'impl','datawarehouse/':'impl',
+  'export/':'impl','sources/':'impl','sinks/':'impl',
+  'downstream/':'impl','orchestration/':'impl','scheduler/':'impl',
+  'schedulers/':'impl','ratelimiting/':'impl',
+};
+
 const SOLID_E = {S:'🪙',O:'🌱',L:'🪆',I:'✂️',D:'🧲'};
 const SOLID_L = {S:'Responsabilité unique',O:'Ouvert/Fermé',L:'Substitution Liskov',I:'Ségrégation interface',D:'Inversion dépendance'};
 const SOLID_MAP = {
@@ -1293,9 +1308,11 @@ function renderNatureResult(d) {
     const fw = depth <= 1 ? 700 : 400;
     const zHtml = zone ? `&nbsp;<span style="opacity:.65;font-size:11px;">${zone}</span>` : '';
     const cHtml = comment ? `&nbsp;<span style="color:#484f58;">← ${comment}</span>` : '';
+    const oopKey = OOP_MAP[name];
+    const oopBadge = oopKey ? `<span title="${OOP_L[oopKey]}" style="margin-left:4px;font-size:10px;opacity:.7;">${OOP_E[oopKey]}</span>` : '';
     const paraBadges = (PARA_MAP[name]||[]).map(p=>`<span title="${PARA_L[p]}" style="margin-left:4px;font-size:10px;opacity:.65;">${PARA_E[p]}</span>`).join('');
     const solidBadges = (SOLID_MAP[name]||[]).map(p=>`<span title="${p} — ${SOLID_L[p]}" style="margin-left:4px;font-size:10px;opacity:.75;">${SOLID_E[p]}</span>`).join('');
-    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${paraBadges}${solidBadges}${zHtml}${cHtml}</div>`;
+    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${oopBadge}${paraBadges}${solidBadges}${zHtml}${cHtml}</div>`;
   });
   treeHtml += '</div>';
 
@@ -1322,6 +1339,9 @@ function renderNatureResult(d) {
     </div>
     <div style="margin-bottom:20px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
       <span>🏛️ Impérative (POO)</span><span>💠 Déclarative (fonctionnel)</span><span>🌀 Concurrente (acteur/réactif)</span>
+    </div>
+    <div style="margin-bottom:20px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
+      <span>📦 Classe (porteur d'état)</span><span>📋 Interface (contrat)</span><span>💎 Record (valeur immuable)</span><span>🔩 Implémentation (adaptateur)</span>
     </div>
     ${treeHtml}
     <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
