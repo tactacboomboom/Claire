@@ -971,7 +971,22 @@ refreshPWF();
 
 // ── NATURE QUESTIONNAIRE ──────────────────────────────────────────────
 const VL = {f:'🧱', e:'🔌', l:'🌊'};
-const VN = {f:'Figé', e:'Extensible', l:'Vivant'};
+const VN = {f:'Pilote', e:'Ossature', l:'Substance'};
+
+const SOLID_E = {S:'🪙',O:'🌱',L:'🪆',I:'✂️',D:'🧲'};
+const SOLID_L = {S:'Responsabilité unique',O:'Ouvert/Fermé',L:'Substitution Liskov',I:'Ségrégation interface',D:'Inversion dépendance'};
+const SOLID_MAP = {
+  'entities/':['S'],'value-objects/':['S','L'],'aggregates/':['S'],
+  'events/':['O'],'repositories/':['D','I'],'services/':['S'],
+  'commands/':['O'],'queries/':['I'],'handlers/':['S','O'],'dto/':['I'],
+  'persistence/':['D','L'],'realtime/':['D'],'external/':['D','L'],
+  'config/':['D'],'http/':['S'],'consumers/':['O'],'triggers/':['O'],
+  'schedulers/':['O'],'monitoring/':['S'],'payment/':['D','L'],
+  'cdn/':['D'],'search/':['D'],'streaming/':['D'],'notifications/':['D'],
+  'websocket/':['D'],'scheduler/':['D'],'datawarehouse/':['D'],
+  'export/':['S','L'],'sources/':['D'],'sinks/':['D'],
+  'orchestration/':['D'],'downstream/':['D'],'ratelimiting/':['S'],'grpc/':['I'],
+};
 
 const NATURES_DATA = {
   productivity: {
@@ -1258,7 +1273,8 @@ function renderNatureResult(d) {
     const fw = depth <= 1 ? 700 : 400;
     const zHtml = zone ? `&nbsp;<span style="opacity:.65;font-size:11px;">${zone}</span>` : '';
     const cHtml = comment ? `&nbsp;<span style="color:#484f58;">← ${comment}</span>` : '';
-    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${zHtml}${cHtml}</div>`;
+    const solidBadges = (SOLID_MAP[name]||[]).map(p=>`<span title="${p} — ${SOLID_L[p]}" style="margin-left:4px;font-size:10px;opacity:.75;">${SOLID_E[p]}</span>`).join('');
+    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${solidBadges}${zHtml}${cHtml}</div>`;
   });
   treeHtml += '</div>';
 
@@ -1279,6 +1295,9 @@ function renderNatureResult(d) {
     <p class="solid-title">📁 Structure src/ recommandée</p>
     <div style="margin-bottom:10px;display:flex;gap:18px;font-size:11px;color:#8b949e;">
       <span>🧱 Pilote — template, jamais rouvert</span><span>🔌 Ossature — contrat/base, étendu par ajout</span><span>🌊 Substance — créé de zéro, porte l'ubiquitous language</span>
+    </div>
+    <div style="margin-bottom:16px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
+      <span>🪙 S — Responsabilité unique</span><span>🌱 O — Ouvert/Fermé</span><span>🪆 L — Liskov</span><span>✂️ I — Ségrégation interface</span><span>🧲 D — Inversion dépendance</span>
     </div>
     ${treeHtml}
     <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
