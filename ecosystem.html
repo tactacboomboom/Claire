@@ -1456,41 +1456,25 @@ function renderNatureResult(d, natureKey) {
       <div style="font-size:13px;color:#c9d1d9;">${d.desc}</div>
     </div>
     <p class="solid-title">📦 Repo structure</p>
-    <div style="margin-bottom:6px;display:flex;gap:10px;font-size:11px;color:#8b949e;flex-wrap:wrap;align-items:center;">
-      <span style="color:#6e7681;font-weight:600;">OOP</span><span>📦 Classe</span><span>📋 Interface</span><span>💎 Record</span><span>🔩 Impl</span>
-      <span style="color:#484f58;">·</span>
-      <span style="color:#6e7681;font-weight:600;">Para</span><span>🏛️ Impérative</span><span>💠 Déclarative</span><span>🌀 Concurrente</span>
-      <span style="color:#484f58;">·</span>
-      <span style="color:#6e7681;font-weight:600;">SOLID</span><span>🪙 S</span><span>🌱 O</span><span>🪆 L</span><span>✂️ I</span><span>🧲 D</span>
-      <span style="color:#484f58;">·</span>
-      <span style="color:#6e7681;font-weight:600;">GoF</span><span>🏭 Factory</span><span>🪵 Builder</span><span>🔐 Singleton</span><span>🔁 Adapter</span><span>🎀 Decorator</span><span>🪟 Facade</span><span>🪞 Proxy</span><span>🌳 Composite</span><span>👂 Observer</span><span>♟️ Strategy</span><span>🗒️ Template</span><span>📨 Command</span><span>🔘 State</span><span>➿ Iterator</span>
+    <div style="margin-bottom:8px;display:grid;grid-template-columns:70px 1fr;gap:3px 8px;font-size:11px;color:#8b949e;">
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">OOP</span><span>📦 Classe &nbsp; 📋 Interface &nbsp; 💎 Record immuable &nbsp; 🔩 Implémentation</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">Para</span><span>🏛️ Impérative (état) &nbsp; 💠 Déclarative (transformation) &nbsp; 🌀 Concurrente (message)</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">SOLID</span><span>🪙 Cohésion &nbsp; 🌱 Extensibilité &nbsp; 🪆 Substituabilité &nbsp; ✂️ Spécialisation &nbsp; 🧲 Inversion</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">GoF</span><span>🏭 Factory &nbsp; 🪵 Builder &nbsp; 🔐 Singleton &nbsp; 🔁 Adapter &nbsp; 🎀 Decorator &nbsp; 🪟 Facade &nbsp; 🪞 Proxy &nbsp; 🌳 Composite &nbsp; 👂 Observer &nbsp; ♟️ Strategy &nbsp; 🗒️ Template &nbsp; 📨 Command &nbsp; 🔘 State &nbsp; ➿ Iterator</span>
     </div>
     ${rootHtml}
     <p class="solid-title" style="margin-top:20px;">📁 Structure src/ recommandée</p>
-    <div style="margin-bottom:6px;display:flex;gap:10px;font-size:11px;color:#8b949e;flex-wrap:wrap;align-items:center;">
-      <span style="color:#6e7681;font-weight:600;">Volatilité</span><span>🧱 Pilote</span><span>🔌 Ossature</span><span>🌊 Substance</span>
-    </div>
-    <div style="margin-bottom:6px;display:flex;gap:10px;font-size:11px;color:#8b949e;flex-wrap:wrap;align-items:center;">
-      <span style="color:#6e7681;font-weight:600;">OOP</span><span>📦 Classe</span><span>📋 Interface</span><span>💎 Record</span><span>🔩 Impl</span>
-      <span style="color:#484f58;">·</span>
-      <span style="color:#6e7681;font-weight:600;">Para</span><span>🏛️ Impérative</span><span>💠 Déclarative</span><span>🌀 Concurrente</span>
-    </div>
-    <div style="margin-bottom:6px;display:flex;gap:10px;font-size:11px;color:#8b949e;flex-wrap:wrap;align-items:center;">
-      <span style="color:#6e7681;font-weight:600;">SOLID</span><span>🪙 S</span><span>🌱 O</span><span>🪆 L</span><span>✂️ I</span><span>🧲 D</span>
-      <span style="color:#484f58;">·</span>
-      <span style="color:#6e7681;font-weight:600;">GoF</span><span>🏭 Factory</span><span>🪵 Builder</span><span>🔐 Singleton</span><span>🔁 Adapter</span><span>🎀 Decorator</span><span>🪟 Facade</span><span>🪞 Proxy</span><span>🌳 Composite</span><span>👂 Observer</span><span>♟️ Strategy</span><span>🗒️ Template</span><span>📨 Command</span><span>🔘 State</span><span>➿ Iterator</span>
-    </div>
-    <div style="margin-bottom:6px;display:flex;gap:10px;font-size:11px;color:#8b949e;flex-wrap:wrap;align-items:center;">
-      <span style="color:#6e7681;font-weight:600;">DAG</span><span>📱 SOURCE</span><span>🚚 TRANSPORT</span><span>🪨 STORE RAW</span><span>⚙️ TRANSFORM</span><span>🗄️ STORE STRUCTURED</span><span>🎯 SERVE</span><span>🧠 CONSUME</span>
-      <span style="color:#484f58;">·</span>
-      <span>🔑 IAM</span><span>🎼 ORCHESTRATION</span><span>🏗️ INFRA</span>
+    <div style="margin-bottom:8px;display:grid;grid-template-columns:70px 1fr;gap:3px 8px;font-size:11px;color:#8b949e;">
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">Volatilité</span><span>🧱 Pilote — copié, jamais rouvert &nbsp; 🔌 Ossature — étendu par ajout &nbsp; 🌊 Substance — écrit de zéro, porte le domaine</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">OOP</span><span>📦 Classe &nbsp; 📋 Interface &nbsp; 💎 Record immuable &nbsp; 🔩 Implémentation</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">Para</span><span>🏛️ Impérative (état) &nbsp; 💠 Déclarative (transformation) &nbsp; 🌀 Concurrente (message)</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">SOLID</span><span>🪙 Cohésion &nbsp; 🌱 Extensibilité &nbsp; 🪆 Substituabilité &nbsp; ✂️ Spécialisation &nbsp; 🧲 Inversion</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">GoF</span><span>🏭 Factory &nbsp; 🪵 Builder &nbsp; 🔐 Singleton &nbsp; 🔁 Adapter &nbsp; 🎀 Decorator &nbsp; 🪟 Facade &nbsp; 🪞 Proxy &nbsp; 🌳 Composite &nbsp; 👂 Observer &nbsp; ♟️ Strategy &nbsp; 🗒️ Template &nbsp; 📨 Command &nbsp; 🔘 State &nbsp; ➿ Iterator</span>
+      <span style="color:#6e7681;font-weight:600;padding-top:1px;">DAG</span><span>📱 SOURCE &nbsp; 🚚 TRANSPORT &nbsp; 🪨 STORE RAW &nbsp; ⚙️ TRANSFORM &nbsp; 🗄️ STORE STRUCTURED &nbsp; 🎯 SERVE &nbsp; 🧠 CONSUME &nbsp; <span style="color:#484f58;">·</span> &nbsp; 🔑 IAM &nbsp; 🎼 ORCHESTRATION &nbsp; 🏗️ INFRA</span>
     </div>
     ${treeHtml}
-    <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
-    <div class="dag-flow" style="margin-bottom:24px;">${patternsHtml}</div>
-    <p class="solid-title">🗺️ DAG type</p>
-    <div class="dag-flow" style="margin-bottom:8px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
-    <div style="text-align:center;margin-bottom:24px;font-size:12px;color:#8b949e;">${(DAG_PATTERNS[natureKey]||[]).map(p=>`<span style="background:rgba(255,255,255,0.06);border-radius:4px;padding:2px 8px;margin:0 3px;">${p}</span>`).join('')}</div>
+    <p class="solid-title">🗺️ DAG — ${(DAG_PATTERNS[natureKey]||[]).join(' · ')}</p>
+    <div class="dag-flow" style="margin-bottom:24px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
     <p class="solid-title">⊕ Zones orthogonales actives</p>
     <div style="margin-bottom:28px;">${zonesHtml}</div>
     <button onclick="resetNatureForm()" style="width:100%;padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#8b949e;font-size:13px;border-radius:8px;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">← Recommencer</button>
