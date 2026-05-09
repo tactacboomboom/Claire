@@ -1031,6 +1031,26 @@ const OOP_MAP = {
   'schedulers/':'impl','ratelimiting/':'impl',
 };
 
+// ROOT_BASE: [name, isFolder, tier, role, para, solid, gof]
+const ROOT_BASE = [
+  ['package.json',       false,'npm · yarn · pnpm',        'Dépendances et scripts',        '','',''],
+  ['tsconfig.json',      false,'TypeScript',                'Configuration du compilateur',  '','',''],
+  ['.env.example',       false,'runtime',                   'Variables d\'environnement',    '','',''],
+  ['.gitignore',         false,'git',                       'Exclusions VCS',                '','',''],
+  ['Dockerfile',         false,'Docker',                    'Image de container',            '','',''],
+  ['docker-compose.yml', false,'Docker Compose',            'Stack locale de dev',           '','',''],
+  ['README.md',          false,'markdown',                  'Documentation du projet',       '','',''],
+  ['src/',               true, '— DDD layers',              '→ voir tableau ci-dessous',     '🏛️ 💠 🌀','',''],
+  ['tests/',             true, 'Jest · Vitest · Playwright','Tests u. + intégration + e2e',  '💠','',''],
+  ['scripts/',           true, 'Node.js · bash',            'Seed, migration, utilitaires',  '💠','',''],
+  ['.github/',           true, 'GitHub Actions',            'CI/CD workflows',               '💠','',''],
+  ['infra/',             true, 'Terraform · CDK · Pulumi',  'Infrastructure as Code',        '💠','',''],
+];
+const ROOT_EXTRA = {
+  pipeline:[['dags/', true,'Airflow · Prefect','Définitions de DAG',          '💠','','']],
+  api:     [['proto/',true,'Protobuf · gRPC',  'Définitions de service gRPC', '💠','','']],
+};
+
 const SOLID_E = {S:'🪙',O:'🌱',L:'🪆',I:'✂️',D:'🧲'};
 const SOLID_L = {S:'Responsabilité unique',O:'Ouvert/Fermé',L:'Substitution Liskov',I:'Ségrégation interface',D:'Inversion dépendance'};
 const SOLID_MAP = {
@@ -1306,7 +1326,7 @@ function computeNature() {
     alert('Répondez à toutes les questions avant de continuer.'); return;
   }
   const key = detectNatureKey(actor, actions, timing, evolution);
-  renderNatureResult(NATURES_DATA[key]);
+  renderNatureResult(NATURES_DATA[key], key);
   document.getElementById('nature-result').style.display = 'block';
   setTimeout(() => document.getElementById('nature-result').scrollIntoView({ behavior:'smooth', block:'start' }), 50);
 }
@@ -1322,7 +1342,22 @@ function detectNatureKey(actor, actions, timing, evolution) {
   return 'productivity';
 }
 
-function renderNatureResult(d) {
+function renderNatureResult(d, natureKey) {
+  const thC = (label, tip) => `<th style="text-align:center;padding:4px 8px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);" title="${tip}">${label}</th>`;
+  const thL = (label) => `<th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">${label}</th>`;
+  const rootRows = [...ROOT_BASE, ...(ROOT_EXTRA[natureKey]||[])];
+  const rootHtml = `<div style="overflow-x:auto;margin-bottom:8px;"><table style="width:100%;border-collapse:collapse;font-family:Consolas,monospace;font-size:12px;"><thead><tr>
+    ${thL('Fichier / Dossier')}${thC('OOP','Construit POO')}${thC('Para','Paradigme')}${thC('SOLID','Principes SOLID')}${thC('GoF','GoF (maille fichier)')}${thL('Tier')}${thL('Rôle')}
+  </tr></thead><tbody>${rootRows.map(([name,isDir,tier,role,para,solid,gof])=>{
+    const nc = isDir ? '#58a6ff' : '#c9d1d9'; const fw = isDir ? 700 : 400;
+    return `<tr><td style="padding:2px 10px;"><span style="color:${nc};font-weight:${fw};">${name}</span></td>
+      <td style="text-align:center;padding:2px 8px;font-size:11px;"></td>
+      <td style="text-align:center;padding:2px 8px;font-size:11px;">${para}</td>
+      <td style="text-align:center;padding:2px 8px;font-size:11px;">${solid}</td>
+      <td style="text-align:center;padding:2px 8px;font-size:11px;">${gof}</td>
+      <td style="padding:2px 10px;color:#8b949e;font-size:11px;">${tier}</td>
+      <td style="padding:2px 10px;color:#484f58;font-size:11px;">${role}</td></tr>`;
+  }).join('')}</tbody></table></div>`;
   const th = (label, tip) => `<th style="text-align:center;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);" title="${tip}">${label}</th>`;
   let treeHtml = `<div style="overflow-x:auto;margin-bottom:8px;"><table style="width:100%;border-collapse:collapse;font-family:Consolas,monospace;font-size:12px;"><thead><tr>
     <th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">Dossier</th>
@@ -1391,7 +1426,9 @@ function renderNatureResult(d) {
       <div style="font-size:11px;color:#8b949e;margin-bottom:8px;">comme ${d.examples}</div>
       <div style="font-size:13px;color:#c9d1d9;">${d.desc}</div>
     </div>
-    <p class="solid-title">📁 Structure src/ recommandée</p>
+    <p class="solid-title">📦 Repo structure</p>
+    ${rootHtml}
+    <p class="solid-title" style="margin-top:20px;">📁 Structure src/ recommandée</p>
     <div style="margin-bottom:6px;display:flex;gap:16px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
       <span>🧱 Pilote — copié du template, jamais rouvert</span><span>🔌 Ossature — contrat/base, étendu par ajout</span><span>🌊 Substance — écrit de zéro, porte l'ubiquitous language</span>
     </div>
