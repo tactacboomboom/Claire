@@ -1051,6 +1051,31 @@ const ROOT_EXTRA = {
   api:     [['proto/',true,'Protobuf · gRPC',  'Définitions de service gRPC', '💠','','']],
 };
 
+const DAG_PATTERNS = {
+  productivity: ['Event-Driven'],
+  marketplace:  ['Event-Driven'],
+  content:      ['Fan-Out', 'CDN'],
+  social:       ['Streaming', 'Fan-Out'],
+  utility:      ['Micro-Batch'],
+  reporting:    ['ELT', 'Micro-Batch'],
+  pipeline:     ['Lambda', 'ETL', 'Streaming'],
+  api:          ['Fan-Out'],
+};
+const DAG_NODE_L = {
+  '📱':'SOURCE','🚚':'TRANSPORT','🪨':'STORE RAW','⚙️':'TRANSFORM',
+  '🗄️':'STORE STRUCTURED','🎯':'SERVE','🧠':'CONSUME',
+  '🔑':'IAM (orthogonal)','🎼':'ORCHESTRATION (orthogonal)','🏗️':'INFRA (orthogonal)',
+};
+const DAG_MAP = {
+  'services/':'⚙️','handlers/':'⚙️',
+  'persistence/':'🗄️','datawarehouse/':'🗄️','sinks/':'🗄️',
+  'sources/':'📱','consumers/':'📱','triggers/':'📱',
+  'realtime/':'🚚','websocket/':'🚚','streaming/':'🚚','downstream/':'🚚','payment/':'🚚','notifications/':'🚚',
+  'http/':'🎯','grpc/':'🎯','cdn/':'🎯','search/':'🎯','export/':'🎯',
+  'orchestration/':'🎼','schedulers/':'🎼','scheduler/':'🎼',
+  'config/':'🏗️','monitoring/':'🏗️','ratelimiting/':'🏗️',
+};
+
 const SOLID_E = {S:'🪙',O:'🌱',L:'🪆',I:'✂️',D:'🧲'};
 const SOLID_L = {S:'Responsabilité unique',O:'Ouvert/Fermé',L:'Substitution Liskov',I:'Ségrégation interface',D:'Inversion dépendance'};
 const SOLID_MAP = {
@@ -1365,6 +1390,7 @@ function renderNatureResult(d, natureKey) {
     ${th('Para','Paradigme : 🏛️ Impérative · 💠 Déclarative · 🌀 Concurrente')}
     ${th('SOLID','🪙 S · 🌱 O · 🪆 L · ✂️ I · 🧲 D')}
     ${th('GoF','Pattern GoF (maille fichier) : 🔁 Adapter · 📨 Command · 👂 Observer · 🏭 Factory...')}
+    ${th('DAG','Nœud DAG absolu : 📱 SOURCE · 🚚 TRANSPORT · ⚙️ TRANSFORM · 🗄️ STORE · 🎯 SERVE · 🎼 ORCHESTRATION · 🏗️ INFRA')}
     <th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">Info</th>
   </tr></thead><tbody>`;
   d.tree.forEach(([depth, vol, name, zone, comment]) => {
@@ -1377,6 +1403,8 @@ function renderNatureResult(d, natureKey) {
     const paraCells  = (PARA_MAP[name]||[]).map(p=>`<span title="${PARA_L[p]}">${PARA_E[p]}</span>`).join('&nbsp;');
     const solidCells = (SOLID_MAP[name]||[]).map(p=>`<span title="${p} — ${SOLID_L[p]}">${SOLID_E[p]}</span>`).join('&nbsp;');
     const gofCells   = (GOF_MAP[name]||[]).map(e=>`<span title="${GOF_NAMES[e]}">${e}</span>`).join('&nbsp;');
+    const dagNode    = DAG_MAP[name];
+    const dagCell    = dagNode ? `<span title="${DAG_NODE_L[dagNode]||''}">${dagNode}</span>` : '';
     const infoHtml   = [zone?`<span style="opacity:.6;">${zone}</span>`:'', comment?`<span style="color:#484f58;">← ${comment}</span>`:''].filter(Boolean).join(' ');
     const rowStyle   = depth === 1 ? 'border-top:1px solid rgba(255,255,255,0.06);' : '';
     treeHtml += `<tr style="${rowStyle}">
@@ -1385,6 +1413,7 @@ function renderNatureResult(d, natureKey) {
       <td style="text-align:center;padding:2px 8px;white-space:nowrap;">${paraCells}</td>
       <td style="text-align:center;padding:2px 8px;white-space:nowrap;">${solidCells}</td>
       <td style="text-align:center;padding:2px 8px;">${gofCells}</td>
+      <td style="text-align:center;padding:2px 8px;">${dagCell}</td>
       <td style="padding:2px 10px;font-size:11px;">${infoHtml}</td>
     </tr>`;
   });
@@ -1442,11 +1471,17 @@ function renderNatureResult(d, natureKey) {
       <span style="color:#484f58;">·</span>
       <span>🏭 Factory</span><span>🪵 Builder</span><span>🔐 Singleton</span><span>🔁 Adapter</span><span>🎀 Decorator</span><span>🪟 Facade</span><span>🪞 Proxy</span><span>🌳 Composite</span><span>👂 Observer</span><span>♟️ Strategy</span><span>🗒️ Template</span><span>📨 Command</span><span>🔘 State</span><span>➿ Iterator</span>
     </div>
+    <div style="margin-bottom:6px;display:flex;gap:14px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
+      <span>📱 SOURCE</span><span>🚚 TRANSPORT</span><span>🪨 STORE RAW</span><span>⚙️ TRANSFORM</span><span>🗄️ STORE STRUCTURED</span><span>🎯 SERVE</span><span>🧠 CONSUME</span>
+      <span style="color:#484f58;">·</span>
+      <span>🔑 IAM</span><span>🎼 ORCHESTRATION</span><span>🏗️ INFRA</span>
+    </div>
     ${treeHtml}
     <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
     <div class="dag-flow" style="margin-bottom:24px;">${patternsHtml}</div>
     <p class="solid-title">🗺️ DAG type</p>
-    <div class="dag-flow" style="margin-bottom:24px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
+    <div class="dag-flow" style="margin-bottom:8px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
+    <div style="text-align:center;margin-bottom:24px;font-size:12px;color:#8b949e;">${(DAG_PATTERNS[natureKey]||[]).map(p=>`<span style="background:rgba(255,255,255,0.06);border-radius:4px;padding:2px 8px;margin:0 3px;">${p}</span>`).join('')}</div>
     <p class="solid-title">⊕ Zones orthogonales actives</p>
     <div style="margin-bottom:28px;">${zonesHtml}</div>
     <button onclick="resetNatureForm()" style="width:100%;padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#8b949e;font-size:13px;border-radius:8px;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">← Recommencer</button>
