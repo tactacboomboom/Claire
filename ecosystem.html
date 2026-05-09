@@ -1005,15 +1005,16 @@ const GOF_MAP = {
 };
 
 const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
+const ZONES_ORDER = ['ÉTAT','IDENTITÉ','EXÉCUTION','TRANSIT','VISIBILITÉ','PARAMÈTRES','ROBUSTESSE','TEMPO'];
 const ZONES_META = {
-  'ÉTAT':       {role:'Persistance et lecture',           vercel:'KV · Postgres',  shopify:'✅ natif'},
-  'IDENTITÉ':   {role:'Authentification et autorisation', vercel:'Auth (add-on)',   shopify:'✅ natif'},
-  'EXÉCUTION':  {role:'Calcul / traitement des requêtes', vercel:'✅ Functions',    shopify:'—'},
-  'TRANSIT':    {role:'Échanges inter-systèmes',          vercel:'—',              shopify:'✅ Stripe'},
-  'VISIBILITÉ': {role:'Logs, métriques, traces',          vercel:'Analytics',      shopify:'✅ Dashboard'},
-  'PARAMÈTRES': {role:'Config, feature flags, secrets',   vercel:'Env vars',       shopify:'—'},
-  'ROBUSTESSE': {role:'Retry, circuit breaker, tolérance',vercel:'—',              shopify:'—'},
-  'TEMPO':      {role:'Scheduling, triggers temporels',   vercel:'Cron (pro)',      shopify:'—'},
+  'ÉTAT':       {e:'🗄️', role:'Persistance et lecture',           folder:'infrastructure/persistence/', vercel:'KV · Postgres',  shopify:'✅ natif'},
+  'IDENTITÉ':   {e:'🔑', role:'Authentification et autorisation', folder:'infrastructure/auth/',        vercel:'Auth (add-on)',   shopify:'✅ natif'},
+  'EXÉCUTION':  {e:'⚡', role:'Calcul / traitement des requêtes', folder:'interfaces/http/',            vercel:'✅ Functions',    shopify:'—'},
+  'TRANSIT':    {e:'🚚', role:'Échanges inter-systèmes',          folder:'infrastructure/external/',    vercel:'—',              shopify:'✅ Stripe'},
+  'VISIBILITÉ': {e:'👁️', role:'Logs, métriques, traces',          folder:'infrastructure/monitoring/',  vercel:'Analytics',      shopify:'✅ Dashboard'},
+  'PARAMÈTRES': {e:'⚙️', role:'Config, feature flags, secrets',   folder:'infrastructure/config/',      vercel:'Env vars',       shopify:'—'},
+  'ROBUSTESSE': {e:'🛡️', role:'Retry, circuit breaker, tolérance',folder:'infrastructure/resilience/',  vercel:'—',              shopify:'—'},
+  'TEMPO':      {e:'⏱️', role:'Scheduling, triggers temporels',   folder:'interfaces/scheduler/',       vercel:'Cron (pro)',      shopify:'—', cond:true},
 };
 
 const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
@@ -1359,20 +1360,26 @@ function renderNatureResult(d) {
   ).join('');
 
   const dagHtml = d.dag.join('<span style="color:#484f58;padding:0 6px;">→</span>');
+  const activeZones = {};
+  d.zones.forEach(z => {
+    const nm = z.replace(/^[\s\S]*?\s/, '').replace(/\s*\(.*\)/, '').trim();
+    activeZones[nm] = (z.match(/\(([^)]+)\)/)||[])[1]||'';
+  });
   const zonesHtml = '<table style="width:100%;border-collapse:collapse;font-size:12px;">'
     + '<thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1);">'
-    + ['Zone','Rôle','Vercel','Shopify'].map((h,i)=>`<th style="text-align:${i<2?'left':'center'};padding:3px ${i<2?'10px':'8px'};color:#6e7681;font-weight:500;font-size:11px;">${h}</th>`).join('')
+    + ['Zone','Rôle','DDD','Vercel','Shopify'].map((h,i)=>`<th style="text-align:${i<3?'left':'center'};padding:3px ${i>=3?'8px':'10px'};color:#6e7681;font-weight:500;font-size:11px;">${h}</th>`).join('')
     + '</tr></thead><tbody>'
-    + d.zones.map(z => {
-        const nm = z.replace(/^[\s\S]*?\s/, '').replace(/\s*\(.*\)/, '').trim();
-        const det = (z.match(/\(([^)]+)\)/)||[])[1]||'';
-        const m = ZONES_META[nm]||{};
-        const vOk = (m.vercel||'').includes('✅'), sOk = (m.shopify||'').includes('✅');
-        return `<tr style="${nm==='TEMPO'?'opacity:.65;':''}">
-          <td style="padding:3px 10px;font-weight:500;white-space:nowrap;">${z.match(/^[^\s]+/)?.[0]||''} ${nm}${det?` <span style="color:#484f58;font-size:10px;">(${det})</span>`:''}</td>
-          <td style="padding:3px 10px;color:#8b949e;font-size:11px;">${m.role||''}</td>
-          <td style="text-align:center;padding:3px 8px;font-size:11px;color:${vOk?'#3fb950':'#8b949e'};">${m.vercel||'—'}</td>
-          <td style="text-align:center;padding:3px 8px;font-size:11px;color:${sOk?'#3fb950':'#8b949e'};">${m.shopify||'—'}</td>
+    + ZONES_ORDER.map(nm => {
+        const m = ZONES_META[nm];
+        const active = nm in activeZones;
+        const det = activeZones[nm]||'';
+        const vOk = m.vercel.includes('✅'), sOk = m.shopify.includes('✅');
+        return `<tr style="opacity:${active?1:.22};">
+          <td style="padding:3px 10px;font-weight:${active?600:400};white-space:nowrap;">${m.e} ${nm}${det?` <span style="color:#484f58;font-size:10px;">(${det})</span>`:''}</td>
+          <td style="padding:3px 10px;color:#8b949e;font-size:11px;">${m.role}</td>
+          <td style="padding:3px 10px;color:#484f58;font-size:10px;font-family:Consolas,monospace;">${m.folder}</td>
+          <td style="text-align:center;padding:3px 8px;font-size:11px;color:${vOk?'#3fb950':'#8b949e'};">${m.vercel}</td>
+          <td style="text-align:center;padding:3px 8px;font-size:11px;color:${sOk?'#3fb950':'#8b949e'};">${m.shopify}</td>
         </tr>`;
       }).join('')
     + '</tbody></table>';
