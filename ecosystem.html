@@ -1005,6 +1005,17 @@ const GOF_MAP = {
 };
 
 const OOP_E = {c:'📦', i:'📋', r:'💎', impl:'🔩'};
+const ZONES_META = {
+  'ÉTAT':       {role:'Persistance et lecture',           vercel:'KV · Postgres',  shopify:'✅ natif'},
+  'IDENTITÉ':   {role:'Authentification et autorisation', vercel:'Auth (add-on)',   shopify:'✅ natif'},
+  'EXÉCUTION':  {role:'Calcul / traitement des requêtes', vercel:'✅ Functions',    shopify:'—'},
+  'TRANSIT':    {role:'Échanges inter-systèmes',          vercel:'—',              shopify:'✅ Stripe'},
+  'VISIBILITÉ': {role:'Logs, métriques, traces',          vercel:'Analytics',      shopify:'✅ Dashboard'},
+  'PARAMÈTRES': {role:'Config, feature flags, secrets',   vercel:'Env vars',       shopify:'—'},
+  'ROBUSTESSE': {role:'Retry, circuit breaker, tolérance',vercel:'—',              shopify:'—'},
+  'TEMPO':      {role:'Scheduling, triggers temporels',   vercel:'Cron (pro)',      shopify:'—'},
+};
+
 const OOP_L = {c:'Classe (porteur d\'état)', i:'Interface (contrat)', r:'Record (valeur immuable)', impl:'Implémentation (adaptateur)'};
 const OOP_MAP = {
   'entities/':'c','aggregates/':'c','services/':'c','handlers/':'c',
@@ -1348,7 +1359,23 @@ function renderNatureResult(d) {
   ).join('');
 
   const dagHtml = d.dag.join('<span style="color:#484f58;padding:0 6px;">→</span>');
-  const zonesHtml = d.zones.map(z => `<span class="chip chip-gray" style="font-size:12px;padding:4px 10px;">${z}</span>`).join('');
+  const zonesHtml = '<table style="width:100%;border-collapse:collapse;font-size:12px;">'
+    + '<thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1);">'
+    + ['Zone','Rôle','Vercel','Shopify'].map((h,i)=>`<th style="text-align:${i<2?'left':'center'};padding:3px ${i<2?'10px':'8px'};color:#6e7681;font-weight:500;font-size:11px;">${h}</th>`).join('')
+    + '</tr></thead><tbody>'
+    + d.zones.map(z => {
+        const nm = z.replace(/^[\s\S]*?\s/, '').replace(/\s*\(.*\)/, '').trim();
+        const det = (z.match(/\(([^)]+)\)/)||[])[1]||'';
+        const m = ZONES_META[nm]||{};
+        const vOk = (m.vercel||'').includes('✅'), sOk = (m.shopify||'').includes('✅');
+        return `<tr style="${nm==='TEMPO'?'opacity:.65;':''}">
+          <td style="padding:3px 10px;font-weight:500;white-space:nowrap;">${z.match(/^[^\s]+/)?.[0]||''} ${nm}${det?` <span style="color:#484f58;font-size:10px;">(${det})</span>`:''}</td>
+          <td style="padding:3px 10px;color:#8b949e;font-size:11px;">${m.role||''}</td>
+          <td style="text-align:center;padding:3px 8px;font-size:11px;color:${vOk?'#3fb950':'#8b949e'};">${m.vercel||'—'}</td>
+          <td style="text-align:center;padding:3px 8px;font-size:11px;color:${sOk?'#3fb950':'#8b949e'};">${m.shopify||'—'}</td>
+        </tr>`;
+      }).join('')
+    + '</tbody></table>';
 
   document.getElementById('nature-result').innerHTML = `
     <div style="background:rgba(${d.rgb},.07);border:1px solid rgba(${d.rgb},.3);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
@@ -1377,7 +1404,7 @@ function renderNatureResult(d) {
     <p class="solid-title">🗺️ DAG type</p>
     <div class="dag-flow" style="margin-bottom:24px;font-size:22px;letter-spacing:2px;text-align:center;">${dagHtml}</div>
     <p class="solid-title">⊕ Zones orthogonales actives</p>
-    <div class="files-wrap" style="margin-bottom:28px;">${zonesHtml}</div>
+    <div style="margin-bottom:28px;">${zonesHtml}</div>
     <button onclick="resetNatureForm()" style="width:100%;padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#8b949e;font-size:13px;border-radius:8px;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">← Recommencer</button>
   `;
 }
