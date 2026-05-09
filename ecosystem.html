@@ -1311,22 +1311,37 @@ function detectNatureKey(actor, actions, timing, evolution) {
 }
 
 function renderNatureResult(d) {
-  let treeHtml = '<div class="dag-flow" style="font-family:Consolas,monospace;font-size:12px;line-height:1.9;">';
+  const th = (label, tip) => `<th style="text-align:center;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);" title="${tip}">${label}</th>`;
+  let treeHtml = `<div style="overflow-x:auto;margin-bottom:8px;"><table style="width:100%;border-collapse:collapse;font-family:Consolas,monospace;font-size:12px;"><thead><tr>
+    <th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">Dossier</th>
+    ${th('OOP','Construit POO : 📦 Classe · 📋 Interface · 💎 Record · 🔩 Implémentation')}
+    ${th('Para','Paradigme : 🏛️ Impérative · 💠 Déclarative · 🌀 Concurrente')}
+    ${th('SOLID','🪙 S · 🌱 O · 🪆 L · ✂️ I · 🧲 D')}
+    ${th('GoF','Pattern GoF (maille fichier) : 🔁 Adapter · 📨 Command · 👂 Observer · 🏭 Factory...')}
+    <th style="text-align:left;padding:4px 10px;color:#6e7681;font-weight:500;font-size:11px;border-bottom:1px solid rgba(255,255,255,0.1);">Info</th>
+  </tr></thead><tbody>`;
   d.tree.forEach(([depth, vol, name, zone, comment]) => {
-    const pad = '&nbsp;'.repeat(depth * 4);
-    const volBadge = vol ? `<span title="${VN[vol]}">${VL[vol]}</span>&nbsp;` : (depth > 0 ? '&nbsp;&nbsp;&nbsp;' : '');
+    const indent = depth * 16;
+    const volBadge = vol ? `<span title="${VN[vol]}" style="margin-right:3px;">${VL[vol]}</span>` : (depth > 0 ? '<span style="display:inline-block;width:16px;"></span>' : '');
     const nc = depth === 0 ? '#e6edf3' : depth === 1 ? '#58a6ff' : '#c9d1d9';
     const fw = depth <= 1 ? 700 : 400;
-    const zHtml = zone ? `&nbsp;<span style="opacity:.65;font-size:11px;">${zone}</span>` : '';
-    const cHtml = comment ? `&nbsp;<span style="color:#484f58;">← ${comment}</span>` : '';
     const oopKey = OOP_MAP[name];
-    const oopBadge = oopKey ? `<span title="${OOP_L[oopKey]}" style="margin-left:4px;font-size:10px;opacity:.7;">${OOP_E[oopKey]}</span>` : '';
-    const paraBadges = (PARA_MAP[name]||[]).map(p=>`<span title="${PARA_L[p]}" style="margin-left:4px;font-size:10px;opacity:.65;">${PARA_E[p]}</span>`).join('');
-    const solidBadges = (SOLID_MAP[name]||[]).map(p=>`<span title="${p} — ${SOLID_L[p]}" style="margin-left:4px;font-size:10px;opacity:.75;">${SOLID_E[p]}</span>`).join('');
-    const gofBadges = (GOF_MAP[name]||[]).map(e=>`<span title="${GOF_NAMES[e]}" style="margin-left:4px;font-size:10px;opacity:.7;">${e}</span>`).join('');
-    treeHtml += `<div>${pad}${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span>${oopBadge}${paraBadges}${solidBadges}${gofBadges}${zHtml}${cHtml}</div>`;
+    const oopCell  = oopKey ? `<span title="${OOP_L[oopKey]}">${OOP_E[oopKey]}</span>` : '';
+    const paraCells  = (PARA_MAP[name]||[]).map(p=>`<span title="${PARA_L[p]}">${PARA_E[p]}</span>`).join('&nbsp;');
+    const solidCells = (SOLID_MAP[name]||[]).map(p=>`<span title="${p} — ${SOLID_L[p]}">${SOLID_E[p]}</span>`).join('&nbsp;');
+    const gofCells   = (GOF_MAP[name]||[]).map(e=>`<span title="${GOF_NAMES[e]}">${e}</span>`).join('&nbsp;');
+    const infoHtml   = [zone?`<span style="opacity:.6;">${zone}</span>`:'', comment?`<span style="color:#484f58;">← ${comment}</span>`:''].filter(Boolean).join(' ');
+    const rowStyle   = depth === 1 ? 'border-top:1px solid rgba(255,255,255,0.06);' : '';
+    treeHtml += `<tr style="${rowStyle}">
+      <td style="padding:2px 10px;padding-left:${10+indent}px;">${volBadge}<span style="color:${nc};font-weight:${fw};">${name}</span></td>
+      <td style="text-align:center;padding:2px 8px;">${oopCell}</td>
+      <td style="text-align:center;padding:2px 8px;white-space:nowrap;">${paraCells}</td>
+      <td style="text-align:center;padding:2px 8px;white-space:nowrap;">${solidCells}</td>
+      <td style="text-align:center;padding:2px 8px;">${gofCells}</td>
+      <td style="padding:2px 10px;font-size:11px;">${infoHtml}</td>
+    </tr>`;
   });
-  treeHtml += '</div>';
+  treeHtml += '</tbody></table></div>';
 
   const patternsHtml = d.patterns.map(p =>
     `<div style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;">${p}</div>`
@@ -1343,21 +1358,6 @@ function renderNatureResult(d) {
       <div style="font-size:13px;color:#c9d1d9;">${d.desc}</div>
     </div>
     <p class="solid-title">📁 Structure src/ recommandée</p>
-    <div style="margin-bottom:10px;display:flex;gap:18px;font-size:11px;color:#8b949e;">
-      <span>🧱 Pilote — template, jamais rouvert</span><span>🔌 Ossature — contrat/base, étendu par ajout</span><span>🌊 Substance — créé de zéro, porte l'ubiquitous language</span>
-    </div>
-    <div style="margin-bottom:16px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
-      <span>🪙 S — Responsabilité unique</span><span>🌱 O — Ouvert/Fermé</span><span>🪆 L — Liskov</span><span>✂️ I — Ségrégation interface</span><span>🧲 D — Inversion dépendance</span>
-    </div>
-    <div style="margin-bottom:20px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
-      <span>🏛️ Impérative (POO)</span><span>💠 Déclarative (fonctionnel)</span><span>🌀 Concurrente (acteur/réactif)</span>
-    </div>
-    <div style="margin-bottom:20px;display:flex;gap:18px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
-      <span>📦 Classe (porteur d'état)</span><span>📋 Interface (contrat)</span><span>💎 Record (valeur immuable)</span><span>🔩 Implémentation (adaptateur)</span>
-    </div>
-    <div style="margin-bottom:20px;display:flex;gap:14px;font-size:11px;color:#8b949e;flex-wrap:wrap;">
-      <span>🏭 Factory</span><span>🪵 Builder</span><span>🔐 Singleton</span><span>🔁 Adapter</span><span>🎀 Decorator</span><span>🪟 Facade</span><span>🪞 Proxy</span><span>🌳 Composite</span><span>👂 Observer</span><span>♟️ Strategy</span><span>🗒️ Template</span><span>📨 Command</span><span>🔘 State</span><span>➿ Iterator</span>
-    </div>
     ${treeHtml}
     <p class="solid-title" style="margin-top:24px;">🧩 Patterns GoF dominants</p>
     <div class="dag-flow" style="margin-bottom:24px;">${patternsHtml}</div>
