@@ -1082,6 +1082,73 @@
       Chemin universel : AMOA → Backend → DevOps/SRE → Data Engineer (si pipeline data)
     </div>
 
+    <p class="solid-title" style="margin-top:16px;">🗂️ Taxonomie complète — 54 rôles × DAG × DDD × Zone</p>
+    <table class="ref-table" style="font-size:11px;">
+      <thead><tr><th>Rôle canonique</th><th>Nœuds DAG primaires</th><th>Couche DDD</th><th>Zone ⊕</th></tr></thead>
+      <tbody>
+        <tr style="background:#0d1824;"><td colspan="4" style="color:#5B8FD4;font-weight:600;padding:6px 8px;">⬡ F1 — Ingénierie Logicielle · 9 rôles · Zone : M — Core + Supporting Domain</td></tr>
+        <tr><td>Software Engineer</td><td>⚙️ TRANSFORM</td><td>domain/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Full-Stack Engineer</td><td>📱 SOURCE → 🧠 CONSUME</td><td>interfaces/ + domain/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Product Engineer</td><td>⚙️ TRANSFORM · 🧠 CONSUME</td><td>domain/ + interfaces/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Frontend Engineer</td><td>🧠 CONSUME</td><td>interfaces/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Backend Engineer</td><td>⚙️ TRANSFORM · 🎯 SERVE</td><td>application/ + domain/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Mobile Engineer</td><td>🧠 CONSUME</td><td>interfaces/mobile/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Embedded Systems Engineer</td><td>📱 SOURCE</td><td>interfaces/hardware/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Game Developer</td><td>🧠 CONSUME</td><td>domain/ (simulation)</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>QA Engineer / SDET</td><td>⊕ transversal</td><td>⊕ tous les layers</td><td>🦺 ROBUSTESSE</td></tr>
+        <tr style="background:#0d1824;"><td colspan="4" style="color:#D4A45B;font-weight:600;padding:6px 8px;">◈ F2 — Données &amp; IA · 10 rôles · Zones : ÉTAT analytique · VISIBILITÉ data · M (modèles)</td></tr>
+        <tr><td>Data Scientist</td><td>🧠 CONSUME</td><td>domain/ (modèles)</td><td>💾 ÉTAT</td></tr>
+        <tr><td>Data Analyst</td><td>🧠 CONSUME</td><td>—</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Analytics Engineer</td><td>⚙️ TRANSFORM → 🎯 SERVE</td><td>infrastructure/datawarehouse/</td><td>💾 ÉTAT → 📊 VISIBILITÉ</td></tr>
+        <tr><td>Data Engineer</td><td>🚚 🪨 ⚙️ 🗄️ 🎼 (pipeline complet)</td><td>infrastructure/data/</td><td>💾 ÉTAT</td></tr>
+        <tr><td>ML Engineer</td><td>⚙️ TRANSFORM · 🎯 SERVE</td><td>domain/ (ML)</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>MLOps Engineer</td><td>🎼 ORCHESTRATION · 🏗️ INFRA</td><td>infrastructure/ml/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>AI Engineer</td><td>⚙️ TRANSFORM · 🎯 SERVE</td><td>domain/ (LLM)</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>BI Developer</td><td>🎯 SERVE · 🧠 CONSUME</td><td>infrastructure/bi/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>AI Researcher</td><td>—</td><td>domain/ (recherche)</td><td>💾 ÉTAT (R&amp;D)</td></tr>
+        <tr><td>Computer Vision Engineer</td><td>⚙️ TRANSFORM</td><td>domain/ (CV)</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr style="background:#0d1824;"><td colspan="4" style="color:#5BD4A4;font-weight:600;padding:6px 8px;">⬢ F3 — Plateforme &amp; Infrastructure · 9 rôles · Zones : EXÉCUTION · ROBUSTESSE · PARAMÈTRES</td></tr>
+        <tr><td>DevOps Engineer</td><td>🏗️ INFRA · 🎼 ORCHESTRATION</td><td>infrastructure/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>SRE — Site Reliability Engineer</td><td>🏗️ INFRA</td><td>infrastructure/</td><td>🦺 ROBUSTESSE</td></tr>
+        <tr><td>Platform Engineer</td><td>🏗️ INFRA</td><td>infrastructure/</td><td>🖥️ EXÉCUTION · 🎛️ PARAMÈTRES</td></tr>
+        <tr><td>Cloud Engineer</td><td>🏗️ INFRA</td><td>infrastructure/cloud/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Cloud Architect</td><td>🏗️ INFRA</td><td>infrastructure/cloud/</td><td>🖥️ EXÉCUTION (stratégie)</td></tr>
+        <tr><td>Network Engineer</td><td>🚚 TRANSPORT</td><td>infrastructure/network/</td><td>📬 TRANSIT</td></tr>
+        <tr><td>Systems Administrator</td><td>🏗️ INFRA</td><td>infrastructure/</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Observability Engineer</td><td>⊕ transversal</td><td>infrastructure/monitoring/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Chaos Engineer</td><td>⊕ transversal</td><td>infrastructure/</td><td>🦺 ROBUSTESSE</td></tr>
+        <tr style="background:#0d1824;"><td colspan="4" style="color:#D45B5B;font-weight:600;padding:6px 8px;">◉ F4 — Sécurité · 8 rôles · Zone : IDENTITÉ · Attribut transversal de toutes les zones</td></tr>
+        <tr><td>Security Engineer</td><td>🔑 IAM (⊕)</td><td>infrastructure/auth/</td><td>🪪 IDENTITÉ</td></tr>
+        <tr><td>Application Security Engineer</td><td>⊕ transversal</td><td>⊕ tous les layers</td><td>🪪 IDENTITÉ</td></tr>
+        <tr><td>IAM Engineer</td><td>🔑 IAM (⊕)</td><td>infrastructure/auth/</td><td>🪪 IDENTITÉ</td></tr>
+        <tr><td>Penetration Tester</td><td>⊕ test adversarial</td><td>⊕ tous les layers</td><td>🪪 IDENTITÉ</td></tr>
+        <tr><td>SOC Analyst</td><td>⊕ transversal</td><td>infrastructure/monitoring/</td><td>📊 VISIBILITÉ (sécurité)</td></tr>
+        <tr><td>Security Architect</td><td>🔑 IAM (⊕)</td><td>infrastructure/auth/</td><td>🪪 IDENTITÉ (design)</td></tr>
+        <tr><td>Compliance Engineer</td><td>⊕ transversal</td><td>infrastructure/compliance/</td><td>🪪 IDENTITÉ (régl.)</td></tr>
+        <tr><td>CISO</td><td>⊕ direction</td><td>⊕ direction</td><td>🪪 IDENTITÉ (direction)</td></tr>
+        <tr style="background:#0d1824;"><td colspan="4" style="color:#A478E0;font-weight:600;padding:6px 8px;">◇ F5 — Produit &amp; Design · 9 rôles · Zone : M — Définition, interface humaine, écosystème</td></tr>
+        <tr><td>Product Manager</td><td>📱 SOURCE (définition)</td><td>domain/ (définition)</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Technical Product Manager</td><td>📱 SOURCE · 🎯 SERVE</td><td>domain/ + interfaces/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Product Designer</td><td>🧠 CONSUME</td><td>interfaces/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>UI Designer</td><td>🧠 CONSUME</td><td>interfaces/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>UX Researcher</td><td>🧠 CONSUME</td><td>—</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Design Systems Engineer</td><td>🧠 CONSUME</td><td>interfaces/ (composants)</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Growth Engineer</td><td>🧠 CONSUME</td><td>interfaces/</td><td>📊 VISIBILITÉ · 💾 ÉTAT</td></tr>
+        <tr><td>Developer Advocate</td><td>🎯 SERVE (ecosystem)</td><td>interfaces/</td><td>📊 VISIBILITÉ</td></tr>
+        <tr><td>Business Analyst / AMOA</td><td>📱 SOURCE · 🧠 CONSUME</td><td>domain/ (traduction métier)</td><td>📊 VISIBILITÉ</td></tr>
+        <tr style="background:#0d1824;"><td colspan="4" style="color:#D4C45B;font-weight:600;padding:6px 8px;">▲ F6 — Leadership &amp; Architecture · 9 rôles · Zones : M + toutes — Influence transversale</td></tr>
+        <tr><td>Tech Lead</td><td>⚙️ TRANSFORM</td><td>domain/ (leadership)</td><td>🖥️ EXÉCUTION</td></tr>
+        <tr><td>Staff Engineer</td><td>⊕ cross-équipes</td><td>⊕ cross-layers</td><td>⊕ transversal</td></tr>
+        <tr><td>Principal / Distinguished Engineer</td><td>⊕ cross-org</td><td>⊕ stratégie</td><td>⊕ transversal</td></tr>
+        <tr><td>Engineering Manager</td><td>—</td><td>—</td><td>⊕ management</td></tr>
+        <tr><td>VP of Engineering</td><td>—</td><td>—</td><td>⊕ direction</td></tr>
+        <tr><td>CTO</td><td>⊕ toutes</td><td>⊕ toutes</td><td>⊕ stratégie</td></tr>
+        <tr><td>CIO</td><td>⊕ toutes</td><td>⊕ toutes</td><td>⊕ IT opérationnel</td></tr>
+        <tr><td>Solutions Architect</td><td>⊕ cross-systèmes</td><td>⊕ cross-layers</td><td>⊕ transversal</td></tr>
+        <tr><td>Software Architect</td><td>⊕ cross-systèmes</td><td>domain/ + application/</td><td>🖥️ EXÉCUTION (stratégie)</td></tr>
+      </tbody>
+    </table>
+
   </div><!-- /tab-metiers -->
 
   <!-- ══════════════════════════════════════
@@ -1097,17 +1164,17 @@
     <table class="ref-table">
       <thead><tr><th>Zone</th><th>Préfecture française</th><th>Architecture IT</th><th>Bijection f</th><th>Outils</th><th>Rôle</th></tr></thead>
       <tbody>
-        <tr><td>Zone 0</td><td>Bâtiment physique (pierre, électricité, HVAC)</td><td>Infrastructure cloud</td><td>f(Bâtiment) = Serveurs/DC</td><td>AWS · Azure · GCP · Terraform</td><td>DevOps / SRE</td></tr>
-        <tr><td>Zone 1</td><td>Portail d'entrée + vigiles + badges</td><td>Sécurité / IAM</td><td>f(Portail+Vigile) = Auth</td><td>OAuth2 · Keycloak · AWS IAM</td><td>SRE</td></tr>
-        <tr><td>Zone 2</td><td>Couloirs internes + signalétique</td><td>Réseau / VPC</td><td>f(Couloir) = LAN/VPC</td><td>VPC · Load Balancer · DNS · CDN</td><td>DevOps</td></tr>
-        <tr><td>Zone 3</td><td>Guichet d'accueil (usager → agent)</td><td>API entrante</td><td>f(Guichet) = Endpoint</td><td>REST · GraphQL · gRPC · nginx</td><td>Backend</td></tr>
-        <tr><td>Zone 4</td><td>Bureau du sous-préfet (traitement)</td><td>Serveur applicatif</td><td>f(Bureau) = App Server</td><td>Node.js · FastAPI · Spring · JVM</td><td>Backend</td></tr>
-        <tr><td>Zone 5</td><td>Service des archives (sortie formulaires)</td><td>API d'extraction / Source</td><td>f(Archives) = Source API</td><td>Airbyte · Fivetran · REST Source</td><td>Data Engineer</td></tr>
-        <tr><td>Zone 6</td><td>Coursier entre services (dossiers en transit)</td><td>Ingestion EL (Extract-Load)</td><td>f(Coursier) = Message Bus</td><td>Kafka · Airbyte · Fivetran · Debezium</td><td>Data Engineer</td></tr>
-        <tr><td>Zone 7</td><td>Service de traitement des dossiers</td><td>Transformation T</td><td>f(Traitement) = Transform Layer</td><td>dbt · Spark · Pandas · SQL</td><td>Data Engineer</td></tr>
-        <tr><td>Zone 8</td><td>Guichet de délivrance des actes</td><td>Distribution / Serving API</td><td>f(Délivrance) = Mart + API</td><td>dbt Mart · Redshift · BigQuery · Looker</td><td>Data Engineer / Backend</td></tr>
-        <tr><td>Zone 9</td><td>Inspection générale / Contrôle qualité</td><td>Observabilité</td><td>f(Inspection) = Monitor</td><td>Datadog · Prometheus · Grafana · OTel</td><td>SRE</td></tr>
-        <tr><td>Zone 10</td><td>Agenda du préfet / Secrétariat général</td><td>Orchestration</td><td>f(Agenda) = Scheduler</td><td>Airflow · Prefect · Dagster · Cron</td><td>Data Engineer</td></tr>
+        <tr><td>Zone 0</td><td>Bâtiment physique (pierre, électricité, HVAC)</td><td>Infrastructure cloud</td><td>f(Bâtiment) = Serveurs/DC</td><td>AWS · Azure · GCP · Terraform</td><td><span style="color:#5BD4A4;">F3</span> Cloud Architect · Cloud Engineer · Systems Admin</td></tr>
+        <tr><td>Zone 1</td><td>Portail d'entrée + vigiles + badges</td><td>Sécurité / IAM</td><td>f(Portail+Vigile) = Auth</td><td>OAuth2 · Keycloak · AWS IAM</td><td><span style="color:#D45B5B;">F4</span> IAM Engineer · Security Engineer</td></tr>
+        <tr><td>Zone 2</td><td>Couloirs internes + signalétique</td><td>Réseau / VPC</td><td>f(Couloir) = LAN/VPC</td><td>VPC · Load Balancer · DNS · CDN</td><td><span style="color:#5BD4A4;">F3</span> Network Engineer · DevOps Engineer</td></tr>
+        <tr><td>Zone 3</td><td>Guichet d'accueil (usager → agent)</td><td>API entrante</td><td>f(Guichet) = Endpoint</td><td>REST · GraphQL · gRPC · nginx</td><td><span style="color:#5B8FD4;">F1</span> Backend Engineer</td></tr>
+        <tr><td>Zone 4</td><td>Bureau du sous-préfet (traitement)</td><td>Serveur applicatif</td><td>f(Bureau) = App Server</td><td>Node.js · FastAPI · Spring · JVM</td><td><span style="color:#5B8FD4;">F1</span> Backend Engineer · Software Engineer</td></tr>
+        <tr><td>Zone 5</td><td>Service des archives (sortie formulaires)</td><td>API d'extraction / Source</td><td>f(Archives) = Source API</td><td>Airbyte · Fivetran · REST Source</td><td><span style="color:#D4A45B;">F2</span> Data Engineer</td></tr>
+        <tr><td>Zone 6</td><td>Coursier entre services (dossiers en transit)</td><td>Ingestion EL (Extract-Load)</td><td>f(Coursier) = Message Bus</td><td>Kafka · Airbyte · Fivetran · Debezium</td><td><span style="color:#D4A45B;">F2</span> Data Engineer</td></tr>
+        <tr><td>Zone 7</td><td>Service de traitement des dossiers</td><td>Transformation T</td><td>f(Traitement) = Transform Layer</td><td>dbt · Spark · Pandas · SQL</td><td><span style="color:#D4A45B;">F2</span> Data Engineer · Analytics Engineer</td></tr>
+        <tr><td>Zone 8</td><td>Guichet de délivrance des actes</td><td>Distribution / Serving API</td><td>f(Délivrance) = Mart + API</td><td>dbt Mart · Redshift · BigQuery · Looker</td><td><span style="color:#D4A45B;">F2</span> Analytics Engineer · BI Developer · <span style="color:#5B8FD4;">F1</span> Backend</td></tr>
+        <tr><td>Zone 9</td><td>Inspection générale / Contrôle qualité</td><td>Observabilité</td><td>f(Inspection) = Monitor</td><td>Datadog · Prometheus · Grafana · OTel</td><td><span style="color:#5BD4A4;">F3</span> SRE · Observability Engineer</td></tr>
+        <tr><td>Zone 10</td><td>Agenda du préfet / Secrétariat général</td><td>Orchestration</td><td>f(Agenda) = Scheduler</td><td>Airflow · Prefect · Dagster · Cron</td><td><span style="color:#D4A45B;">F2</span> Data Engineer · <span style="color:#5BD4A4;">F3</span> Platform Engineer</td></tr>
       </tbody>
     </table>
 
