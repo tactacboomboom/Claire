@@ -742,7 +742,7 @@
   ══════════════════════════════════════ -->
   <div id="tab-solid" class="tab-content">
 
-    <!-- VOCABULAIRE INVARIANT -->
+    <!-- 1. VOCABULAIRE INVARIANT -->
     <p class="solid-title">🔤 Vocabulaire invariant — Emojis DAG</p>
     <div class="vocab-grid">
       <div class="vocab-card"><span class="vocab-emoji">📱</span><span><span class="vocab-node">SOURCE</span><span class="vocab-desc">Ce qui entre dans le système</span></span></div>
@@ -757,77 +757,39 @@
       <div class="vocab-card"><span class="vocab-emoji">🏗️</span><span><span class="vocab-node">INFRA</span><span class="vocab-desc">Cross-cutting — invisible</span></span></div>
     </div>
 
-    <!-- SOLID → DAG -->
-    <p class="solid-title">🏗️ SOLID traduit en DAG</p>
-    <table class="ref-table" style="margin-bottom:28px;">
-      <thead><tr><th>Principe</th><th>Règle</th><th>Traduction DAG</th></tr></thead>
-      <tbody>
-        <tr><td>S — Single Responsibility</td><td>Un fichier = un nœud</td><td>scoring.ts = ⚙️ uniquement. Pas ⚙️ + 🎯 dans le même fichier</td></tr>
-        <tr><td>O — Open / Closed</td><td>Étendre sans modifier</td><td>ε₀ n'ouvre pas φ₀ — deux ⚙️ séparés</td></tr>
-        <tr><td>L — Liskov</td><td>Sous-types substituables</td><td>5 personas PSPO = même interface Validator</td></tr>
-        <tr><td>I — Interface Segregation</td><td>Petites interfaces ciblées</td><td>ScrumMasterValidator ≠ DevValidator</td></tr>
-        <tr><td>D — Dependency Inversion</td><td>Dépendre des abstractions</td><td>route.ts → LLMProvider, pas Anthropic SDK</td></tr>
-      </tbody>
-    </table>
-
-    <!-- AUDIT CLAIRE-APP -->
-    <p class="solid-title">🔍 Audit claire-app — état 2026-05-06</p>
-    <table class="ref-table" style="margin-bottom:28px;">
-      <thead><tr><th>Fichier</th><th>Nœud</th><th>SOLID</th><th>Status</th><th>Détail</th></tr></thead>
-      <tbody>
-        <tr><td>lib/scoring.ts</td><td>⚙️</td><td>S</td><td><span class="ok">✅</span></td><td>Fait une seule chose</td></tr>
-        <tr><td>lib/types.ts</td><td>⚙️</td><td>S</td><td><span class="ok">✅</span></td><td>Interfaces uniquement</td></tr>
-        <tr><td>lib/prompts.ts</td><td>⚙️</td><td>S</td><td><span class="ok">✅</span></td><td>Prompts uniquement</td></tr>
-        <tr><td>app/api/generate/route.ts</td><td>⚙️+🎯</td><td>S + D</td><td><span class="bad">🔴</span></td><td>Trop de responsabilités + SDK câblé en dur</td></tr>
-      </tbody>
-    </table>
-
-    <!-- ARCHITECTURE CIBLE -->
-    <p class="solid-title">🎯 Architecture cible Sprint 2</p>
-    <div class="dag-flow">
-      <div>📱 &nbsp;<strong>SOURCE</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ route.ts &nbsp;<span style="color:#484f58">(orchestration seule)</span></div>
-      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
-      <div>⚙️ &nbsp;<strong>φ₀</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/generate.ts &nbsp;<span style="color:#484f58">(appel LLM abstrait)</span></div>
-      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
-      <div>⚙️ &nbsp;<strong>𝕍</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/scoring.ts &nbsp;<span style="color:#3fb950">(déjà propre ✅)</span></div>
-      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
-      <div>⚙️ &nbsp;<strong>ε₀</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/diagnostics.ts &nbsp;<span style="color:#484f58">(nouveau — O)</span></div>
-      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
-      <div>⚙️ &nbsp;<strong>κ₀</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ lib/refine.ts &nbsp;<span style="color:#484f58">(nouveau — O)</span></div>
-      <div style="color:#484f58">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓</div>
-      <div>🎯 &nbsp;<strong>SERVE</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ route.ts &nbsp;<span style="color:#484f58">(response uniquement)</span></div>
-      <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06);">
-        <div>⊕ &nbsp;🔑 &nbsp;lib/llm.ts &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ interface LLMProvider &nbsp;<span style="color:#484f58">(D — abstraire le SDK)</span></div>
-        <div>⊕ &nbsp;🎼 &nbsp;lib/personas/ &nbsp;→ un fichier par persona PSPO &nbsp;<span style="color:#484f58">(L + I)</span></div>
-      </div>
-    </div>
-
-
-    <!-- ZONES ORTHOGONALES FERMÉES -->
-    <p class="solid-title">⊕ Zones orthogonales — C_clos fermé (vérifié fmaths)</p>
-    <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">7 zones irréductibles + 1 conditionnelle. Orthogonales à la logique métier — présentes dans tout projet logiciel quelle que soit sa nature.</div>
+    <!-- 2. STRUCTURE DDD -->
+    <p class="solid-title">🏗️ Structure DDD — Ontologie des couches</p>
     <table class="ref-table" style="margin-bottom:16px;">
-      <thead><tr><th>Zone</th><th>Rôle</th><th>Couche DDD</th><th>Vercel</th><th>Shopify</th></tr></thead>
+      <thead><tr><th>Couche</th><th>Question</th><th>Contenu essentiel</th><th>Paradigme naturel</th></tr></thead>
       <tbody>
-        <tr><td>🗄️ ÉTAT</td><td>Persistance et lecture des données</td><td>infrastructure/persistence</td><td>KV · Postgres</td><td>✅ natif</td></tr>
-        <tr><td>🔑 IDENTITÉ</td><td>Authentification et autorisation</td><td>infrastructure/auth</td><td>Auth (add-on)</td><td>✅ natif</td></tr>
-        <tr><td>⚡ EXÉCUTION</td><td>Traitement des requêtes / calcul</td><td>interfaces/http</td><td>✅ Functions</td><td>—</td></tr>
-        <tr><td>🚚 TRANSIT</td><td>Échanges inter-systèmes (files, events)</td><td>infrastructure/external</td><td>—</td><td>✅ Stripe</td></tr>
-        <tr><td>👁️ VISIBILITÉ</td><td>Logs, métriques, traces</td><td>infrastructure/observability</td><td>Analytics</td><td>✅ Dashboard</td></tr>
-        <tr><td>⚙️ PARAMÈTRES</td><td>Config, feature flags, secrets</td><td>infrastructure/config</td><td>Env vars</td><td>—</td></tr>
-        <tr><td>🛡️ ROBUSTESSE</td><td>Retry, circuit breaker, tolérance</td><td>infrastructure/resilience</td><td>—</td><td>—</td></tr>
-        <tr style="opacity:0.6;"><td>⏱️ TEMPO <em>(conditionnel)</em></td><td>Scheduling, time-based triggers</td><td>interfaces/scheduler</td><td>Cron (pro)</td><td>—</td></tr>
+        <tr><td>domain/</td><td>POURQUOI métier</td><td>entities · value-objects · aggregates · repositories (interfaces) · services · events</td><td>POO — obligatoire</td></tr>
+        <tr><td>application/</td><td>QUOI (cas d'usage)</td><td>commands · queries · handlers · dto</td><td>POO + fonctionnel</td></tr>
+        <tr><td>infrastructure/</td><td>COMMENT technique</td><td>persistence · external APIs · config DI</td><td>Fonctionnel privilégié</td></tr>
+        <tr><td>interfaces/</td><td>QUI communique</td><td>http/controllers · schedulers · REST/GraphQL</td><td>Fonctionnel majoritaire</td></tr>
       </tbody>
     </table>
-    <div class="dag-flow" style="margin-bottom:16px; font-size:12px;">
-      <strong style="color:#c9d1d9;">NC4 = zones résolues par le framework</strong> <span style="color:#58a6ff;">→ {ÉTAT · IDENTITÉ · EXÉCUTION}</span> — câblées une fois, ne changent plus (🧱 Figées)<br>
-      <span style="color:#8b949e;">Δ = zones à gérer manuellement → {TRANSIT · VISIBILITÉ · PARAMÈTRES · ROBUSTESSE}</span>
-    </div>
-    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
-      <strong style="color:#c9d1d9;">Règle :</strong> plateforme spécialisée (Shopify) = plus de zones couvertes mais domain/ partiellement contraint &nbsp;·&nbsp; Vercel = zéro contrainte sur domain/ mais Δ à gérer
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
+      <strong style="color:#c9d1d9;">Règle absolue :</strong> <span style="color:#f85149;">domain/ ne dépend d'aucune autre couche.</span> Tout import de framework dans une entité = dette architecturale majeure.
+      <div style="margin-top:8px; color:#8b949e;">Structure domain/ = invariante (mêmes dossiers, même règle) &nbsp;·&nbsp; Contenu domain/ = toujours unique par projet &nbsp;·&nbsp; Template infrastructure/+interfaces/ = réutilisable entre projets de même nature</div>
     </div>
 
-    <!-- POO — ONTOLOGIE MINIMALE -->
+    <!-- 3. PARADIGMES — TRIANGLE FERMÉ -->
+    <p class="solid-title">△ Paradigmes — Triangle fermé</p>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Famille</th><th>Paradigmes</th><th>Unité première</th><th>Rapport à l'état</th></tr></thead>
+      <tbody>
+        <tr><td>Impérative</td><td>POO · procédural</td><td>Objet / Instruction</td><td>Central, encapsulé</td></tr>
+        <tr><td>Déclarative</td><td>Fonctionnel · logique</td><td>Fonction / Fait</td><td>Absent ou interdit</td></tr>
+        <tr><td>Concurrente</td><td>Acteur · réactif · dataflow</td><td>Message / Flux</td><td>Local et propagé</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
+      <strong style="color:#c9d1d9;">Cohabitation dans src/ :</strong>
+      <span style="color:#8b949e;"> domain/ → POO (identité + état) &nbsp;·&nbsp; infrastructure/ → fonctionnel (pipelines purs) &nbsp;·&nbsp; interfaces/ → fonctionnel (parsing/sérialisation)</span>
+      <div style="margin-top:8px; color:#d29922;">Saine si intentionnelle. Problème si accidentelle — objet mutable dans un pipeline fonctionnel = source de bugs subtils.</div>
+    </div>
+
+    <!-- 4. POO — ONTOLOGIE MINIMALE -->
     <p class="solid-title">🧬 POO — Ontologie minimale (vérifié fmaths)</p>
     <table class="ref-table" style="margin-bottom:16px;">
       <thead><tr><th>Primitif</th><th>Rôle</th><th>Irréductible ?</th></tr></thead>
@@ -845,47 +807,44 @@
       </div>
     </div>
 
-    <!-- DESIGN PATTERNS — 14 ESSENTIELS -->
-    <p class="solid-title">🧩 Design Patterns — Les 14 essentiels (vérifié fmaths)</p>
-    <div style="color:#8b949e; font-size:13px; margin-bottom:16px;">3 familles exhaustives (Création · Structure · Comportement) — réduction des 23 patterns GoF aux 14 qui résolvent ~99.999% des cas</div>
+    <!-- 5. SOLID → DAG (nettoyé) -->
+    <p class="solid-title">🏗️ SOLID traduit en DAG</p>
     <table class="ref-table" style="margin-bottom:28px;">
-      <thead><tr><th>Famille</th><th>Pattern</th><th>Problème résolu</th><th>Exemple claire-app</th></tr></thead>
+      <thead><tr><th>Principe</th><th>Règle</th><th>Traduction DAG</th></tr></thead>
       <tbody>
-        <tr><td>🐣 Création</td><td>🏭 Factory Method</td><td>Créer sans connaître la classe exacte</td><td>Choisir le bon LLMProvider</td></tr>
-        <tr><td>🐣 Création</td><td>🪵 Builder</td><td>Construire des objets complexes</td><td>Construire le prompt par étapes</td></tr>
-        <tr><td>🐣 Création</td><td>🔐 Singleton</td><td>Une seule instance partagée</td><td>Config ANTHROPIC_API_KEY</td></tr>
-        <tr><td>🕸️ Structure</td><td>🔁 Adapter</td><td>Brancher deux interfaces incompatibles</td><td>lib/llm.ts → LLMProvider (D)</td></tr>
-        <tr><td>🕸️ Structure</td><td>🎀 Decorator</td><td>Ajouter un comportement sans modifier</td><td>Middleware logging sur route.ts</td></tr>
-        <tr><td>🕸️ Structure</td><td>🪟 Facade</td><td>Une porte simple sur un système complexe</td><td>route.ts = façade de φ₀+𝕍+ε₀+κ₀</td></tr>
-        <tr><td>🕸️ Structure</td><td>🪞 Proxy</td><td>Contrôler l'accès, lazy loading</td><td>Memoization sur lib/generate.ts</td></tr>
-        <tr><td>🕸️ Structure</td><td>🌳 Composite</td><td>Traiter un arbre comme un seul objet</td><td>Personas PSPO composées</td></tr>
-        <tr><td>🎭 Comportement</td><td>👂 Observer</td><td>Notifier des abonnés d'un état</td><td>useEffect React sur la réponse LLM</td></tr>
-        <tr><td>🎭 Comportement</td><td>♟️ Strategy</td><td>Interchanger des algorithmes</td><td>Swap Claude → GPT via LLMProvider</td></tr>
-        <tr><td>🎭 Comportement</td><td>🗒️ Template Method</td><td>Squelette d'algo, sous-classes remplissent</td><td>BaseValidator → ScrumMasterValidator</td></tr>
-        <tr><td>🎭 Comportement</td><td>📨 Command</td><td>Encapsuler une action comme objet</td><td>File d'attente de génération</td></tr>
-        <tr><td>🎭 Comportement</td><td>🔘 State</td><td>Comportement selon l'état courant</td><td>idle / loading / done</td></tr>
-        <tr><td>🎭 Comportement</td><td>➿ Iterator</td><td>Parcourir sans connaître la structure</td><td>Map sur la liste de personas</td></tr>
+        <tr><td>S — Single Responsibility</td><td>Un fichier = un nœud</td><td>handler.ts = ⚙️ uniquement — pas ⚙️ + 🎯 dans le même fichier</td></tr>
+        <tr><td>O — Open / Closed</td><td>Étendre sans modifier</td><td>un nouveau ⚙️ s'ajoute à côté — sans modifier l'⚙️ existant</td></tr>
+        <tr><td>L — Liskov</td><td>Sous-types substituables</td><td>tout validator implémente la même interface Validator</td></tr>
+        <tr><td>I — Interface Segregation</td><td>Petites interfaces ciblées</td><td>UserValidator ≠ AdminValidator — deux interfaces distinctes</td></tr>
+        <tr><td>D — Dependency Inversion</td><td>Dépendre des abstractions</td><td>controller.ts → Repository interface, pas l'ORM concret</td></tr>
       </tbody>
     </table>
 
-
-    <!-- STRUCTURE DDD ONTOLOGIQUE -->
-    <p class="solid-title">🏗️ Structure DDD — Ontologie des couches</p>
+    <!-- 6. ZONES ORTHOGONALES (nettoyées — Outils courants) -->
+    <p class="solid-title">⊕ Zones orthogonales — C_clos fermé (vérifié fmaths)</p>
+    <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">7 zones irréductibles + 1 conditionnelle. Orthogonales à la logique métier — présentes dans tout projet logiciel quelle que soit sa nature.</div>
     <table class="ref-table" style="margin-bottom:16px;">
-      <thead><tr><th>Couche</th><th>Question</th><th>Contenu essentiel</th><th>Paradigme naturel</th></tr></thead>
+      <thead><tr><th>Zone</th><th>Rôle</th><th>Couche DDD</th><th>Outils courants</th></tr></thead>
       <tbody>
-        <tr><td>domain/</td><td>POURQUOI métier</td><td>entities · value-objects · aggregates · repositories (interfaces) · services · events</td><td>POO — obligatoire</td></tr>
-        <tr><td>application/</td><td>QUOI (cas d'usage)</td><td>commands · queries · handlers · dto</td><td>POO + fonctionnel</td></tr>
-        <tr><td>infrastructure/</td><td>COMMENT technique</td><td>persistence · external APIs · config DI</td><td>Fonctionnel privilégié</td></tr>
-        <tr><td>interfaces/</td><td>QUI communique</td><td>http/controllers · schedulers · REST/GraphQL</td><td>Fonctionnel majoritaire</td></tr>
+        <tr><td>💾 ÉTAT</td><td>Persistance et lecture des données</td><td>infrastructure/persistence</td><td>Postgres · Redis · SQLite · S3</td></tr>
+        <tr><td>🪪 IDENTITÉ</td><td>Authentification et autorisation</td><td>infrastructure/auth</td><td>OAuth2 · JWT · Keycloak · Auth0</td></tr>
+        <tr><td>🖥️ EXÉCUTION</td><td>Traitement des requêtes / calcul</td><td>interfaces/http</td><td>Docker · K8s · Serverless · Functions</td></tr>
+        <tr><td>📬 TRANSIT</td><td>Échanges inter-systèmes (files, events)</td><td>infrastructure/external</td><td>Kafka · RabbitMQ · Webhooks · Stripe</td></tr>
+        <tr><td>📊 VISIBILITÉ</td><td>Logs, métriques, traces</td><td>infrastructure/observability</td><td>Prometheus · Grafana · Datadog · OTel</td></tr>
+        <tr><td>🎛️ PARAMÈTRES</td><td>Config, feature flags, secrets</td><td>infrastructure/config</td><td>.env · Vault · AWS SSM · Feature flags</td></tr>
+        <tr><td>🦺 ROBUSTESSE</td><td>Retry, circuit breaker, tolérance</td><td>infrastructure/resilience</td><td>Circuit breaker · Retry · Timeout · Bulkhead</td></tr>
+        <tr style="opacity:0.6;"><td>🕰️ TEMPO <em>(conditionnel)</em></td><td>Scheduling, time-based triggers</td><td>interfaces/scheduler</td><td>Airflow · Cron · Celery · Temporal</td></tr>
       </tbody>
     </table>
-    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
-      <strong style="color:#c9d1d9;">Règle absolue :</strong> <span style="color:#f85149;">domain/ ne dépend d'aucune autre couche.</span> Tout import de framework dans une entité = dette architecturale majeure.
-      <div style="margin-top:8px; color:#8b949e;">Structure domain/ = invariante (mêmes dossiers, même règle) &nbsp;·&nbsp; Contenu domain/ = toujours unique par projet &nbsp;·&nbsp; Template infrastructure/+interfaces/ = réutilisable entre projets de même nature</div>
+    <div class="dag-flow" style="margin-bottom:16px; font-size:12px;">
+      <strong style="color:#c9d1d9;">Zones résolues une fois par le framework</strong> <span style="color:#58a6ff;">→ {ÉTAT · IDENTITÉ · EXÉCUTION}</span> — câblées une fois, ne changent plus (🧱 Figées)<br>
+      <span style="color:#8b949e;">Δ = zones à gérer manuellement → {TRANSIT · VISIBILITÉ · PARAMÈTRES · ROBUSTESSE}</span>
+    </div>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
+      <strong style="color:#c9d1d9;">Règle :</strong> plus la plateforme est spécialisée, plus elle couvre de zones — mais plus elle contraint domain/. Zéro contrainte sur domain/ = Δ entier à gérer manuellement.
     </div>
 
-    <!-- VOLATILITÉ DU CODE — 3 CLASSES -->
+    <!-- 7. VOLATILITÉ DU CODE — 3 CLASSES -->
     <p class="solid-title">⏱️ Volatilité du code — 3 classes</p>
     <table class="ref-table" style="margin-bottom:16px;">
       <thead><tr><th>Classe</th><th>Fréquence</th><th>Exemples</th><th>Principe SOLID</th></tr></thead>
@@ -914,43 +873,30 @@
       Signal d'alarme : un fichier <span style="color:#f85149;">🧱 Figé modifié</span> = architecture remise en question &nbsp;·&nbsp; un fichier <span style="color:#d29922;">🌊 Vivant qui grossit</span> = violation SRP à découper
     </div>
 
-    <!-- PARADIGMES PROGRAMMATION — TRIANGLE FERMÉ -->
-    <p class="solid-title">△ Paradigmes — Triangle fermé</p>
-    <table class="ref-table" style="margin-bottom:16px;">
-      <thead><tr><th>Famille</th><th>Paradigmes</th><th>Unité première</th><th>Rapport à l'état</th></tr></thead>
+    <!-- 8. DESIGN PATTERNS — 14 ESSENTIELS (nettoyés) -->
+    <p class="solid-title">🧩 Design Patterns — Les 14 essentiels (vérifié fmaths)</p>
+    <div style="color:#8b949e; font-size:13px; margin-bottom:16px;">3 familles exhaustives (Création · Structure · Comportement) — réduction des 23 patterns GoF aux 14 qui résolvent ~99.999% des cas</div>
+    <table class="ref-table" style="margin-bottom:28px;">
+      <thead><tr><th>Famille</th><th>Pattern</th><th>Problème résolu</th><th>Cas concret</th></tr></thead>
       <tbody>
-        <tr><td>Impérative</td><td>POO · procédural</td><td>Objet / Instruction</td><td>Central, encapsulé</td></tr>
-        <tr><td>Déclarative</td><td>Fonctionnel · logique</td><td>Fonction / Fait</td><td>Absent ou interdit</td></tr>
-        <tr><td>Concurrente</td><td>Acteur · réactif · dataflow</td><td>Message / Flux</td><td>Local et propagé</td></tr>
+        <tr><td>🐣 Création</td><td>🏭 Factory Method</td><td>Créer sans connaître la classe exacte</td><td>Choisir le bon PaymentProvider (Stripe / PayPal)</td></tr>
+        <tr><td>🐣 Création</td><td>🪵 Builder</td><td>Construire des objets complexes</td><td>Construire une requête SQL complexe étape par étape</td></tr>
+        <tr><td>🐣 Création</td><td>🔐 Singleton</td><td>Une seule instance partagée</td><td>Instance de connexion à la base de données</td></tr>
+        <tr><td>🕸️ Structure</td><td>🔁 Adapter</td><td>Brancher deux interfaces incompatibles</td><td>SDK tiers → interface Repository interne</td></tr>
+        <tr><td>🕸️ Structure</td><td>🎀 Decorator</td><td>Ajouter un comportement sans modifier</td><td>Middleware auth ajouté autour d'un controller</td></tr>
+        <tr><td>🕸️ Structure</td><td>🪟 Facade</td><td>Une porte simple sur un système complexe</td><td>OrderService = façade sur Inventory + Payment + Shipping</td></tr>
+        <tr><td>🕸️ Structure</td><td>🪞 Proxy</td><td>Contrôler l'accès, lazy loading</td><td>Memoization sur un service de calcul coûteux</td></tr>
+        <tr><td>🕸️ Structure</td><td>🌳 Composite</td><td>Traiter un arbre comme un seul objet</td><td>Menu / sous-menus — un seul render récursif</td></tr>
+        <tr><td>🎭 Comportement</td><td>👂 Observer</td><td>Notifier des abonnés d'un état</td><td>Envoi email automatique quand commande payée</td></tr>
+        <tr><td>🎭 Comportement</td><td>♟️ Strategy</td><td>Interchanger des algorithmes</td><td>Swap algorithme de tri selon taille du dataset</td></tr>
+        <tr><td>🎭 Comportement</td><td>🗒️ Template Method</td><td>Squelette d'algo, sous-classes remplissent</td><td>BaseReport → PdfReport / ExcelReport / CsvReport</td></tr>
+        <tr><td>🎭 Comportement</td><td>📨 Command</td><td>Encapsuler une action comme objet</td><td>File de jobs : email / notifications / exports</td></tr>
+        <tr><td>🎭 Comportement</td><td>🔘 State</td><td>Comportement selon l'état courant</td><td>Commande : pending → confirmed → shipped → delivered</td></tr>
+        <tr><td>🎭 Comportement</td><td>➿ Iterator</td><td>Parcourir sans connaître la structure</td><td>Pagination sur une liste de produits</td></tr>
       </tbody>
     </table>
-    <div class="dag-flow" style="margin-bottom:28px; font-size:12px;">
-      <strong style="color:#c9d1d9;">Cohabitation dans src/ :</strong>
-      <span style="color:#8b949e;"> domain/ → POO (identité + état) &nbsp;·&nbsp; infrastructure/ → fonctionnel (pipelines purs) &nbsp;·&nbsp; interfaces/ → fonctionnel (parsing/sérialisation)</span>
-      <div style="margin-top:8px; color:#d29922;">Saine si intentionnelle. Problème si accidentelle — objet mutable dans un pipeline fonctionnel = source de bugs subtils.</div>
-    </div>
 
-    <!-- 8 NATURES DE PROJETS -->
-    <p class="solid-title">🧬 8 Natures de projets — Axes générateurs</p>
-    <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">3 axes : Acteur (Humain / Machine / Hybride) × Transaction (Échange / Transformation / Accès / Coordination) × Temps (Réel / Différé / Périodique)</div>
-    <table class="ref-table" style="margin-bottom:16px;">
-      <thead><tr><th>Nature</th><th>Acteur</th><th>Transaction</th><th>Temps</th><th>Exemples</th></tr></thead>
-      <tbody>
-        <tr><td>Marketplace</td><td>Humain</td><td>Échange</td><td>Réel</td><td>E-commerce, Airbnb, Uber</td></tr>
-        <tr><td>Plateforme de contenu</td><td>Humain</td><td>Accès</td><td>Réel</td><td>Netflix, blog</td></tr>
-        <tr><td>Outil de productivité</td><td>Humain</td><td>Transformation</td><td>Réel</td><td>Notion, Figma, <strong style="color:#3fb950;">claire-app ✅</strong></td></tr>
-        <tr><td>Réseau social</td><td>Humain</td><td>Coordination</td><td>Réel</td><td>Twitter, WhatsApp</td></tr>
-        <tr><td>Application utilitaire</td><td>Humain</td><td>Transformation</td><td>Périodique</td><td>Réveil, prières</td></tr>
-        <tr><td>Système de reporting</td><td>Hybride</td><td>Accès</td><td>Différé</td><td>Dashboards, BI</td></tr>
-        <tr><td>Pipeline de données</td><td>Machine</td><td>Transformation</td><td>Différé / Périodique</td><td>ETL, batch, ML</td></tr>
-        <tr><td>API / Intégration</td><td>Machine</td><td>Coordination</td><td>Réel</td><td>BFF, gateway</td></tr>
-      </tbody>
-    </table>
-    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
-      <strong style="color:#c9d1d9;">Formulaire ontologique</strong> avant la première ligne de code : Qui initie ? → Que fait le système fondamentalement ? → Dans quel rapport au temps ? → La combinaison désigne la nature → le template architectural.
-    </div>
-
-    <!-- PROCESSUS DE DÉCOUPE UNIVERSEL -->
+    <!-- 9. PROCESSUS DE DÉCOUPE UNIVERSEL -->
     <p class="solid-title">🔀 Processus de découpe universel</p>
     <table class="ref-table" style="margin-bottom:16px;">
       <thead><tr><th>Composante</th><th>Rôle</th><th>Ce qu'elle résout</th></tr></thead>
@@ -964,7 +910,27 @@
       <strong style="color:#c9d1d9;">Propriété :</strong> <span style="color:#8b949e;">SOLID+GoF+DDD est universel et invariant — seul le vocabulaire AMOA change entre domaines. La posture Dev = appliquer ce processus au vocabulaire donné par l'AMOA.</span>
     </div>
 
-    <!-- DIVISION COGNITIVE AMOA / DEV -->
+    <!-- 10. 8 NATURES DE PROJETS (nettoyé) -->
+    <p class="solid-title">🧬 8 Natures de projets — Axes générateurs</p>
+    <div style="font-size:12px; color:#8b949e; margin-bottom:12px;">3 axes : Acteur (Humain / Machine / Hybride) × Transaction (Échange / Transformation / Accès / Coordination) × Temps (Réel / Différé / Périodique)</div>
+    <table class="ref-table" style="margin-bottom:16px;">
+      <thead><tr><th>Nature</th><th>Acteur</th><th>Transaction</th><th>Temps</th><th>Exemples</th></tr></thead>
+      <tbody>
+        <tr><td>Marketplace</td><td>Humain</td><td>Échange</td><td>Réel</td><td>E-commerce, Airbnb, Uber</td></tr>
+        <tr><td>Plateforme de contenu</td><td>Humain</td><td>Accès</td><td>Réel</td><td>Netflix, Medium, blog</td></tr>
+        <tr><td>Outil de productivité</td><td>Humain</td><td>Transformation</td><td>Réel</td><td>Notion, Figma, Slack</td></tr>
+        <tr><td>Réseau social</td><td>Humain</td><td>Coordination</td><td>Réel</td><td>Twitter, WhatsApp, Discord</td></tr>
+        <tr><td>Application utilitaire</td><td>Humain</td><td>Transformation</td><td>Périodique</td><td>Calendrier, réveil, calculatrice</td></tr>
+        <tr><td>Système de reporting</td><td>Hybride</td><td>Accès</td><td>Différé</td><td>Dashboards BI, analytics</td></tr>
+        <tr><td>Pipeline de données</td><td>Machine</td><td>Transformation</td><td>Différé / Périodique</td><td>ETL, batch ML, data warehouse</td></tr>
+        <tr><td>API / Intégration</td><td>Machine</td><td>Coordination</td><td>Réel</td><td>BFF, API gateway, webhooks</td></tr>
+      </tbody>
+    </table>
+    <div class="dag-flow" style="margin-bottom:28px; font-size:12px; color:#8b949e;">
+      <strong style="color:#c9d1d9;">Formulaire ontologique</strong> avant la première ligne de code : Qui initie ? → Que fait le système fondamentalement ? → Dans quel rapport au temps ? → La combinaison désigne la nature → le template architectural.
+    </div>
+
+    <!-- 11. DIVISION COGNITIVE AMOA / DEV / IA -->
     <p class="solid-title">👥 Division cognitive — AMOA / Dev / IA</p>
     <table class="ref-table" style="margin-bottom:16px;">
       <thead><tr><th>Posture</th><th>Rôle</th><th>Output</th></tr></thead>
