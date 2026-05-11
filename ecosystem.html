@@ -466,6 +466,28 @@
     #metiers-it .f6 .family-header{background:rgba(212,196,91,.1);border:1px solid rgba(212,196,91,.2)} #metiers-it .f6 .family-title{color:#D4C45B}
     #metiers-it .f6 .disc-header{background:rgba(212,196,91,.08);color:#D4C45B;border-bottom:1px solid rgba(212,196,91,.15)}
     #metiers-it .f6 .card{border-left-color:#D4C45B} #metiers-it .f6 .card-name{color:#E0D080} #metiers-it .f6 .card-zone{background:rgba(212,196,91,.15);color:#D4C45B}
+    /* ── ATLAS ─────────────────────────────────────────────── */
+    #tab-atlas .atl-ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center}
+    #tab-atlas .atl-sel{background:#161b22;border:1px solid rgba(255,255,255,.12);color:#e6edf3;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer}
+    #tab-atlas .atl-srch{background:#161b22;border:1px solid rgba(255,255,255,.12);color:#e6edf3;padding:5px 10px;border-radius:6px;font-size:12px;flex:1;min-width:140px}
+    #tab-atlas .atl-srch::placeholder{color:#484f58}
+    #tab-atlas .atl-tog{background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.2);color:#58a6ff;padding:5px 12px;border-radius:6px;font-size:12px;cursor:pointer;transition:background .15s}
+    #tab-atlas .atl-tog.on{background:rgba(88,166,255,.2)}
+    #tab-atlas .atl-cnt{font-size:11px;color:#6e7681;margin-left:auto}
+    #tab-atlas .atl-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:8px;margin-top:4px}
+    #tab-atlas table{width:100%;border-collapse:collapse;font-size:11.5px}
+    #tab-atlas th{background:#161b22;color:#8b949e;font-weight:600;padding:8px 10px;text-align:left;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.1)}
+    #tab-atlas td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:top;line-height:1.4}
+    #tab-atlas tr:last-child td{border-bottom:none}
+    #tab-atlas tr:hover td{background:rgba(255,255,255,.02)}
+    #tab-atlas .btype{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;white-space:nowrap}
+    #tab-atlas .bn1{background:rgba(91,143,212,.15);color:#5B8FD4} #tab-atlas .bn2{background:rgba(212,164,91,.15);color:#D4A45B} #tab-atlas .bn3{background:rgba(212,91,143,.15);color:#D45B8F}
+    #tab-atlas .bf1{background:rgba(91,143,212,.15);color:#5B8FD4} #tab-atlas .bf2{background:rgba(212,164,91,.15);color:#D4A45B} #tab-atlas .bf3{background:rgba(91,212,164,.15);color:#5BD4A4}
+    #tab-atlas .bf4{background:rgba(212,91,91,.15);color:#D45B5B} #tab-atlas .bf5{background:rgba(164,120,224,.15);color:#A478E0} #tab-atlas .bf6{background:rgba(212,196,91,.15);color:#D4C45B}
+    #tab-atlas .bdef{background:rgba(255,255,255,.07);color:#8b949e}
+    #tab-atlas .uok{color:#5BD4A4} #tab-atlas .uno{color:#484f58}
+    #tab-atlas .dcell{max-width:220px;color:#8b949e;font-size:11px}
+    #tab-atlas .nores{text-align:center;color:#6e7681;padding:32px;font-size:13px;font-style:italic}
   </style>
 </head>
 <body>
@@ -486,6 +508,7 @@
     <button class="tab-btn" onclick="switchTab('prefecture')">🏛️ Préfecture</button>
     <button class="tab-btn" onclick="switchTab('theoremes')">🔬 Théorèmes</button>
     <button class="tab-btn" onclick="switchTab('rolesit')">🧑‍💻 Rôles IT</button>
+    <button class="tab-btn" onclick="switchTab('atlas')">🗂️ Atlas</button>
   </div>
 
   <div id="tab-ecosystem" class="tab-content active">
@@ -1671,6 +1694,53 @@
     </div><!-- /metiers-it -->
   </div><!-- /tab-rolesit -->
 
+  <!-- ══════════════════════════════════════
+       🗂️ ONGLET ATLAS
+  ══════════════════════════════════════ -->
+  <div id="tab-atlas" class="tab-content">
+    <p class="solid-title">🗂️ Atlas des Concepts — 154 entrées · 9 colonnes</p>
+    <div class="atl-ctrl">
+      <select class="atl-sel" id="atl-type" onchange="filterAtlas()">
+        <option value="">Tous types</option>
+        <option>Théorème</option><option>Rôle IT</option>
+        <option>SOLID</option><option>GoF</option>
+        <option>Nœud DAG</option><option>Zone</option>
+        <option>Paradigme</option><option>Volatilité</option><option>POO</option>
+      </select>
+      <select class="atl-sel" id="atl-fam" onchange="filterAtlas()">
+        <option value="">Toutes familles</option>
+        <option>N1</option><option>N2</option><option>N3</option>
+        <option>F1</option><option>F2</option><option>F3</option>
+        <option>F4</option><option>F5</option><option>F6</option>
+        <option>Création</option><option>Structure</option><option>Comportement</option>
+        <option>S</option><option>O</option><option>L</option><option>I</option><option>D</option>
+        <option>Principal</option><option>Orthogonal</option>
+        <option>Impérative</option><option>Déclarative</option><option>Concurrente</option>
+        <option>Pilote</option><option>Ossature</option><option>Substance</option><option>POO</option><option>Zone</option>
+      </select>
+      <select class="atl-sel" id="atl-zone" onchange="filterAtlas()">
+        <option value="">Toutes zones</option>
+        <option>💾 ÉTAT</option><option>🪪 IDENTITÉ</option>
+        <option>🖥️ EXÉCUTION</option><option>📬 TRANSIT</option>
+        <option>📊 VISIBILITÉ</option><option>🎛️ PARAMÈTRES</option>
+        <option>🦺 ROBUSTESSE</option><option>🕰️ TEMPO</option>
+      </select>
+      <select class="atl-sel" id="atl-dag" onchange="filterAtlas()">
+        <option value="">Tous nœuds DAG</option>
+        <option>SOURCE</option><option>TRANSPORT</option><option>STORE_RAW</option>
+        <option>TRANSFORM</option><option>STORE_STRUCTURED</option>
+        <option>SERVE</option><option>CONSUME</option>
+        <option>IAM</option><option>ORCHESTRATION</option><option>INFRA</option>
+      </select>
+      <input class="atl-srch" id="atl-srch" placeholder="Rechercher nom ou description..." oninput="filterAtlas()">
+      <button class="atl-tog" id="atl-univ" onclick="toggleAtlasUniv()">⊕ Universels</button>
+      <span class="atl-cnt" id="atl-cnt"></span>
+    </div>
+    <div class="atl-wrap">
+      <table><thead id="atl-th"></thead><tbody id="atl-tb"></tbody></table>
+    </div>
+  </div><!-- /tab-atlas -->
+
   <div class="legend">
     <div class="legend-item"><span class="chip chip-pwf" style="margin:0">PWF</span> Planning files → 📐 Claire uniquement</div>
     <div class="legend-item"><span class="chip chip-code" style="margin:0">code</span> App TypeScript → ⚙️ claire-app</div>
@@ -2261,6 +2331,252 @@ function resetNatureForm() {
   document.getElementById('nature-result').style.display = 'none';
   document.getElementById('nature-form').scrollIntoView({ behavior:'smooth' });
 }
+
+// ─── ATLAS ────────────────────────────────────────────────────────────────
+const ATLAS_COLS = [
+  {k:'nom',  l:'Nom',         w:'170px'},
+  {k:'type', l:'Type',        w:'90px' },
+  {k:'fam',  l:'Famille',     w:'80px' },
+  {k:'desc', l:'Description', w:'220px'},
+  {k:'dag',  l:'Nœuds DAG',   w:'150px'},
+  {k:'ddd',  l:'Couche DDD',  w:'120px'},
+  {k:'zone', l:'Zone ⊕',      w:'120px'},
+  {k:'univ', l:'⊕',           w:'32px' },
+  {k:'outils',l:'Outils',     w:'150px'},
+];
+
+const ATLAS_DATA = [
+// ── THÉORÈMES N1 — La Matière ──
+{id:"T001",nom:"Axiomes ZFC",type:"Théorème",fam:"N1",desc:"Règles fondamentales : ensemble défini par ses membres, sous-ensembles et choix toujours possibles.",dag:"",ddd:"domain",zone:"",univ:true,outils:"SQL, tout langage formel"},
+{id:"T002",nom:"Théorème de Cantor",type:"Théorème",fam:"N1",desc:"L'espace des sous-requêtes sur n colonnes est toujours plus grand que n.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"Query optimizers, PostgreSQL"},
+{id:"T003",nom:"Complétude de Gödel",type:"Théorème",fam:"N1",desc:"Si l'information existe et la question est bien formée, une requête l'obtient.",dag:"TRANSFORM,STORE_STRUCTURED",ddd:"domain",zone:"",univ:true,outils:"SQL"},
+{id:"T004",nom:"Algèbre de Boole",type:"Théorème",fam:"N1",desc:"Chaque condition WHERE est binaire — ET, OU, PAS. Rend SQL simple et universel.",dag:"TRANSFORM,STORE_STRUCTURED",ddd:"",zone:"",univ:true,outils:"SQL WHERE, filtres"},
+{id:"T005",nom:"Décomposition SVD",type:"Théorème",fam:"N1",desc:"Toute table numérique se décompose en couches ordonnées par importance. Fondement de PCA.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"💾 ÉTAT",univ:false,outils:"scikit-learn, PyTorch, PCA"},
+{id:"T006",nom:"Théorème Spectral",type:"Théorème",fam:"N1",desc:"Dans tout jeu de données structuré, il existe des axes naturels d'indépendance.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"💾 ÉTAT",univ:false,outils:"scikit-learn, numpy, PCA"},
+{id:"T007",nom:"Théorème d'Eckart-Young",type:"Théorème",fam:"N1",desc:"La meilleure compression en k dimensions est unique : SVD tronquée. Justifie chaque embedding.",dag:"TRANSFORM",ddd:"domain",zone:"💾 ÉTAT",univ:false,outils:"SVD truncated, embeddings"},
+{id:"T008",nom:"Conditionnement κ(A)",type:"Théorème",fam:"N1",desc:"Mesure si une transformation amplifie les erreurs. À vérifier avant d'inverser une matrice.",dag:"TRANSFORM",ddd:"",zone:"",univ:false,outils:"numpy.linalg.cond"},
+{id:"T009",nom:"Entropie de Shannon H(X)",type:"Théorème",fam:"N1",desc:"Une info prévisible ne vaut rien. Mesure la surprise moyenne. Moteur des splits en arbres.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"📊 VISIBILITÉ",univ:true,outils:"scikit-learn, decision trees"},
+{id:"T010",nom:"Théorème de Codage Source",type:"Théorème",fam:"N1",desc:"Il existe un plancher de compression sans perte. Parquet, ORC, Snappy s'en approchent.",dag:"STORE_RAW,TRANSPORT",ddd:"",zone:"💾 ÉTAT",univ:true,outils:"Parquet, ORC, Snappy, gzip"},
+{id:"T011",nom:"Information Mutuelle I(X;Y)",type:"Théorème",fam:"N1",desc:"Mesure combien connaître X réduit l'incertitude sur Y. Capture les dépendances non-linéaires.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:false,outils:"scikit-learn mutual_info"},
+{id:"T012",nom:"Divergence KL",type:"Théorème",fam:"N1",desc:"Mesure à quel point deux distributions diffèrent. Fondement de la détection de data drift.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"📊 VISIBILITÉ",univ:false,outils:"scipy, Prometheus, monitoring drift"},
+{id:"T013",nom:"Lemme de Johnson-Lindenstrauss",type:"Théorème",fam:"N1",desc:"1M de points peuvent être projetés en moins de dimensions en conservant les distances.",dag:"TRANSFORM",ddd:"",zone:"",univ:false,outils:"UMAP, LSH, Random Projections"},
+{id:"T014",nom:"Malédiction de la Dimension",type:"Théorème",fam:"N1",desc:"En haute dimension, tous les points deviennent équidistants. Les distances cessent de discriminer.",dag:"TRANSFORM",ddd:"",zone:"",univ:false,outils:"PCA, embeddings, UMAP"},
+{id:"T015",nom:"Homologie Persistante (TDA)",type:"Théorème",fam:"N1",desc:"Compte les trous structurels dans un nuage de points. Les structures qui persistent sont réelles.",dag:"TRANSFORM,CONSUME",ddd:"",zone:"",univ:false,outils:"Giotto-TDA, Ripser"},
+// ── THÉORÈMES N2 — Le Mouvement ──
+{id:"T016",nom:"Tri Topologique (Kahn)",type:"Théorème",fam:"N2",desc:"Trouve le bon ordre d'exécution des tâches d'un pipeline. Détecte les cycles.",dag:"ORCHESTRATION",ddd:"",zone:"🕰️ TEMPO",univ:true,outils:"Airflow, dbt, Spark, Dagster"},
+{id:"T017",nom:"Théorème de Dilworth",type:"Théorème",fam:"N2",desc:"Le nombre max de tâches parallélisables = largeur du graphe. Plafond du parallélisme.",dag:"ORCHESTRATION,TRANSPORT",ddd:"",zone:"🕰️ TEMPO",univ:false,outils:"Spark, Airflow workers"},
+{id:"T018",nom:"Algorithme de Dijkstra",type:"Théorème",fam:"N2",desc:"Trouve le chemin critique d'un pipeline — la séquence qui fixe la durée totale.",dag:"ORCHESTRATION",ddd:"",zone:"🕰️ TEMPO",univ:false,outils:"Airflow critical path, Spark DAG"},
+{id:"T019",nom:"Théorème de Menger",type:"Théorème",fam:"N2",desc:"Nombre de routes alternatives si un composant tombe = taille du point de blocage minimal.",dag:"TRANSPORT,INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:true,outils:"réseau redondant, multi-AZ"},
+{id:"T020",nom:"Ford-Fulkerson / Max-flow Min-cut",type:"Théorème",fam:"N2",desc:"Le débit max dans un réseau = capacité du goulot le plus étroit.",dag:"TRANSPORT,TRANSFORM",ddd:"",zone:"🕰️ TEMPO",univ:false,outils:"Kafka partitions, network design"},
+{id:"T021",nom:"Complétude de Codd",type:"Théorème",fam:"N2",desc:"L'algèbre relationnelle et le calcul tuple sont équivalents. Le moteur réécrit librement.",dag:"TRANSFORM,STORE_STRUCTURED",ddd:"infrastructure",zone:"💾 ÉTAT",univ:true,outils:"SQL, PostgreSQL, BigQuery"},
+{id:"T022",nom:"Formes Normales (1NF→BCNF)",type:"Théorème",fam:"N2",desc:"Chaque information doit avoir un seul endroit de référence — sinon contradiction silencieuse.",dag:"STORE_STRUCTURED",ddd:"infrastructure",zone:"💾 ÉTAT",univ:true,outils:"PostgreSQL, SQLite, modélisation"},
+{id:"T023",nom:"Pushdown de Prédicats",type:"Théorème",fam:"N2",desc:"Filtrer 10M lignes puis joindre est catastrophique. Joindre 1000 lignes filtrées est trivial.",dag:"TRANSFORM",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:true,outils:"Spark Catalyst, BigQuery, PostgreSQL"},
+{id:"T024",nom:"Semi-anneau Tropical",type:"Théorème",fam:"N2",desc:"Algèbre où additionner = prendre le minimum. Moteur de la provenance de données.",dag:"TRANSFORM",ddd:"",zone:"",univ:false,outils:"provenance tracking, bases déductives"},
+{id:"T025",nom:"Transformée de Fourier (FFT)",type:"Théorème",fam:"N2",desc:"Décompose une série temporelle en ses rythmes constituants. Révèle les cycles cachés.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"📊 VISIBILITÉ",univ:false,outils:"numpy FFT, scipy, Prophet"},
+{id:"T026",nom:"Théorème de Nyquist-Shannon",type:"Théorème",fam:"N2",desc:"Pour ne rater aucune variation, mesurer au minimum 2× plus vite que la plus rapide.",dag:"SOURCE,TRANSPORT",ddd:"",zone:"🕰️ TEMPO",univ:true,outils:"capteurs IoT, audio processing"},
+{id:"T027",nom:"Transformation en Ondelettes",type:"Théorème",fam:"N2",desc:"Fourier dit quelles fréquences. Les ondelettes ajoutent : à quel moment.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:false,outils:"PyWavelets, scipy.signal"},
+{id:"T028",nom:"Convolution",type:"Théorème",fam:"N2",desc:"Faire glisser un filtre sur un signal pour mesurer sa ressemblance avec un pattern.",dag:"TRANSFORM",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:false,outils:"PyTorch, TensorFlow, CNN"},
+{id:"T029",nom:"Théorème Central Limite",type:"Théorème",fam:"N2",desc:"La moyenne d'un grand nombre de mesures suit toujours une cloche. Fondement des tests A/B.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"📊 VISIBILITÉ",univ:true,outils:"scipy, statsmodels, A/B testing"},
+{id:"T030",nom:"Loi des Grands Nombres (forte)",type:"Théorème",fam:"N2",desc:"Avec assez de données, la moyenne converge vers la vraie valeur. Justifie le big data.",dag:"STORE_RAW,TRANSFORM",ddd:"",zone:"",univ:true,outils:"Spark, BigQuery, statistiques"},
+{id:"T031",nom:"Inégalité de Chebyshev",type:"Théorème",fam:"N2",desc:"Au max 25% des valeurs à plus de 2 écarts-types. Alarme universelle sans hypothèse.",dag:"CONSUME",ddd:"",zone:"📊 VISIBILITÉ",univ:true,outils:"alerting, Prometheus rules"},
+{id:"T032",nom:"Théorème de Bayes",type:"Théorème",fam:"N2",desc:"Comment mettre à jour sa croyance à chaque nouvelle observation. Moteur du ML en ligne.",dag:"TRANSFORM,CONSUME",ddd:"domain",zone:"",univ:true,outils:"sklearn, pgm, ML pipelines"},
+{id:"T033",nom:"Borne de Cramér-Rao",type:"Théorème",fam:"N2",desc:"Plancher d'erreur sous lequel aucun algo ne peut descendre. Atteindre ce plancher = optimal.",dag:"TRANSFORM",ddd:"",zone:"",univ:false,outils:"scipy optimize, benchmark"},
+// ── THÉORÈMES N3 — La Jonction ──
+{id:"T034",nom:"Modèle M/M/1",type:"Théorème",fam:"N3",desc:"1 worker, arrivées aléatoires. À 90% d'occupation, la file = 9 messages, pas 1.",dag:"TRANSPORT,ORCHESTRATION",ddd:"infrastructure",zone:"📬 TRANSIT",univ:true,outils:"Kafka, RabbitMQ, SQS"},
+{id:"T035",nom:"Modèle M/M/c (Erlang-C)",type:"Théorème",fam:"N3",desc:"Combien de workers pour que 99% des messages soient traités en <1s ? Erlang-C répond.",dag:"TRANSPORT,ORCHESTRATION",ddd:"infrastructure",zone:"📬 TRANSIT",univ:true,outils:"dimensionnement Kafka, call center"},
+{id:"T036",nom:"Loi de Little (L = λ·W)",type:"Théorème",fam:"N3",desc:"Lag ÷ débit = latence. Universel, sans hypothèse. Premier calcul quand un pipeline dérive.",dag:"TRANSPORT",ddd:"",zone:"📬 TRANSIT",univ:true,outils:"Kafka lag monitor, Prometheus"},
+{id:"T037",nom:"Théorème de Burke",type:"Théorème",fam:"N3",desc:"La sortie d'une file bien dimensionnée est aussi régulière que son entrée.",dag:"TRANSPORT,ORCHESTRATION",ddd:"",zone:"📬 TRANSIT",univ:false,outils:"Kafka pipeline chaining"},
+{id:"T038",nom:"M/G/1 (Pollaczek-Khinchine)",type:"Théorème",fam:"N3",desc:"La variance du temps de traitement coûte autant que la durée moyenne.",dag:"TRANSPORT,ORCHESTRATION",ddd:"",zone:"📬 TRANSIT",univ:false,outils:"batch job tuning, variance analysis"},
+{id:"T039",nom:"Files à Priorité (HOL)",type:"Théorème",fam:"N3",desc:"Messages critiques voient une file composée uniquement de messages aussi prioritaires.",dag:"TRANSPORT",ddd:"infrastructure",zone:"📬 TRANSIT",univ:false,outils:"Kafka priority, DLQ, SLA tiered"},
+{id:"T040",nom:"Théorème PASTA",type:"Théorème",fam:"N3",desc:"Un monitoring aléatoire voit l'état moyen réel — pas un état biaisé.",dag:"TRANSPORT,INFRA",ddd:"",zone:"📊 VISIBILITÉ",univ:true,outils:"Prometheus scraping, monitoring"},
+{id:"T041",nom:"Théorème CAP (Brewer)",type:"Théorème",fam:"N3",desc:"On ne peut garantir simultanément que 2 parmi : cohérence, disponibilité, partitions.",dag:"STORE_RAW,STORE_STRUCTURED,TRANSPORT",ddd:"infrastructure",zone:"💾 ÉTAT",univ:true,outils:"Kafka, Cassandra, Postgres"},
+{id:"T042",nom:"Théorème FLP",type:"Théorème",fam:"N3",desc:"Une seule panne potentielle suffit à rendre impossible tout consensus. D'où les timeouts.",dag:"ORCHESTRATION,INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:true,outils:"Raft, Zookeeper, timeouts"},
+{id:"T043",nom:"Algorithme de Raft",type:"Théorème",fam:"N3",desc:"Élection de leader + réplication de log. Cohérence garantie tant qu'une majorité est vivante.",dag:"INFRA,ORCHESTRATION",ddd:"infrastructure",zone:"🦺 ROBUSTESSE",univ:false,outils:"Kafka KRaft, etcd, CockroachDB"},
+{id:"T044",nom:"CRDTs",type:"Théorème",fam:"N3",desc:"Opérations commutatives et idempotentes : peu importe l'ordre, le résultat converge.",dag:"STORE_RAW,TRANSPORT",ddd:"infrastructure",zone:"💾 ÉTAT",univ:false,outils:"Redis, Riak, distributed counters"},
+{id:"T045",nom:"Exactly-once Semantics",type:"Théorème",fam:"N3",desc:"Chaque message traité exactement une fois, même si le réseau coupe. Non-négociable en finance.",dag:"TRANSPORT,TRANSFORM",ddd:"infrastructure",zone:"🦺 ROBUSTESSE",univ:true,outils:"Kafka Transactions, Flink"},
+{id:"T046",nom:"Fonction de Transfert (Laplace)",type:"Théorème",fam:"N3",desc:"La personnalité dynamique d'un système : comment il répond à une perturbation soudaine.",dag:"INFRA,ORCHESTRATION",ddd:"",zone:"🕰️ TEMPO",univ:false,outils:"autoscaling models, K8s HPA"},
+{id:"T047",nom:"Critère de Nyquist (Stabilité)",type:"Théorème",fam:"N3",desc:"Teste si un autoscaler convergera vers un équilibre ou oscillera indéfiniment.",dag:"INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:false,outils:"autoscaler design, KEDA"},
+{id:"T048",nom:"Régulateur PID",type:"Théorème",fam:"N3",desc:"3 signaux : écart actuel (P) + accumulation (I) + vitesse de changement (D). KEDA est un PID.",dag:"INFRA,ORCHESTRATION",ddd:"infrastructure",zone:"🕰️ TEMPO",univ:false,outils:"KEDA, K8s HPA, autoscaling"},
+{id:"T049",nom:"Stabilité de Lyapunov",type:"Théorème",fam:"N3",desc:"Preuve formelle qu'un système revient toujours à l'équilibre après toute perturbation.",dag:"INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:false,outils:"formal verification, control systems"},
+{id:"T050",nom:"Processus de Poisson (Défaillances)",type:"Théorème",fam:"N3",desc:"Les erreurs arrivent comme la pluie : aléatoires, indépendantes. Modèle du budget SLO.",dag:"INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:true,outils:"Prometheus, SLO budget, Datadog"},
+{id:"T051",nom:"Distribution de Weibull",type:"Théorème",fam:"N3",desc:"3 régimes de défaillance : défauts de jeunesse, hasard pur, usure progressive.",dag:"INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:false,outils:"reliability engineering, MTTF"},
+{id:"T052",nom:"Disponibilité Série/Parallèle",type:"Théorème",fam:"N3",desc:"5 composants à 99% en série = 95% de dispo. En parallèle : 99,99%. Arithmétique de la redondance.",dag:"INFRA,TRANSPORT",ddd:"",zone:"🦺 ROBUSTESSE",univ:true,outils:"multi-AZ, redondance, SLA calc"},
+{id:"T053",nom:"Inégalités de Markov & Cantelli",type:"Théorème",fam:"N3",desc:"Bornes universelles sur la probabilité qu'une latence dépasse un seuil.",dag:"INFRA",ddd:"",zone:"🦺 ROBUSTESSE",univ:true,outils:"alerting conservatif, SLO bounds"},
+// ── RÔLES IT F1 ──
+{id:"R001",nom:"Software Engineer",type:"Rôle IT",fam:"F1",desc:"Conçoit et implémente les fonctionnalités côté serveur ou partagées.",dag:"TRANSFORM",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"Java, TypeScript, Go, Python"},
+{id:"R002",nom:"Full-Stack Engineer",type:"Rôle IT",fam:"F1",desc:"Couvre la stack complète de la source à l'interface.",dag:"SOURCE,CONSUME",ddd:"interfaces,domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"React, Node.js, TypeScript"},
+{id:"R003",nom:"Product Engineer",type:"Rôle IT",fam:"F1",desc:"Ingénieur focalisé sur le produit utilisateur final.",dag:"TRANSFORM,CONSUME",ddd:"domain,interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"React, A/B testing, analytics"},
+{id:"R004",nom:"Frontend Engineer",type:"Rôle IT",fam:"F1",desc:"Spécialiste de l'interface utilisateur web.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"React, Vue, TypeScript, CSS"},
+{id:"R005",nom:"Backend Engineer",type:"Rôle IT",fam:"F1",desc:"Implémente la logique applicative et expose les APIs.",dag:"TRANSFORM,SERVE",ddd:"application,domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"Node.js, Go, FastAPI, PostgreSQL"},
+{id:"R006",nom:"Mobile Engineer",type:"Rôle IT",fam:"F1",desc:"Développe les applications iOS / Android natives.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"Swift, Kotlin, React Native"},
+{id:"R007",nom:"Embedded Systems Engineer",type:"Rôle IT",fam:"F1",desc:"Programme les systèmes temps-réel et matériels embarqués.",dag:"SOURCE",ddd:"interfaces",zone:"🖥️ EXÉCUTION",univ:null,outils:"C, C++, RTOS, Rust"},
+{id:"R008",nom:"Game Developer",type:"Rôle IT",fam:"F1",desc:"Développe les moteurs de jeu et expériences interactives.",dag:"CONSUME",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"Unity, Unreal, C++"},
+{id:"R009",nom:"QA Engineer / SDET",type:"Rôle IT",fam:"F1",desc:"Assure la qualité par l'automatisation des tests.",dag:"",ddd:"all",zone:"🦺 ROBUSTESSE",univ:null,outils:"Cypress, Playwright, Jest, Selenium"},
+// ── RÔLES IT F2 ──
+{id:"R010",nom:"Data Scientist",type:"Rôle IT",fam:"F2",desc:"Construit des modèles prédictifs à partir des données.",dag:"CONSUME",ddd:"domain",zone:"💾 ÉTAT",univ:null,outils:"Python, scikit-learn, Jupyter"},
+{id:"R011",nom:"Data Analyst",type:"Rôle IT",fam:"F2",desc:"Explore et visualise les données pour générer des insights.",dag:"CONSUME",ddd:"",zone:"📊 VISIBILITÉ",univ:null,outils:"SQL, Tableau, Looker, Python"},
+{id:"R012",nom:"Analytics Engineer",type:"Rôle IT",fam:"F2",desc:"Transforme les données brutes en modèles analytiques réutilisables.",dag:"TRANSFORM,SERVE",ddd:"infrastructure",zone:"💾 ÉTAT",univ:null,outils:"dbt, SQL, BigQuery, Redshift"},
+{id:"R013",nom:"Data Engineer",type:"Rôle IT",fam:"F2",desc:"Conçoit et opère les pipelines de données de bout en bout.",dag:"TRANSPORT,STORE_RAW,TRANSFORM,STORE_STRUCTURED,ORCHESTRATION",ddd:"infrastructure",zone:"💾 ÉTAT",univ:null,outils:"Spark, Kafka, Airflow, dbt, S3"},
+{id:"R014",nom:"ML Engineer",type:"Rôle IT",fam:"F2",desc:"Met en production et optimise les modèles ML.",dag:"TRANSFORM,SERVE",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"MLflow, PyTorch, FastAPI, K8s"},
+{id:"R015",nom:"MLOps Engineer",type:"Rôle IT",fam:"F2",desc:"Gère le cycle de vie des modèles ML en production.",dag:"ORCHESTRATION,INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:null,outils:"MLflow, Kubeflow, ArgoCD"},
+{id:"R016",nom:"AI Engineer",type:"Rôle IT",fam:"F2",desc:"Intègre les LLMs et modèles génératifs dans les produits.",dag:"TRANSFORM,SERVE",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"LangChain, OpenAI API, RAG"},
+{id:"R017",nom:"BI Developer",type:"Rôle IT",fam:"F2",desc:"Conçoit les tableaux de bord et rapports analytiques.",dag:"SERVE,CONSUME",ddd:"infrastructure",zone:"📊 VISIBILITÉ",univ:null,outils:"Looker, Tableau, Power BI, dbt"},
+{id:"R018",nom:"AI Researcher",type:"Rôle IT",fam:"F2",desc:"Recherche de nouvelles architectures et algorithmes ML.",dag:"",ddd:"domain",zone:"💾 ÉTAT",univ:null,outils:"PyTorch, JAX, arXiv, CUDA"},
+{id:"R019",nom:"Computer Vision Engineer",type:"Rôle IT",fam:"F2",desc:"Développe les systèmes de traitement d'images et vidéos.",dag:"TRANSFORM",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"OpenCV, PyTorch, TensorRT"},
+// ── RÔLES IT F3 ──
+{id:"R020",nom:"DevOps Engineer",type:"Rôle IT",fam:"F3",desc:"Automatise le déploiement et l'opération des systèmes.",dag:"INFRA,ORCHESTRATION",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:null,outils:"K8s, Terraform, GitHub Actions, ArgoCD"},
+{id:"R021",nom:"SRE",type:"Rôle IT",fam:"F3",desc:"Garantit la fiabilité, disponibilité et performance des services.",dag:"INFRA",ddd:"infrastructure",zone:"🦺 ROBUSTESSE",univ:null,outils:"Prometheus, PagerDuty, SLO tooling"},
+{id:"R022",nom:"Platform Engineer",type:"Rôle IT",fam:"F3",desc:"Construit et maintient la plateforme interne.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:null,outils:"Backstage, K8s, Terraform, Helm"},
+{id:"R023",nom:"Cloud Engineer",type:"Rôle IT",fam:"F3",desc:"Déploie et opère les ressources cloud.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:null,outils:"AWS, GCP, Azure, Terraform"},
+{id:"R024",nom:"Cloud Architect",type:"Rôle IT",fam:"F3",desc:"Conçoit l'architecture des systèmes cloud à grande échelle.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:null,outils:"AWS Well-Architected, multi-cloud"},
+{id:"R025",nom:"Network Engineer",type:"Rôle IT",fam:"F3",desc:"Conçoit et maintient les réseaux et la connectivité.",dag:"TRANSPORT",ddd:"infrastructure",zone:"📬 TRANSIT",univ:null,outils:"VPC, BGP, CDN, Load Balancer"},
+{id:"R026",nom:"Systems Administrator",type:"Rôle IT",fam:"F3",desc:"Administre les serveurs et systèmes d'exploitation.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:null,outils:"Linux, Bash, Ansible, Puppet"},
+{id:"R027",nom:"Observability Engineer",type:"Rôle IT",fam:"F3",desc:"Instrumente et monitore les systèmes en production.",dag:"",ddd:"infrastructure",zone:"📊 VISIBILITÉ",univ:null,outils:"Prometheus, Grafana, OTel, Datadog"},
+{id:"R028",nom:"Chaos Engineer",type:"Rôle IT",fam:"F3",desc:"Teste la résilience des systèmes par des pannes contrôlées.",dag:"",ddd:"infrastructure",zone:"🦺 ROBUSTESSE",univ:null,outils:"Chaos Monkey, Gremlin, Litmus"},
+// ── RÔLES IT F4 ──
+{id:"R029",nom:"Security Engineer",type:"Rôle IT",fam:"F4",desc:"Protège les systèmes contre les menaces et vulnérabilités.",dag:"IAM",ddd:"infrastructure",zone:"🪪 IDENTITÉ",univ:null,outils:"Vault, SIEM, SAST, pen testing tools"},
+{id:"R030",nom:"Application Security Engineer",type:"Rôle IT",fam:"F4",desc:"Sécurise les applications au niveau du code et des APIs.",dag:"",ddd:"all",zone:"🪪 IDENTITÉ",univ:null,outils:"OWASP, Snyk, SonarQube, DAST"},
+{id:"R031",nom:"IAM Engineer",type:"Rôle IT",fam:"F4",desc:"Gère les identités, accès et permissions.",dag:"IAM",ddd:"infrastructure",zone:"🪪 IDENTITÉ",univ:null,outils:"Keycloak, AWS IAM, OAuth2, LDAP"},
+{id:"R032",nom:"Penetration Tester",type:"Rôle IT",fam:"F4",desc:"Identifie les vulnérabilités par des tests d'intrusion.",dag:"",ddd:"all",zone:"🪪 IDENTITÉ",univ:null,outils:"Metasploit, Burp Suite, Nmap"},
+{id:"R033",nom:"SOC Analyst",type:"Rôle IT",fam:"F4",desc:"Détecte et répond aux incidents de sécurité.",dag:"",ddd:"infrastructure",zone:"📊 VISIBILITÉ",univ:null,outils:"Splunk, QRadar, CrowdStrike"},
+{id:"R034",nom:"Security Architect",type:"Rôle IT",fam:"F4",desc:"Conçoit l'architecture sécurité globale de l'organisation.",dag:"IAM",ddd:"infrastructure",zone:"🪪 IDENTITÉ",univ:null,outils:"zero-trust, network segmentation"},
+{id:"R035",nom:"Compliance Engineer",type:"Rôle IT",fam:"F4",desc:"Assure la conformité réglementaire (RGPD, SOC2, ISO27001).",dag:"",ddd:"infrastructure",zone:"🪪 IDENTITÉ",univ:null,outils:"Vanta, Drata, audit tools"},
+{id:"R036",nom:"CISO",type:"Rôle IT",fam:"F4",desc:"Dirige la stratégie sécurité au niveau exécutif.",dag:"",ddd:"all",zone:"🪪 IDENTITÉ",univ:null,outils:"risk frameworks, GRC tools"},
+// ── RÔLES IT F5 ──
+{id:"R037",nom:"Product Manager",type:"Rôle IT",fam:"F5",desc:"Définit la vision produit et priorise le backlog.",dag:"SOURCE",ddd:"domain",zone:"📊 VISIBILITÉ",univ:null,outils:"Jira, Notion, Figma, analytics"},
+{id:"R038",nom:"Technical Product Manager",type:"Rôle IT",fam:"F5",desc:"Fait le lien entre besoins techniques et décisions produit.",dag:"SOURCE,SERVE",ddd:"domain,interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"Jira, OKRs, API specs"},
+{id:"R039",nom:"Product Designer",type:"Rôle IT",fam:"F5",desc:"Conçoit l'expérience et les interactions utilisateur.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"Figma, Framer, usability testing"},
+{id:"R040",nom:"UI Designer",type:"Rôle IT",fam:"F5",desc:"Crée les composants visuels et l'identité de l'interface.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"Figma, design tokens, Storybook"},
+{id:"R041",nom:"UX Researcher",type:"Rôle IT",fam:"F5",desc:"Comprend les besoins utilisateurs par la recherche terrain.",dag:"CONSUME",ddd:"",zone:"📊 VISIBILITÉ",univ:null,outils:"Maze, Hotjar, user interviews"},
+{id:"R042",nom:"Design Systems Engineer",type:"Rôle IT",fam:"F5",desc:"Maintient la cohérence visuelle via un design system.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"Storybook, tokens, React components"},
+{id:"R043",nom:"Growth Engineer",type:"Rôle IT",fam:"F5",desc:"Optimise la croissance par l'expérimentation.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"A/B testing, Amplitude, Segment"},
+{id:"R044",nom:"Developer Advocate",type:"Rôle IT",fam:"F5",desc:"Évangélise les technologies auprès des développeurs.",dag:"SERVE",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:null,outils:"docs, demos, SDKs, community"},
+{id:"R045",nom:"Business Analyst / AMOA",type:"Rôle IT",fam:"F5",desc:"Traduit les besoins métier en spécifications fonctionnelles.",dag:"SOURCE,CONSUME",ddd:"domain",zone:"📊 VISIBILITÉ",univ:null,outils:"user stories, Jira, Confluence, BPMN"},
+// ── RÔLES IT F6 ──
+{id:"R046",nom:"Tech Lead",type:"Rôle IT",fam:"F6",desc:"Guide technique d'une équipe sur une codebase.",dag:"TRANSFORM",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:null,outils:"code review, architecture decisions"},
+{id:"R047",nom:"Staff Engineer",type:"Rôle IT",fam:"F6",desc:"Influence technique transverse à plusieurs équipes.",dag:"",ddd:"all",zone:"",univ:null,outils:"RFCs, design docs, cross-team work"},
+{id:"R048",nom:"Principal / Distinguished Engineer",type:"Rôle IT",fam:"F6",desc:"Expert de référence à l'échelle de l'organisation.",dag:"",ddd:"all",zone:"",univ:null,outils:"architecture patterns, tech strategy"},
+{id:"R049",nom:"Engineering Manager",type:"Rôle IT",fam:"F6",desc:"Manage et développe une équipe d'ingénieurs.",dag:"",ddd:"",zone:"",univ:null,outils:"1:1s, OKRs, hiring, roadmaps"},
+{id:"R050",nom:"VP of Engineering",type:"Rôle IT",fam:"F6",desc:"Dirige l'organisation ingénierie au niveau VP.",dag:"",ddd:"",zone:"",univ:null,outils:"org design, budget, roadmap"},
+{id:"R051",nom:"CTO",type:"Rôle IT",fam:"F6",desc:"Dirige la stratégie technologique de l'entreprise.",dag:"",ddd:"all",zone:"",univ:null,outils:"tech strategy, board communication"},
+{id:"R052",nom:"CIO",type:"Rôle IT",fam:"F6",desc:"Dirige les systèmes d'information de l'entreprise.",dag:"",ddd:"all",zone:"",univ:null,outils:"IT governance, ERP, procurement"},
+{id:"R053",nom:"Solutions Architect",type:"Rôle IT",fam:"F6",desc:"Conçoit les architectures systèmes inter-applications.",dag:"",ddd:"all",zone:"",univ:null,outils:"architecture diagrams, RFCs"},
+{id:"R054",nom:"Software Architect",type:"Rôle IT",fam:"F6",desc:"Définit les standards et patterns architecturaux.",dag:"",ddd:"domain,application",zone:"🖥️ EXÉCUTION",univ:null,outils:"ADRs, patterns, SOLID, DDD"},
+// ── SOLID ──
+{id:"S001",nom:"Single Responsibility (SRP)",type:"SOLID",fam:"S",desc:"Chaque classe a une seule raison de changer.",dag:"",ddd:"all",zone:"",univ:true,outils:"ESLint, SonarQube, code review"},
+{id:"S002",nom:"Open/Closed (OCP)",type:"SOLID",fam:"O",desc:"Ouvert à l'extension, fermé à la modification.",dag:"",ddd:"domain",zone:"",univ:true,outils:"interfaces, abstract classes, plugins"},
+{id:"S003",nom:"Liskov Substitution (LSP)",type:"SOLID",fam:"L",desc:"Un sous-type doit être substituable à son type parent.",dag:"",ddd:"domain",zone:"",univ:true,outils:"type systems, tests, TypeScript"},
+{id:"S004",nom:"Interface Segregation (ISP)",type:"SOLID",fam:"I",desc:"Préférer des interfaces spécialisées à une interface générale.",dag:"",ddd:"interfaces,domain",zone:"",univ:true,outils:"TypeScript interfaces, traits, Kotlin"},
+{id:"S005",nom:"Dependency Inversion (DIP)",type:"SOLID",fam:"D",desc:"Dépendre des abstractions, pas des implémentations.",dag:"",ddd:"application,infrastructure",zone:"",univ:true,outils:"DI containers, Spring, NestJS"},
+// ── GOF ──
+{id:"G001",nom:"Factory Method",type:"GoF",fam:"Création",desc:"Délègue la création d'objets à des sous-classes.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"Spring @Bean, NestJS, factories"},
+{id:"G002",nom:"Builder",type:"GoF",fam:"Création",desc:"Construit des objets complexes étape par étape.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"Lombok @Builder, Kotlin DSL"},
+{id:"G003",nom:"Singleton",type:"GoF",fam:"Création",desc:"Une seule instance partagée dans tout le programme.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:true,outils:"Spring @Singleton, DI scope"},
+{id:"G004",nom:"Adapter",type:"GoF",fam:"Structure",desc:"Rend compatibles deux interfaces incompatibles.",dag:"TRANSPORT,SERVE",ddd:"infrastructure",zone:"",univ:true,outils:"REST adapters, Repository, ACL"},
+{id:"G005",nom:"Decorator",type:"GoF",fam:"Structure",desc:"Ajoute des comportements dynamiquement sans modifier la classe.",dag:"",ddd:"domain",zone:"",univ:true,outils:"Python @decorator, Express middleware"},
+{id:"G006",nom:"Facade",type:"GoF",fam:"Structure",desc:"Interface simplifiée cachant un sous-système complexe.",dag:"SERVE",ddd:"interfaces",zone:"",univ:true,outils:"API Gateway, BFF pattern"},
+{id:"G007",nom:"Proxy",type:"GoF",fam:"Structure",desc:"Contrôle l'accès à un objet via un intermédiaire.",dag:"TRANSPORT,SERVE",ddd:"infrastructure",zone:"📬 TRANSIT",univ:true,outils:"nginx, Envoy, Repository"},
+{id:"G008",nom:"Composite",type:"GoF",fam:"Structure",desc:"Traite des objets individuels et des compositions uniformément.",dag:"",ddd:"domain",zone:"",univ:true,outils:"React components, UI trees"},
+{id:"G009",nom:"Observer",type:"GoF",fam:"Comportement",desc:"Notifie des observateurs des changements d'état.",dag:"TRANSPORT",ddd:"domain",zone:"📬 TRANSIT",univ:true,outils:"RxJS, EventEmitter, Kafka, webhooks"},
+{id:"G010",nom:"Strategy",type:"GoF",fam:"Comportement",desc:"Interchangez des algorithmes dans une famille.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"payment providers, sort algorithms"},
+{id:"G011",nom:"Template Method",type:"GoF",fam:"Comportement",desc:"Squelette d'algorithme fixe, étapes personnalisables.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"Airflow DAG templates, abstract classes"},
+{id:"G012",nom:"Command",type:"GoF",fam:"Comportement",desc:"Encapsule une requête en objet pour différer son exécution.",dag:"TRANSPORT",ddd:"application",zone:"📬 TRANSIT",univ:true,outils:"CQRS, undo/redo, message bus"},
+{id:"G013",nom:"State",type:"GoF",fam:"Comportement",desc:"Comportement conditionné par l'état interne. Commande : pending→shipped.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"XState, state machines, sagas"},
+{id:"G014",nom:"Iterator",type:"GoF",fam:"Comportement",desc:"Parcourt une collection sans exposer sa structure interne.",dag:"TRANSFORM",ddd:"infrastructure",zone:"",univ:true,outils:"Python generators, cursors, streams"},
+// ── NŒUDS DAG ──
+{id:"D001",nom:"📱 SOURCE",type:"Nœud DAG",fam:"Principal",desc:"Point d'entrée des données brutes dans le système.",dag:"SOURCE",ddd:"interfaces",zone:"📬 TRANSIT",univ:true,outils:"Kafka producers, IoT, APIs, CDCs"},
+{id:"D002",nom:"🚚 TRANSPORT",type:"Nœud DAG",fam:"Principal",desc:"Déplace les données sans les transformer — queues, streams, webhooks.",dag:"TRANSPORT",ddd:"infrastructure",zone:"📬 TRANSIT",univ:true,outils:"Kafka, RabbitMQ, SQS, Debezium"},
+{id:"D003",nom:"🪨 STORE RAW",type:"Nœud DAG",fam:"Principal",desc:"Persiste les données en forme brute — Data Lake, S3.",dag:"STORE_RAW",ddd:"infrastructure",zone:"💾 ÉTAT",univ:false,outils:"S3, GCS, ADLS, Delta Lake"},
+{id:"D004",nom:"⚙️ TRANSFORM",type:"Nœud DAG",fam:"Principal",desc:"Transforme les données — logique métier, dbt, Spark, SQL.",dag:"TRANSFORM",ddd:"domain,application",zone:"🖥️ EXÉCUTION",univ:true,outils:"dbt, Spark, Flink, Pandas, SQL"},
+{id:"D005",nom:"🗄️ STORE STRUCTURED",type:"Nœud DAG",fam:"Principal",desc:"Persiste les données organisées — Warehouse, Data Mart.",dag:"STORE_STRUCTURED",ddd:"infrastructure",zone:"💾 ÉTAT",univ:true,outils:"PostgreSQL, BigQuery, Redshift, Snowflake"},
+{id:"D006",nom:"🎯 SERVE",type:"Nœud DAG",fam:"Principal",desc:"Expose les données aux consommateurs — APIs, CDN.",dag:"SERVE",ddd:"interfaces",zone:"📬 TRANSIT",univ:true,outils:"REST APIs, GraphQL, CDN, Looker"},
+{id:"D007",nom:"🧠 CONSUME",type:"Nœud DAG",fam:"Principal",desc:"Reçoit et utilise les données — UI, dashboards, ML models.",dag:"CONSUME",ddd:"interfaces",zone:"📊 VISIBILITÉ",univ:true,outils:"UI, Tableau, Looker, ML inference"},
+{id:"D008",nom:"🔑 IAM",type:"Nœud DAG",fam:"Orthogonal",desc:"Auth, accès, secrets — cross-cutting sur tous les nœuds.",dag:"IAM",ddd:"infrastructure",zone:"🪪 IDENTITÉ",univ:true,outils:"OAuth2, JWT, Keycloak, AWS IAM"},
+{id:"D009",nom:"🎼 ORCHESTRATION",type:"Nœud DAG",fam:"Orthogonal",desc:"Déclenche et ordonne la chaîne — Airflow, Cron, scheduling.",dag:"ORCHESTRATION",ddd:"interfaces",zone:"🕰️ TEMPO",univ:true,outils:"Airflow, Dagster, Prefect, Cron"},
+{id:"D010",nom:"🏗️ INFRA",type:"Nœud DAG",fam:"Orthogonal",desc:"Fait tourner tout le système — cloud, containers, compute.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:true,outils:"K8s, Terraform, Docker, AWS"},
+// ── ZONES ──
+{id:"Z001",nom:"💾 ÉTAT",type:"Zone",fam:"Zone",desc:"Persistance et cohérence des données à long terme.",dag:"STORE_RAW,STORE_STRUCTURED",ddd:"infrastructure",zone:"💾 ÉTAT",univ:true,outils:"Postgres, Redis, S3, Cassandra"},
+{id:"Z002",nom:"🪪 IDENTITÉ",type:"Zone",fam:"Zone",desc:"Gestion des identités, accès et permissions.",dag:"IAM",ddd:"infrastructure",zone:"🪪 IDENTITÉ",univ:true,outils:"OAuth2, JWT, Keycloak, Vault"},
+{id:"Z003",nom:"🖥️ EXÉCUTION",type:"Zone",fam:"Zone",desc:"Ressources de calcul, runtime et concurrence.",dag:"INFRA",ddd:"infrastructure",zone:"🖥️ EXÉCUTION",univ:true,outils:"Docker, K8s, Serverless, Functions"},
+{id:"Z004",nom:"📬 TRANSIT",type:"Zone",fam:"Zone",desc:"Circulation des messages et événements entre composants.",dag:"TRANSPORT",ddd:"infrastructure",zone:"📬 TRANSIT",univ:true,outils:"Kafka, RabbitMQ, webhooks, SQS"},
+{id:"Z005",nom:"📊 VISIBILITÉ",type:"Zone",fam:"Zone",desc:"Monitoring, métriques, logs et alerting.",dag:"",ddd:"infrastructure",zone:"📊 VISIBILITÉ",univ:true,outils:"Prometheus, Grafana, Datadog, OTel"},
+{id:"Z006",nom:"🎛️ PARAMÈTRES",type:"Zone",fam:"Zone",desc:"Configuration, secrets et feature flags.",dag:"",ddd:"infrastructure",zone:"🎛️ PARAMÈTRES",univ:true,outils:"Vault, AWS Secrets, LaunchDarkly"},
+{id:"Z007",nom:"🦺 ROBUSTESSE",type:"Zone",fam:"Zone",desc:"Résilience, tolérance aux pannes et SLA.",dag:"INFRA",ddd:"infrastructure",zone:"🦺 ROBUSTESSE",univ:true,outils:"circuit breaker, retry, Resilience4j"},
+{id:"Z008",nom:"🕰️ TEMPO",type:"Zone",fam:"Zone",desc:"Ordonnancement, dépendances temporelles et latence.",dag:"ORCHESTRATION",ddd:"infrastructure",zone:"🕰️ TEMPO",univ:true,outils:"Airflow, Cron, temporal, scheduling"},
+// ── PARADIGMES ──
+{id:"P001",nom:"Paradigme Impératif",type:"Paradigme",fam:"Impérative",desc:"Centré sur l'état mutable et l'identité. POO, procédural.",dag:"TRANSFORM",ddd:"domain",zone:"🖥️ EXÉCUTION",univ:true,outils:"Java, Python, Go, C++, TypeScript"},
+{id:"P002",nom:"Paradigme Déclaratif",type:"Paradigme",fam:"Déclarative",desc:"Sans état. Fonctionnel, logique. Ce que faire, pas comment.",dag:"TRANSFORM",ddd:"all",zone:"🖥️ EXÉCUTION",univ:true,outils:"SQL, Haskell, Scala, React, Elm"},
+{id:"P003",nom:"Paradigme Concurrent",type:"Paradigme",fam:"Concurrente",desc:"Acteurs et flux. Messages, réactivité, dataflow.",dag:"TRANSPORT,TRANSFORM",ddd:"infrastructure",zone:"📬 TRANSIT",univ:true,outils:"Akka, RxJava, Erlang, Go channels"},
+// ── VOLATILITÉ ──
+{id:"V001",nom:"🧱 Pilote",type:"Volatilité",fam:"Pilote",desc:"Code copié et rarement rouvert. Drivers, boilerplates, configs.",dag:"INFRA",ddd:"infrastructure",zone:"",univ:true,outils:"libs copiées, boilerplates"},
+{id:"V002",nom:"🔌 Ossature",type:"Volatilité",fam:"Ossature",desc:"Code étendu par ajout, jamais modifié. Interfaces, frameworks.",dag:"",ddd:"application,interfaces",zone:"",univ:true,outils:"frameworks, interfaces, abstract classes"},
+{id:"V003",nom:"🌊 Substance",type:"Volatilité",fam:"Substance",desc:"Code réécrit de zéro. Porte la logique métier. Domain pur.",dag:"TRANSFORM",ddd:"domain",zone:"",univ:true,outils:"code métier, domain logic, use cases"},
+// ── POO PRIMITIFS ──
+{id:"O001",nom:"📦 Classe",type:"POO",fam:"POO",desc:"Modèle abstrait d'un concept. Définit état et comportements.",dag:"",ddd:"domain",zone:"",univ:true,outils:"tout langage OO"},
+{id:"O002",nom:"🧩 Objet",type:"POO",fam:"POO",desc:"Instance concrète d'une classe. Porte un état propre.",dag:"",ddd:"domain",zone:"",univ:true,outils:"new, instantiation"},
+{id:"O003",nom:"🔧 Méthode",type:"POO",fam:"POO",desc:"Comportement attaché à un objet. Transforme ou retourne l'état.",dag:"",ddd:"domain",zone:"",univ:true,outils:"functions, behaviors"},
+{id:"O004",nom:"📋 Interface",type:"POO",fam:"POO",desc:"Contrat de comportement sans implémentation. Abstraction pure.",dag:"",ddd:"domain,interfaces",zone:"",univ:true,outils:"TypeScript interfaces, Java interfaces"},
+];
+
+let _atlasUniv = false;
+
+function filterAtlas() {
+  const type = document.getElementById('atl-type').value;
+  const fam  = document.getElementById('atl-fam').value;
+  const zone = document.getElementById('atl-zone').value;
+  const dag  = document.getElementById('atl-dag').value;
+  const q    = document.getElementById('atl-srch').value.toLowerCase();
+  const rows = ATLAS_DATA.filter(r => {
+    if (type && r.type !== type) return false;
+    if (fam  && r.fam  !== fam)  return false;
+    if (zone && r.zone !== zone)  return false;
+    if (dag  && !r.dag.split(',').map(s => s.trim()).includes(dag)) return false;
+    if (_atlasUniv && r.univ !== true) return false;
+    if (q && !r.nom.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  renderAtlas(rows);
+}
+
+function toggleAtlasUniv() {
+  _atlasUniv = !_atlasUniv;
+  document.getElementById('atl-univ').classList.toggle('on', _atlasUniv);
+  filterAtlas();
+}
+
+function renderAtlas(rows) {
+  const DE = {SOURCE:'📱',TRANSPORT:'🚚',STORE_RAW:'🪨',TRANSFORM:'⚙️',STORE_STRUCTURED:'🗄️',SERVE:'🎯',CONSUME:'🧠',IAM:'🔑',ORCHESTRATION:'🎼',INFRA:'🏗️'};
+  const FB = {N1:'bn1',N2:'bn2',N3:'bn3',F1:'bf1',F2:'bf2',F3:'bf3',F4:'bf4',F5:'bf5',F6:'bf6'};
+  document.getElementById('atl-th').innerHTML =
+    '<tr>' + ATLAS_COLS.map(c => `<th style="min-width:${c.w}">${c.l}</th>`).join('') + '</tr>';
+  if (!rows.length) {
+    document.getElementById('atl-tb').innerHTML =
+      `<tr><td colspan="${ATLAS_COLS.length}" class="nores">Aucun résultat</td></tr>`;
+    document.getElementById('atl-cnt').textContent = '0 résultat';
+    return;
+  }
+  document.getElementById('atl-tb').innerHTML = rows.map(r => {
+    const dagHtml = r.dag
+      ? r.dag.split(',').map(n => { const e = DE[n.trim()] || ''; return `<span style="white-space:nowrap;display:block">${e} ${n.trim()}</span>`; }).join('')
+      : '<span style="color:#484f58">—</span>';
+    const famCls = FB[r.fam] || 'bdef';
+    const univHtml = r.univ === true ? '<span class="uok">✓</span>' : '<span class="uno">—</span>';
+    return '<tr>' +
+      `<td><strong style="font-size:12px">${r.nom}</strong></td>` +
+      `<td><span class="btype bdef" style="font-size:10px">${r.type}</span></td>` +
+      `<td><span class="btype ${famCls}">${r.fam || '—'}</span></td>` +
+      `<td class="dcell">${r.desc}</td>` +
+      `<td style="font-size:10.5px">${dagHtml}</td>` +
+      `<td style="font-size:11px;color:#8b949e">${r.ddd || '—'}</td>` +
+      `<td style="font-size:11px">${r.zone || '<span style="color:#484f58">—</span>'}</td>` +
+      `<td style="text-align:center">${univHtml}</td>` +
+      `<td style="font-size:10.5px;color:#8b949e">${r.outils || '—'}</td>` +
+    '</tr>';
+  }).join('');
+  document.getElementById('atl-cnt').textContent = `${rows.length} résultat${rows.length > 1 ? 's' : ''}`;
+}
+
+(function() { renderAtlas(ATLAS_DATA); })();
 </script>
 </body>
 </html>
