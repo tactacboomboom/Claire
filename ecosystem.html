@@ -1709,14 +1709,14 @@
       </select>
       <select class="atl-sel" id="atl-fam" onchange="filterAtlas()">
         <option value="">Toutes familles</option>
-        <option>N1</option><option>N2</option><option>N3</option>
-        <option>F1</option><option>F2</option><option>F3</option>
-        <option>F4</option><option>F5</option><option>F6</option>
-        <option>Création</option><option>Structure</option><option>Comportement</option>
-        <option>S</option><option>O</option><option>L</option><option>I</option><option>D</option>
-        <option>Principal</option><option>Orthogonal</option>
-        <option>Impérative</option><option>Déclarative</option><option>Concurrente</option>
-        <option>Pilote</option><option>Ossature</option><option>Substance</option><option>POO</option><option>Zone</option>
+        <option value="N1">N1 — Matière</option><option value="N2">N2 — Mouvement</option><option value="N3">N3 — Jonction</option>
+        <option value="F1">F1 — Développeurs</option><option value="F2">F2 — Data / ML</option><option value="F3">F3 — Infra / Ops</option>
+        <option value="F4">F4 — Sécurité</option><option value="F5">F5 — Produit / Design</option><option value="F6">F6 — Leadership</option>
+        <option value="Création">Création</option><option value="Structure">Structure</option><option value="Comportement">Comportement</option>
+        <option value="S">S — SRP</option><option value="O">O — OCP</option><option value="L">L — LSP</option><option value="I">I — ISP</option><option value="D">D — DIP</option>
+        <option value="Principal">Principal</option><option value="Orthogonal">Orthogonal</option>
+        <option value="Impérative">Impérative</option><option value="Déclarative">Déclarative</option><option value="Concurrente">Concurrente</option>
+        <option value="Pilote">Pilote</option><option value="Ossature">Ossature</option><option value="Substance">Substance</option><option value="POO">POO</option><option value="Zone">Zone</option>
       </select>
       <select class="atl-sel" id="atl-zone" onchange="filterAtlas()">
         <option value="">Toutes zones</option>
@@ -1731,6 +1731,14 @@
         <option>TRANSFORM</option><option>STORE_STRUCTURED</option>
         <option>SERVE</option><option>CONSUME</option>
         <option>IAM</option><option>ORCHESTRATION</option><option>INFRA</option>
+      </select>
+      <select class="atl-sel" id="atl-ddd" onchange="filterAtlas()">
+        <option value="">Toutes couches DDD</option>
+        <option value="domain">Domain — Logique métier</option>
+        <option value="infrastructure">Infrastructure — Technique</option>
+        <option value="application">Application — Use cases</option>
+        <option value="interfaces">Interfaces — UI & API</option>
+        <option value="all">Tous contextes DDD</option>
       </select>
       <select class="atl-sel" id="atl-role" onchange="filterAtlas()">
         <option value="">Tous rôles</option>
@@ -1802,7 +1810,6 @@
         </optgroup>
       </select>
       <input class="atl-srch" id="atl-srch" placeholder="Rechercher nom ou description..." oninput="filterAtlas()">
-      <button class="atl-tog" id="atl-univ" onclick="toggleAtlasUniv()">⊕ Universels</button>
       <span class="atl-cnt" id="atl-cnt"></span>
     </div>
     <div class="atl-wrap">
@@ -2613,8 +2620,6 @@ function computeRolePairs(data) {
   return map;
 }
 
-let _atlasUniv = false;
-
 function filterAtlas() {
   const role = document.getElementById('atl-role').value;
   if (role) document.getElementById('atl-type').value = 'Théorème';
@@ -2622,24 +2627,19 @@ function filterAtlas() {
   const fam  = document.getElementById('atl-fam').value;
   const zone = document.getElementById('atl-zone').value;
   const dag  = document.getElementById('atl-dag').value;
+  const ddd  = document.getElementById('atl-ddd').value;
   const q    = document.getElementById('atl-srch').value.toLowerCase();
   const rows = ATLAS_DATA.filter(r => {
     if (type && r.type !== type) return false;
     if (fam  && r.fam  !== fam)  return false;
     if (zone && r.zone !== zone)  return false;
     if (dag  && !r.dag.split(',').map(s => s.trim()).includes(dag)) return false;
+    if (ddd  && !(r.ddd === 'all' || r.ddd.includes(ddd))) return false;
     if (role && (!ROLE_PAIRS[r.id] || !ROLE_PAIRS[r.id].includes(role))) return false;
-    if (_atlasUniv && r.univ !== true) return false;
     if (q && !r.nom.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q)) return false;
     return true;
   });
   renderAtlas(rows);
-}
-
-function toggleAtlasUniv() {
-  _atlasUniv = !_atlasUniv;
-  document.getElementById('atl-univ').classList.toggle('on', _atlasUniv);
-  filterAtlas();
 }
 
 const FB = {N1:'bn1',N2:'bn2',N3:'bn3',F1:'bf1',F2:'bf2',F3:'bf3',F4:'bf4',F5:'bf5',F6:'bf6'};
