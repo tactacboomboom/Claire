@@ -467,7 +467,7 @@
     #metiers-it .f6 .disc-header{background:rgba(212,196,91,.08);color:#D4C45B;border-bottom:1px solid rgba(212,196,91,.15)}
     #metiers-it .f6 .card{border-left-color:#D4C45B} #metiers-it .f6 .card-name{color:#E0D080} #metiers-it .f6 .card-zone{background:rgba(212,196,91,.15);color:#D4C45B}
     /* ── ATLAS ─────────────────────────────────────────────── */
-    #tab-atlas .atl-ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center}
+    #tab-atlas .atl-ctrl{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;align-items:center;position:sticky;top:0;z-index:10;background:#0d1117;padding:10px 0 10px 0}
     #tab-atlas .atl-sel{background:#161b22;border:1px solid rgba(255,255,255,.12);color:#e6edf3;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer}
     #tab-atlas .atl-srch{background:#161b22;border:1px solid rgba(255,255,255,.12);color:#e6edf3;padding:5px 10px;border-radius:6px;font-size:12px;flex:1;min-width:140px}
     #tab-atlas .atl-srch::placeholder{color:#484f58}
@@ -2643,6 +2643,7 @@ function filterAtlas() {
 }
 
 const FB = {N1:'bn1',N2:'bn2',N3:'bn3',F1:'bf1',F2:'bf2',F3:'bf3',F4:'bf4',F5:'bf5',F6:'bf6'};
+const FL = {N1:'N1 — Matière',N2:'N2 — Mouvement',N3:'N3 — Jonction',F1:'F1 — Développeurs',F2:'F2 — Data / ML',F3:'F3 — Infra / Ops',F4:'F4 — Sécurité',F5:'F5 — Produit / Design',F6:'F6 — Leadership',S:'S — SRP',O:'O — OCP',L:'L — LSP',I:'I — ISP',D:'D — DIP'};
 
 function renderRoleBadges(theoremId) {
   if (!ROLE_PAIRS[theoremId] || !ROLE_PAIRS[theoremId].length) return '';
@@ -2692,7 +2693,7 @@ function renderAtlas(rows) {
     return '<tr>' +
       `<td><strong style="font-size:12px">${r.nom}</strong>${rolesHtml}</td>` +
       `<td><span class="btype bdef" style="font-size:10px">${r.type}</span></td>` +
-      `<td><span class="btype ${famCls}">${r.fam || '—'}</span></td>` +
+      `<td><span class="btype ${famCls}">${FL[r.fam] || r.fam || '—'}</span></td>` +
       `<td class="dcell">${r.desc}</td>` +
       `<td style="font-size:10.5px">${dagHtml}</td>` +
       `<td style="font-size:11px;color:#8b949e">${r.ddd || '—'}</td>` +
