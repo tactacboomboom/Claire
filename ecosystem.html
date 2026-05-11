@@ -2616,21 +2616,19 @@ function computeRolePairs(data) {
 let _atlasUniv = false;
 
 function filterAtlas() {
+  const role = document.getElementById('atl-role').value;
+  if (role) document.getElementById('atl-type').value = 'Théorème';
   const type = document.getElementById('atl-type').value;
   const fam  = document.getElementById('atl-fam').value;
   const zone = document.getElementById('atl-zone').value;
   const dag  = document.getElementById('atl-dag').value;
-  const role = document.getElementById('atl-role').value;
   const q    = document.getElementById('atl-srch').value.toLowerCase();
   const rows = ATLAS_DATA.filter(r => {
     if (type && r.type !== type) return false;
     if (fam  && r.fam  !== fam)  return false;
     if (zone && r.zone !== zone)  return false;
     if (dag  && !r.dag.split(',').map(s => s.trim()).includes(dag)) return false;
-    if (role) {
-      if (r.type !== 'Théorème') return false;
-      if (!ROLE_PAIRS[r.id] || !ROLE_PAIRS[r.id].includes(role)) return false;
-    }
+    if (role && (!ROLE_PAIRS[r.id] || !ROLE_PAIRS[r.id].includes(role))) return false;
     if (_atlasUniv && r.univ !== true) return false;
     if (q && !r.nom.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q)) return false;
     return true;
@@ -2644,9 +2642,38 @@ function toggleAtlasUniv() {
   filterAtlas();
 }
 
+const FB = {N1:'bn1',N2:'bn2',N3:'bn3',F1:'bf1',F2:'bf2',F3:'bf3',F4:'bf4',F5:'bf5',F6:'bf6'};
+
+function renderRoleBadges(theoremId) {
+  if (!ROLE_PAIRS[theoremId] || !ROLE_PAIRS[theoremId].length) return '';
+  const pills = ROLE_PAIRS[theoremId].map(rid => {
+    const role = ATLAS_DATA.find(x => x.id === rid);
+    if (!role) return '';
+    return `<a href="#" onclick="goToRole('${rid}');return false;" class="btype ${FB[role.fam]||'bdef'}" style="font-size:10px;cursor:pointer;text-decoration:none;margin:1px 2px 0 0;display:inline-block">${role.nom}</a>`;
+  }).join('');
+  return `<div style="margin-top:4px;line-height:1.6">${pills}</div>`;
+}
+
+function goToRole(roleId) {
+  const role = ATLAS_DATA.find(r => r.id === roleId);
+  if (!role) return;
+  switchTab('rolesit');
+  setTimeout(() => {
+    const cards = document.querySelectorAll('#tab-rolesit .card-name');
+    for (const el of cards) {
+      if (el.textContent.trim() === role.nom) {
+        const card = el.closest('.card');
+        card.scrollIntoView({behavior:'smooth', block:'center'});
+        card.style.outline = '2px solid rgba(88,166,255,.5)';
+        setTimeout(() => { card.style.outline = ''; }, 1500);
+        break;
+      }
+    }
+  }, 120);
+}
+
 function renderAtlas(rows) {
   const DE = {SOURCE:'📱',TRANSPORT:'🚚',STORE_RAW:'🪨',TRANSFORM:'⚙️',STORE_STRUCTURED:'🗄️',SERVE:'🎯',CONSUME:'🧠',IAM:'🔑',ORCHESTRATION:'🎼',INFRA:'🏗️'};
-  const FB = {N1:'bn1',N2:'bn2',N3:'bn3',F1:'bf1',F2:'bf2',F3:'bf3',F4:'bf4',F5:'bf5',F6:'bf6'};
   document.getElementById('atl-th').innerHTML =
     '<tr>' + ATLAS_COLS.map(c => `<th style="min-width:${c.w}">${c.l}</th>`).join('') + '</tr>';
   if (!rows.length) {
@@ -2661,14 +2688,9 @@ function renderAtlas(rows) {
       : '<span style="color:#484f58">—</span>';
     const famCls = FB[r.fam] || 'bdef';
     const univHtml = r.univ === true ? '<span class="uok">✓</span>' : '<span class="uno">—</span>';
-    const rolesFamHtml = (() => {
-      if (r.type !== 'Théorème' || !ROLE_PAIRS[r.id] || !ROLE_PAIRS[r.id].length) return '';
-      const byFam = {};
-      ROLE_PAIRS[r.id].forEach(rid => { const role = ATLAS_DATA.find(x => x.id === rid); if (role) byFam[role.fam] = (byFam[role.fam] || 0) + 1; });
-      return '<div style="margin-top:3px">' + Object.entries(byFam).map(([fam, cnt]) => `<span class="btype ${FB[fam]||'bdef'}" style="font-size:9px;padding:1px 4px">${fam}<span style="opacity:.7">×${cnt}</span></span>`).join(' ') + '</div>';
-    })();
+    const rolesHtml = r.type === 'Théorème' ? renderRoleBadges(r.id) : '';
     return '<tr>' +
-      `<td><strong style="font-size:12px">${r.nom}</strong>${rolesFamHtml}</td>` +
+      `<td><strong style="font-size:12px">${r.nom}</strong>${rolesHtml}</td>` +
       `<td><span class="btype bdef" style="font-size:10px">${r.type}</span></td>` +
       `<td><span class="btype ${famCls}">${r.fam || '—'}</span></td>` +
       `<td class="dcell">${r.desc}</td>` +
