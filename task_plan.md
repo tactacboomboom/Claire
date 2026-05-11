@@ -8,7 +8,7 @@ Créer le repo de documentation Claire qui formalise la méthode CPE (Canonical 
 
 ## 📍 Current Phase
 
-**Phase 4 — Rétro-ingénierie CPE**
+**Phase 8 — Sprints ecosystem.html (IDs + Atlas UX)**
 
 ## 🗓 Phases
 
@@ -54,6 +54,78 @@ Sources : clear-sky (21 fiches) + saas-traduction (15 templates)
 - [ ] README — pipeline visuel, quick start
 - [ ] docs/method.md, objects.md, operators.md
 - **Status:** pending
+
+---
+
+## 🗂️ Ecosystem.html — Sprints produit
+
+> Branche active : `feat/atlas-concepts`
+> Dernier commit : `46f4666` — role pills + goToRole cross-tab navigation
+
+### Sprint accomplis (historique)
+- [x] C4 — Tabs Métiers, Préfecture, Théorèmes (53 théorèmes Atlas)
+- [x] Atlas tab — 154 concepts, 9 colonnes, 5 filtres
+- [x] Role-theorem pairing — computeRolePairs() algorithme sémantique score ≥ 2
+- [x] Role pills + goToRole() — navigation croisée Atlas → Métiers
+
+### Phase 7: Product Spec — ecosystem-prd.md
+- [x] Définir purpose + public + global attractor d'ecosystem.html
+- [x] Mapper les onglets actuels sur les couches raw/transform/mart/viz
+- [x] Q3 — rôle de chaque onglet (résolu)
+- [x] Q4 — Métiers vs Rôles IT (résolu : différent)
+- [x] Q5 — ⊕ Universels → supprimer (résolu)
+- [x] Q6 — Filtres Atlas → DDD manquant + labels familles (résolu)
+- [x] Produire `ecosystem-prd.md`
+- **Status:** complete
+
+### Phase 8: Sprint "Terminologie IDs"
+- [ ] Définir le système d'IDs stables (T001-T053, R001-R054, Z001-Z008, D001-D010…)
+- [ ] Vérifier cohérence entre tous les onglets
+- [ ] Ajouter IDs manquants (SOLID S001-S005, GoF G001-G014, etc.)
+- **Status:** pending
+
+### Phase 8b: Sprint C5 "Atlas UX"
+- [x] Supprimer bouton ⊕ Universels
+- [x] Ajouter filtre "Couche DDD" dans l'Atlas
+- [x] Labels familles dans dropdown : "N1 — Matière", "N2 — Mouvement", "N3 — Jonction", "F1 — …"
+- [x] Labels familles dans cellules table (FL map)
+- [x] Barre filtres sticky
+- **Status:** complete
+
+### Phase 9: Sprint C6 "Légende & Ontologie"
+- [x] Fusionner onglets SOLID&Pipeline + Théorèmes + Rôles IT en onglet unique "📚 Légendes"
+- [x] SOLID & Pipeline découpé en 4 sous-onglets (Pipeline · Code · Architecture · Projets)
+- [x] Sommaire par défaut avec description de chaque section
+- [x] goToRole() recâblé vers Légendes → Rôles IT
+- [x] État mémorisé (_legTab, _solidSubTab)
+- **Status:** complete
+
+### Phase 10: Sprint "Store Raw explicite"
+- [ ] Section/onglet montrant ATLAS_DATA comme source de vérité nommée
+- [ ] Clarifier séparation raw vs marts dans le code
+- **Status:** pending
+
+### Phase 11: Sprint "Marts"
+- [ ] Onglet dédié marts
+- [ ] mart_role_stack — fiche complète d'un rôle (théorèmes + outils + zones + nœuds DAG)
+- [ ] mart_zone_coverage — pour chaque zone, quels théorèmes et rôles
+- **Status:** pending
+
+### Phase 12: Sprint "Préfecture → Entrepôt industriel"
+- [ ] Définir la métaphore entrepôt Amazon (zones physiques ↔ zones IT)
+- [ ] Mapper rôles entrepôt ↔ rôles IT ↔ familles F1-F6
+- [ ] Rendu visuel — pas un tableau, une viz graphique
+- **Status:** pending
+
+### Phase 13: Sprint "Role-as-Skill mapping"
+- [ ] Relier chaque rôle ATLAS_DATA à un skill Claude Code (existant ou à créer)
+- [ ] Définir le format d'un "skill de domaine" (≠ skill de processus)
+- [ ] Prototype : skill `data-engineer` invocable depuis Claude Code
+- **Status:** pending
+
+> PRD complet : `ecosystem-prd.md`
+> Global Attractor : décodeur IT + orchestre d'agents (4 cas d'usage)
+> Q3 (mapping onglets) en cours au moment du compact
 
 ---
 
