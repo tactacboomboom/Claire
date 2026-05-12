@@ -100,15 +100,23 @@ Sources : clear-sky (21 fiches) + saas-traduction (15 templates)
 - [x] État mémorisé (_legTab, _solidSubTab)
 - **Status:** complete
 
-### Phase 10: Sprint "Store Raw explicite"
-- [ ] Section/onglet montrant ATLAS_DATA comme source de vérité nommée
-- [ ] Clarifier séparation raw vs marts dans le code
-- **Status:** pending
+### Phase 10: Sprint C7 "DAG Layer Labels"
+- [x] Étiquette DAG (LAKE/WAREHOUSE/MART/SOURCE/CONSUME) sur chaque bouton topbar
+- [x] CSS `.tab-dag` + règle de nommage pour futurs onglets
+- [x] Arbitrage : Nature = SOURCE, LAKE/WAREHOUSE/MART = terminologie business
+- **Status:** complete
 
-### Phase 11: Sprint "Marts"
-- [ ] Onglet dédié marts
+### Phase 10b: Sprint C7b "Atlas Cleanup"
+- [x] Retirer filtre `atl-role` de l'onglet Atlas (mart caché dans warehouse)
+- [x] Supprimer les 3 lignes role dans filterAtlas()
+- [x] Conserver computeRolePairs() pour usage futur en C8
+- **Status:** complete
+
+### Phase 11: Sprint C8 "Marts"
+- [ ] Onglet dédié 🛒 MART
 - [ ] mart_role_stack — fiche complète d'un rôle (théorèmes + outils + zones + nœuds DAG)
 - [ ] mart_zone_coverage — pour chaque zone, quels théorèmes et rôles
+- [ ] Migrer computeRolePairs() vers le nouvel onglet
 - **Status:** pending
 
 ### Phase 12: Sprint "Préfecture → Entrepôt industriel"

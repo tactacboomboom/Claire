@@ -2494,75 +2494,7 @@
         <option value="interfaces">Interfaces — UI & API</option>
         <option value="all">Tous contextes DDD</option>
       </select>
-      <select class="atl-sel" id="atl-role" onchange="filterAtlas()">
-        <option value="">Tous rôles</option>
-        <optgroup label="F1 — Développeurs">
-          <option value="R001">Software Engineer</option>
-          <option value="R002">Full-Stack Engineer</option>
-          <option value="R003">Product Engineer</option>
-          <option value="R004">Frontend Engineer</option>
-          <option value="R005">Backend Engineer</option>
-          <option value="R006">Mobile Engineer</option>
-          <option value="R007">Embedded Systems Engineer</option>
-          <option value="R008">Game Developer</option>
-          <option value="R009">QA Engineer / SDET</option>
-        </optgroup>
-        <optgroup label="F2 — Data / ML">
-          <option value="R010">Data Scientist</option>
-          <option value="R011">Data Analyst</option>
-          <option value="R012">Analytics Engineer</option>
-          <option value="R013">Data Engineer</option>
-          <option value="R014">ML Engineer</option>
-          <option value="R015">MLOps Engineer</option>
-          <option value="R016">AI Engineer</option>
-          <option value="R017">BI Developer</option>
-          <option value="R018">AI Researcher</option>
-          <option value="R019">Computer Vision Engineer</option>
-        </optgroup>
-        <optgroup label="F3 — Infra / Ops">
-          <option value="R020">DevOps Engineer</option>
-          <option value="R021">SRE</option>
-          <option value="R022">Platform Engineer</option>
-          <option value="R023">Cloud Engineer</option>
-          <option value="R024">Cloud Architect</option>
-          <option value="R025">Network Engineer</option>
-          <option value="R026">Systems Administrator</option>
-          <option value="R027">Observability Engineer</option>
-          <option value="R028">Chaos Engineer</option>
-        </optgroup>
-        <optgroup label="F4 — Sécurité">
-          <option value="R029">Security Engineer</option>
-          <option value="R030">Application Security Engineer</option>
-          <option value="R031">IAM Engineer</option>
-          <option value="R032">Penetration Tester</option>
-          <option value="R033">SOC Analyst</option>
-          <option value="R034">Security Architect</option>
-          <option value="R035">Compliance Engineer</option>
-          <option value="R036">CISO</option>
-        </optgroup>
-        <optgroup label="F5 — Produit / Design">
-          <option value="R037">Product Manager</option>
-          <option value="R038">Technical Product Manager</option>
-          <option value="R039">Product Designer</option>
-          <option value="R040">UI Designer</option>
-          <option value="R041">UX Researcher</option>
-          <option value="R042">Design Systems Engineer</option>
-          <option value="R043">Growth Engineer</option>
-          <option value="R044">Developer Advocate</option>
-          <option value="R045">Business Analyst / AMOA</option>
-        </optgroup>
-        <optgroup label="F6 — Leadership">
-          <option value="R046">Tech Lead</option>
-          <option value="R047">Staff Engineer</option>
-          <option value="R048">Principal / Distinguished Engineer</option>
-          <option value="R049">Engineering Manager</option>
-          <option value="R050">VP of Engineering</option>
-          <option value="R051">CTO</option>
-          <option value="R052">CIO</option>
-          <option value="R053">Solutions Architect</option>
-          <option value="R054">Software Architect</option>
-        </optgroup>
-      </select>
+
       <input class="atl-srch" id="atl-srch" placeholder="Rechercher nom ou description..." oninput="filterAtlas()">
       <span class="atl-cnt" id="atl-cnt"></span>
     </div>
@@ -3394,8 +3326,6 @@ function computeRolePairs(data) {
 }
 
 function filterAtlas() {
-  const role = document.getElementById('atl-role').value;
-  if (role) document.getElementById('atl-type').value = 'Théorème';
   const type = document.getElementById('atl-type').value;
   const fam  = document.getElementById('atl-fam').value;
   const zone = document.getElementById('atl-zone').value;
@@ -3408,7 +3338,6 @@ function filterAtlas() {
     if (zone && r.zone !== zone)  return false;
     if (dag  && !r.dag.split(',').map(s => s.trim()).includes(dag)) return false;
     if (ddd  && !(r.ddd === 'all' || r.ddd.includes(ddd))) return false;
-    if (role && (!ROLE_PAIRS[r.id] || !ROLE_PAIRS[r.id].includes(role))) return false;
     if (q && !r.nom.toLowerCase().includes(q) && !r.desc.toLowerCase().includes(q)) return false;
     return true;
   });
