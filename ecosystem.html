@@ -1695,6 +1695,7 @@
       <button class="leg-nav-btn" onclick="switchLegTab('solid', this)">📐 SOLID &amp; Pipeline</button>
       <button class="leg-nav-btn" onclick="switchLegTab('theoremes', this)">🔬 Théorèmes</button>
       <button class="leg-nav-btn" onclick="switchLegTab('rolesit', this)">🧑‍💻 Rôles IT</button>
+      <button class="leg-nav-btn" onclick="switchLegTab('phasespec', this)">📋 Phase Spec</button>
     </div>
 
     <!-- SOMMAIRE -->
@@ -1704,6 +1705,7 @@
         <div style="margin-bottom:10px"><strong style="color:#c9d1d9">📐 SOLID &amp; Pipeline</strong> — Vocabulaire DAG, DDD, paradigmes, POO, patterns GoF, découpe universelle et natures de projets. Découpé en 4 sous-onglets : Pipeline · Code · Architecture · Projets.</div>
         <div style="margin-bottom:10px"><strong style="color:#c9d1d9">🔬 Théorèmes</strong> — Atlas des 53 théorèmes mathématiques fondateurs de la data science, organisés en 3 actes : N1 Matière · N2 Mouvement · N3 Jonction.</div>
         <div style="margin-bottom:10px"><strong style="color:#c9d1d9">🧑‍💻 Rôles IT</strong> — Historiographie et taxonomie complète des 54 métiers IT de 1945 à 2026, organisés en 6 familles et 7 ères.</div>
+        <div style="margin-bottom:10px"><strong style="color:#c9d1d9">📋 Phase Spec</strong> — Chaîne nilpotente documentaire MRD→BRD→PRD→SRD→Code. 2 tables Kimball : Phase (5 lignes × dimensions intrinsèques + artefacts) et Rupture (6 transitions × rituels Scrum + garanties nilpotentes). Vérifié fmaths.</div>
       </div>
     </div>
 
@@ -2445,6 +2447,116 @@
         </div><!-- /canvas -->
       </div><!-- /metiers-it-leg -->
     </div><!-- /leg-rolesit -->
+
+    <!-- PHASE SPEC -->
+    <div id="leg-phasespec" class="leg-section">
+      <p class="solid-title">📋 Chaîne Nilpotente Documentaire — Structure formelle (fmaths vérifié)</p>
+
+      <div class="dag-flow" style="font-size:13px; margin-bottom:16px; text-align:center; padding:12px;">
+        <span style="color:#8b949e; font-size:11px;">espace ∞ </span>
+        <span style="color:#c9d1d9; font-weight:600; font-size:15px;">MRD</span>
+        <span style="color:#58a6ff;"> → </span>
+        <span style="color:#c9d1d9; font-weight:600; font-size:15px;">BRD</span>
+        <span style="color:#58a6ff;"> → </span>
+        <span style="color:#c9d1d9; font-weight:600; font-size:15px;">PRD</span>
+        <span style="color:#58a6ff;"> → </span>
+        <span style="color:#c9d1d9; font-weight:600; font-size:15px;">SRD</span>
+        <span style="color:#58a6ff;"> → </span>
+        <span style="color:#c9d1d9; font-weight:600; font-size:15px;">Code</span>
+        <span style="color:#8b949e; font-size:11px;"> espace 1</span>
+        <div style="font-size:11px; color:#8b949e; margin-top:6px;">∞ → N → M → K → 1 — convergence en k=4 transformations</div>
+      </div>
+
+      <div class="info-box" style="margin-bottom:20px;">
+        <strong style="color:#c9d1d9;">3 Socles immuables — conditions nécessaires de nilpotence</strong>
+        <div style="margin-top:8px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">A₄ Cohérence d'intention</strong> — Le "pourquoi" reste identifiable à chaque niveau. Si violé : dérive en circularité.</div>
+          <div><strong style="color:#58a6ff;">A₅ Traçabilité bidirectionnelle</strong> — Feature → objectif ET objectif → feature. Si violé : requirements orphelins.</div>
+          <div><strong style="color:#58a6ff;">A₆ Non-redondance</strong> — Chaque document a un rôle unique non substituable. Si violé : contradiction latente.</div>
+          <div style="color:#8b949e; margin-top:4px; font-size:11px;">Source : chaine-nilpotente-documentaire.md · vault/2-CONCEPTS · N2.md axiomes A₄–A₆</div>
+        </div>
+      </div>
+
+      <!-- Table Phase : dimensions intrinsèques -->
+      <p class="solid-title">Table Phase — Dimensions intrinsèques</p>
+      <table class="ref-table" style="margin-bottom:20px;">
+        <thead>
+          <tr><th>Phase</th><th>Question fondamentale</th><th>WHAT / HOW</th><th>Métier / Technique</th><th>Espace possibles</th><th>Horizon temporel</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>MRD</strong></td><td>Pourquoi ce produit existe-t-il ?</td><td>WHAT</td><td>Métier pur</td><td>∞</td><td>1 an+</td></tr>
+          <tr><td><strong>BRD</strong></td><td>Quel segment, quelle stratégie business ?</td><td>WHAT</td><td>Métier</td><td>N</td><td>1–2 trim.</td></tr>
+          <tr><td><strong>PRD</strong></td><td>Quelles features réalisent les objectifs ?</td><td>WHAT</td><td>Mixte</td><td>M</td><td>1–2 sprints / feature</td></tr>
+          <tr><td><strong>SRD</strong></td><td>Comment construire ces features ?</td><td>HOW</td><td>Technique</td><td>K</td><td>1 sprint</td></tr>
+          <tr><td><strong>Code</strong></td><td>Qu'est-ce que les specs ont omis ?</td><td>HOW</td><td>Technique pur</td><td>1</td><td>Continu</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Table Phase : artefacts -->
+      <p class="solid-title">Table Phase — Artefacts (Ker · Im de la transformation)</p>
+      <div style="font-size:12px; color:#8b949e; margin-bottom:10px;">Sections propres = absorbées à ce niveau (Ker — noyau qui grandit). Sections transmises = ce qui passe au document suivant (Im — image qui rétrécit).</div>
+      <table class="ref-table" style="margin-bottom:20px;">
+        <thead>
+          <tr><th>Phase</th><th>Artefact principal</th><th>Sections propres (Ker)</th><th>Sections transmises → (Im)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>MRD</strong></td><td>Project Charter</td><td>Market size · TAM/SAM/SOM · Competitive landscape</td><td>Problem statement · Success metrics</td></tr>
+          <tr><td><strong>BRD</strong></td><td>Business Requirements</td><td>Business case financier · ROI · Stakeholder notes</td><td>Business objectives · Target segment · Scope Phase 1</td></tr>
+          <tr><td><strong>PRD</strong></td><td>Product Requirements</td><td>Personas · User research</td><td>Features · Acceptance Criteria · User Workflows</td></tr>
+          <tr><td><strong>SRD</strong></td><td>Software Requirements</td><td>Tech choices + rationale · Architecture diagrams</td><td>Data Model · API Spec · Non-Functional Requirements</td></tr>
+          <tr><td><strong>Code</strong></td><td>Implementation</td><td>Code · Debug notes</td><td style="color:#8b949e;">← Implicites découverts (feedback ↑ vers SRD/PRD)</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Table Rupture -->
+      <p class="solid-title">Table Rupture — Transitions · Rituels · Garanties nilpotentes</p>
+      <div style="font-size:12px; color:#8b949e; margin-bottom:10px;">6 ruptures dans la chaîne. R3 se décompose en 3 grains (Epic→Story→Task) — la frontière Story→Task est la vraie frontière PRD↔SRD au niveau sprint.</div>
+      <table class="ref-table" style="margin-bottom:16px; font-size:12px;">
+        <thead>
+          <tr><th>Rupture</th><th>Grain</th><th>Source → Cible</th><th>Socle critique</th><th>Critère convergence</th><th>Rituel Scrum</th><th>Source rituel</th><th>Garantie</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Qualification Stratégique</strong></td><td>—</td><td>MRD → BRD</td><td>A₄ Intention</td>
+            <td>BRD justifie la réduction de scope</td><td>Kick-off stratégique</td><td>Pratique générale</td>
+            <td style="color:#d29922;">A₄ partiel ⚠️</td>
+          </tr>
+          <tr>
+            <td><strong>Arbitrage Features</strong></td><td>—</td><td>BRD → PRD</td><td>A₅ Traçabilité</td>
+            <td>Chaque feature adresse un objectif BRD</td><td>Product Discovery</td><td>Torres 2021</td>
+            <td style="color:#d29922;">A₅ partiel ⚠️</td>
+          </tr>
+          <tr>
+            <td><strong>Décomposition Backlog</strong></td><td>Epic</td><td>PRD → Backlog</td><td>A₆ Non-redondance</td>
+            <td>Definition of Ready</td><td>Backlog Refinement</td><td>Scrum Guide 2020</td>
+            <td style="color:#3fb950;">A₆ local ✅</td>
+          </tr>
+          <tr>
+            <td><strong>Sprint Planning</strong></td><td>Story</td><td>Backlog → Sprint</td><td>A₅ Traçabilité</td>
+            <td>Definition of Ready</td><td>Sprint Planning</td><td>Scrum Guide 2020</td>
+            <td style="color:#3fb950;">A₅ local ✅</td>
+          </tr>
+          <tr>
+            <td><strong>Cristallisation Technique</strong></td><td>Task</td><td>PRD → SRD (sprint)</td><td>A₄ + A₅</td>
+            <td>Definition of Done</td><td>Sprint Planning — task breakdown</td><td>Scrum Guide 2020</td>
+            <td style="color:#3fb950;">Frontière sémantique / technique ✅</td>
+          </tr>
+          <tr>
+            <td><strong>Révélateur d'Implicites</strong></td><td>—</td><td>SRD → Code</td><td>A₄ Intention finale</td>
+            <td>Code sans implicites orphelins</td><td>Sprint Review + Rétrospective</td><td>Scrum Guide 2020</td>
+            <td style="color:#3fb950;">A₁₃ Feedback loop ✅</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box-warn" style="font-size:12px; margin-bottom:12px;">
+        <strong>⚠️ Scrum = nilpotence locale seulement (R3–R4).</strong> Aucun rituel Scrum ne vérifie A₄ ni A₅ aux niveaux R1–R2. La nilpotence globale (MRD→Code) requiert des mécanismes complémentaires : OKRs (A₄ trimestriel), Product Strategy Review (A₅), QBR (A₄ annuel) — hors périmètre Scrum.
+      </div>
+
+      <div style="font-size:11px; color:#8b949e;">
+        Sources : chaine-nilpotente-documentaire.md · protocole-spec-solo.md · vault/2-CONCEPTS · N2.md (axiomes A₄–A₁₃) · RESUME-EXECUTIF-ONE-PAGER.md · ATLAS-DOCUMENTATION-PRODUIT-SYNTHESE.md (Claude.ai / fmaths) · Scrum Guide 2020 (scrum.org)
+      </div>
+    </div><!-- /leg-phasespec -->
 
   </div><!-- /tab-legendes -->
 
