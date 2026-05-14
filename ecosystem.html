@@ -2509,42 +2509,52 @@
       </table>
 
       <!-- Table Rupture -->
-      <p class="solid-title">Table Rupture — Transitions · Rituels · Garanties nilpotentes</p>
-      <div style="font-size:12px; color:#8b949e; margin-bottom:10px;">6 ruptures dans la chaîne. R3 se décompose en 3 grains (Epic→Story→Task) — la frontière Story→Task est la vraie frontière PRD↔SRD au niveau sprint.</div>
+      <p class="solid-title">Table Rupture — Transitions · Protocoles · Garanties nilpotentes</p>
+      <div style="font-size:12px; color:#8b949e; margin-bottom:10px;">4 ruptures (R1–R4). R3 se décompose en 3 niveaux Agile standard : <strong style="color:#c9d1d9;">Epic</strong> (Feature PRD) → <strong style="color:#c9d1d9;">Story</strong> (scénario utilisateur) → <strong style="color:#c9d1d9;">Task</strong> (décomposition technique). La frontière Story→Task marque le passage PRD↔SRD au niveau sprint.</div>
       <table class="ref-table" style="margin-bottom:16px; font-size:12px;">
         <thead>
-          <tr><th>Rupture</th><th>Grain</th><th>Source → Cible</th><th>Socle critique</th><th>Critère convergence</th><th>Rituel Scrum</th><th>Source rituel</th><th>Garantie</th></tr>
+          <tr><th>ID</th><th>Rupture</th><th>Source → Cible</th><th>Socle critique</th><th>Critère convergence</th><th>Protocoles garantisseurs</th><th>Source</th><th>Garantie</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Qualification Stratégique</strong></td><td>—</td><td>MRD → BRD</td><td>A₄ Intention</td>
-            <td>BRD justifie la réduction de scope</td><td>Kick-off stratégique</td><td>Pratique générale</td>
+            <td><strong style="color:#58a6ff;">R1</strong></td>
+            <td><strong>Qualification Stratégique</strong></td><td>MRD → BRD</td><td>A₄ Intention</td>
+            <td>BRD justifie la réduction de scope</td>
+            <td>OKRs · PR-FAQ · JTBD · Lean BML · North Star</td>
+            <td>Grove/Doerr · Amazon · Christensen · Ries · Ellis</td>
             <td style="color:#d29922;">A₄ partiel ⚠️</td>
           </tr>
           <tr>
-            <td><strong>Arbitrage Features</strong></td><td>—</td><td>BRD → PRD</td><td>A₅ Traçabilité</td>
-            <td>Chaque feature adresse un objectif BRD</td><td>Product Discovery</td><td>Torres 2021</td>
+            <td><strong style="color:#58a6ff;">R2</strong></td>
+            <td><strong>Arbitrage Features</strong></td><td>BRD → PRD</td><td>A₅ Traçabilité</td>
+            <td>Chaque feature adresse un objectif BRD</td>
+            <td>Impact Mapping · USM · JTBD</td>
+            <td>Adzic 2012 · Patton 2005 · Christensen</td>
             <td style="color:#d29922;">A₅ partiel ⚠️</td>
           </tr>
           <tr>
-            <td><strong>Décomposition Backlog</strong></td><td>Epic</td><td>PRD → Backlog</td><td>A₆ Non-redondance</td>
+            <td><strong style="color:#58a6ff;">R3a</strong></td>
+            <td><strong>Décomp. Epic → Stories</strong></td><td>PRD → Backlog</td><td>A₆ Non-redondance</td>
             <td>Definition of Ready</td><td>Backlog Refinement</td><td>Scrum Guide 2020</td>
             <td style="color:#3fb950;">A₆ local ✅</td>
           </tr>
           <tr>
-            <td><strong>Sprint Planning</strong></td><td>Story</td><td>Backlog → Sprint</td><td>A₅ Traçabilité</td>
+            <td><strong style="color:#58a6ff;">R3b</strong></td>
+            <td><strong>Décomp. Stories → Sprint</strong></td><td>Backlog → Sprint</td><td>A₅ Traçabilité</td>
             <td>Definition of Ready</td><td>Sprint Planning</td><td>Scrum Guide 2020</td>
             <td style="color:#3fb950;">A₅ local ✅</td>
           </tr>
           <tr>
-            <td><strong>Cristallisation Technique</strong></td><td>Task</td><td>PRD → SRD (sprint)</td><td>A₄ + A₅</td>
+            <td><strong style="color:#58a6ff;">R3c</strong></td>
+            <td><strong>Cristallisation Story→Task</strong></td><td>Story → Task (PRD↔SRD)</td><td>A₄ + A₅</td>
             <td>Definition of Done</td><td>Sprint Planning — task breakdown</td><td>Scrum Guide 2020</td>
-            <td style="color:#3fb950;">Frontière sémantique / technique ✅</td>
+            <td style="color:#3fb950;">Frontière PRD↔SRD ✅</td>
           </tr>
           <tr>
-            <td><strong>Révélateur d'Implicites</strong></td><td>—</td><td>SRD → Code</td><td>A₄ Intention finale</td>
-            <td>Code sans implicites orphelins</td><td>Sprint Review + Rétrospective</td><td>Scrum Guide 2020</td>
-            <td style="color:#3fb950;">A₁₃ Feedback loop ✅</td>
+            <td><strong style="color:#58a6ff;">R4</strong></td>
+            <td><strong>Révélateur d'Implicites</strong></td><td>SRD → Code</td><td>A₄ Intention finale</td>
+            <td>Code sans implicites orphelins</td><td>Sprint Review · Rétrospective · DoD</td><td>Scrum Guide 2020</td>
+            <td style="color:#3fb950;">A₁₃ Feedback ✅</td>
           </tr>
         </tbody>
       </table>
@@ -2554,7 +2564,7 @@
       </div>
 
       <div style="font-size:11px; color:#8b949e;">
-        Sources : chaine-nilpotente-documentaire.md · protocole-spec-solo.md · vault/2-CONCEPTS · N2.md (axiomes A₄–A₁₃) · RESUME-EXECUTIF-ONE-PAGER.md · ATLAS-DOCUMENTATION-PRODUIT-SYNTHESE.md (Claude.ai / fmaths) · Scrum Guide 2020 (scrum.org)
+        Sources : chaine-nilpotente-documentaire.md · protocole-spec-solo.md · protocoles-nilpotence-globale.md · team-charter-couche-orthogonale.md · vault/2-CONCEPTS · N2.md (axiomes A₄–A₁₃) · RESUME-EXECUTIF-ONE-PAGER.md · ATLAS-DOCUMENTATION-PRODUIT-SYNTHESE.md (Claude.ai / fmaths) · Scrum Guide 2020 (scrum.org) · Grove/Doerr — OKRs · Christensen 1997 — JTBD · Ries 2011 — Lean Startup · Adzic 2012 — Impact Mapping · Patton 2005 — User Story Mapping · Ellis — North Star Framework
       </div>
     </div><!-- /leg-phasespec -->
 
