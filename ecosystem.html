@@ -273,6 +273,19 @@
     .solid-sub-section { display: none; }
     .solid-sub-section.active { display: block; }
 
+    /* ── DOCUMENTS TAB ── */
+    .rupture-connector { display:flex; align-items:center; gap:10px; margin:20px 0 0; padding:8px 12px; background:rgba(88,166,255,0.05); border-radius:6px; border-left:3px solid rgba(88,166,255,0.35); }
+    .rupture-id-badge { font-weight:700; color:#58a6ff; font-size:11px; font-family:monospace; background:rgba(88,166,255,0.12); padding:2px 8px; border-radius:4px; white-space:nowrap; }
+    .proto-nav { display:flex; gap:4px; margin:8px 0 0; flex-wrap:wrap; padding-left:4px; }
+    .proto-btn { padding:3px 10px; border:none; border-radius:5px; background:transparent; color:#8b949e; font-size:11px; cursor:pointer; transition:background 0.15s,color 0.15s; }
+    .proto-btn:hover { background:rgba(255,255,255,0.05); color:#e6edf3; }
+    .proto-btn.active { background:rgba(88,166,255,0.12); color:#58a6ff; font-weight:600; }
+    .proto-content { display:none; padding:12px; background:rgba(255,255,255,0.02); border-radius:6px; margin-top:8px; border:1px solid rgba(255,255,255,0.05); }
+    .not-tag { background:rgba(248,81,73,0.08); border-radius:4px; padding:2px 8px; color:#e6544e; font-size:11px; }
+    .ker-im-grid { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+    .ker-im-box { flex:1; min-width:180px; background:rgba(255,255,255,0.02); border-radius:6px; padding:10px; border-left:2px solid rgba(88,166,255,0.3); font-size:12px; }
+    .ker-im-label { color:#8b949e; font-size:10px; margin-bottom:5px; text-transform:uppercase; letter-spacing:1px; }
+
     /* ── SOLID TAB ── */
     .solid-title {
       font-size: 10px; font-weight: 700; letter-spacing: 2px;
@@ -1697,6 +1710,7 @@
       <button class="leg-nav-btn" onclick="switchLegTab('rolesit', this)">🧑‍💻 Rôles IT</button>
       <button class="leg-nav-btn" onclick="switchLegTab('phasespec', this)">📋 Phase Spec</button>
       <button class="leg-nav-btn" onclick="switchLegTab('teamcharter', this)">🤝 Team Charter</button>
+      <button class="leg-nav-btn" onclick="switchLegTab('documents', this)">📄 Documents</button>
     </div>
 
     <!-- SOMMAIRE -->
@@ -2664,6 +2678,525 @@
       </div>
     </div><!-- /leg-teamcharter -->
 
+    <!-- ════════════════════════════════════════════════════════════
+         LEG-DOCUMENTS — Chaîne nilpotente documentaire
+         MRD → R1 → BRD → R2 → PRD → R3 → SRD → R4 → Code
+    ════════════════════════════════════════════════════════════ -->
+    <div id="leg-documents" class="leg-section">
+      <p class="solid-title">📄 Chaîne nilpotente documentaire — MRD → BRD → PRD → SRD → Code</p>
+
+      <div class="dag-flow" style="font-size:11px; margin-bottom:20px; padding:10px 14px; font-family:monospace; text-align:center; line-height:2;">
+        <span style="color:#58a6ff; font-weight:600;">MRD</span><span style="color:#3b4b65;"> ──[R1]──→ </span><span style="color:#58a6ff; font-weight:600;">BRD</span><span style="color:#3b4b65;"> ──[R2]──→ </span><span style="color:#58a6ff; font-weight:600;">PRD</span><span style="color:#3b4b65;"> ──[R3]──→ </span><span style="color:#58a6ff; font-weight:600;">SRD</span><span style="color:#3b4b65;"> ──[R4]──→ </span><span style="color:#58a6ff; font-weight:600;">Code</span><br>
+        <span style="color:#8b949e; font-size:10px;">k=4 transformations · 3 socles immuables (A₄/A₅/A₆) · incertitude ↓ à chaque rupture</span>
+      </div>
+
+      <!-- ══════════ MRD ══════════ -->
+      <p class="solid-title">MRD — Market Requirements Document</p>
+      <div class="info-box" style="margin-bottom:14px; font-size:12px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">Question fondamentale</strong> — "Quelle opportunité marché justifie qu'on construise ce produit ?"</div>
+          <div><strong style="color:#58a6ff;">Nature</strong> — Découverte · Incertitude maximale · Ne choisit pas — justifie</div>
+          <div><strong style="color:#58a6ff;">Grain</strong> — Produit × 18–24 mois · Mutabilité : Rare · 20–40 pages</div>
+          <div style="color:#8b949e; font-size:11px; margin-top:2px;">Impl. contemporaines : PR-FAQ · Customer Discovery Doc · Market OKRs</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
+        <span class="not-tag">≠ liste de features → BRD</span>
+        <span class="not-tag">≠ objectifs business → BRD</span>
+        <span class="not-tag">≠ spec produit → PRD</span>
+        <span class="not-tag">≠ business plan → CFO</span>
+      </div>
+      <p class="solid-title">Sommaire canonique</p>
+      <table class="ref-table" style="margin-bottom:14px; font-size:12px;">
+        <thead><tr><th>Section</th><th>Question structurante</th><th>Garde-fou</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Problem Statement</strong></td><td>Quel problème, quel segment, quelle fréquence, quel coût ?</td><td>"Un manque sur le marché" sans data = invalide</td></tr>
+          <tr><td><strong>Market Opportunity</strong></td><td>TAM/SAM/SOM chiffré ? Taux de croissance ?</td><td>Estimations sans source = invalide</td></tr>
+          <tr><td><strong>Competitive Positioning</strong></td><td>Pourquoi nous vs alternatives actuelles ?</td><td>"Nous sommes uniques" sans preuve = invalide</td></tr>
+          <tr><td><strong>Success Metrics</strong></td><td>Métriques mesurables qui prouvent que le problème est résolu ?</td><td>"Être leader" sans chiffre = invalide</td></tr>
+          <tr><td><strong>Timeline & Constraints</strong></td><td>Contraintes marché non-négociables ?</td><td>Absent = BRD sans contraintes héritées</td></tr>
+        </tbody>
+      </table>
+      <div class="ker-im-grid">
+        <div class="ker-im-box"><div class="ker-im-label">Ker — reste dans MRD</div><div style="color:#c9d1d9;">Market analysis · Competitive intel · Revenue model · GTM plan</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Im → BRD via R1</div><div style="color:#c9d1d9;">OKRs · PR-FAQ · JTBD · Lean BML · North Star</div></div>
+      </div>
+      <p class="solid-title">Historiographie</p>
+      <table class="ref-table" style="margin-bottom:6px; font-size:12px;">
+        <thead><tr><th>Période</th><th>État</th><th>Rupture</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1970–1985</strong></td><td>Systems engineering (défense, aérospatiale)</td><td>IEEE 830 — premier standard requirements</td></tr>
+          <tr><td><strong>1985–2000</strong></td><td>Enterprise software (Rational Software, RUP)</td><td>MRD formalisé dans le cycle en V</td></tr>
+          <tr><td><strong>2000–2010</strong></td><td>SaaS rise — MRD allégé, orientation B2B</td><td>Pragmatic Marketing Framework</td></tr>
+          <tr><td><strong>2010–2020</strong></td><td>Concurrencé par PR-FAQ et Customer Discovery</td><td>Lean Startup — "customer problem statement"</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Absorbé dans OKRs ou rebaptisé Market Strategy Doc</td><td>Post-Agile — document formel disparaît, niveau reste</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ══════════ RUPTURE R1 ══════════ -->
+      <div class="rupture-connector">
+        <span class="rupture-id-badge">R1</span>
+        <span style="color:#c9d1d9; font-size:12px; font-weight:600;">Qualification Stratégique</span>
+        <span style="color:#8b949e; font-size:11px;">MRD → BRD · MRD ∩ BRD = P_R1</span>
+        <span style="color:#8b949e; font-size:11px; margin-left:auto;">A₄ + A₅</span>
+      </div>
+      <div class="proto-nav">
+        <button class="proto-btn active" data-group="r1" onclick="switchProto('r1','okrs',this)">OKRs</button>
+        <button class="proto-btn" data-group="r1" onclick="switchProto('r1','prfaq',this)">PR-FAQ</button>
+        <button class="proto-btn" data-group="r1" onclick="switchProto('r1','jtbd',this)">JTBD</button>
+        <button class="proto-btn" data-group="r1" onclick="switchProto('r1','bml',this)">Lean BML</button>
+        <button class="proto-btn" data-group="r1" onclick="switchProto('r1','northstar',this)">North Star</button>
+      </div>
+      <div id="proto-r1-okrs" class="proto-content" data-group="r1" style="display:block; font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Quelle intention stratégique mesurable aligne l'organisation ce trimestre ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Objective (qualitatif) → Key Results (2–5, quantitatifs). Force : "Comment sait-on qu'on a réussi ?" avant de définir quoi construire.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₄ + A₅</span>
+          <span class="not-tag">> 5 OKRs → circularité</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Org × Trimestre · Source : Grove/Doerr — Intel 1960s, Google 1999</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1968</strong></td><td>Andy Grove invente les OKRs chez Intel (MbO quantifié)</td></tr>
+          <tr><td><strong>1999</strong></td><td>John Doerr introduit les OKRs chez Google</td></tr>
+          <tr><td><strong>2013</strong></td><td>"Measure What Matters" — mainstream corporate global</td></tr>
+          <tr><td><strong>2015+</strong></td><td>OKRs comme proxy BRD dans les scale-ups</td></tr>
+          <tr><td><strong>2020+</strong></td><td>OKR fatigue — retour vers formats plus simples</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r1-prfaq" class="proto-content" data-group="r1" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Si ce produit existait dans 6 mois, quel communiqué de presse écrirait-on ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Écrire le PR <em>avant</em> de construire : titre · citation CEO · citation client fictive · FAQ internes. Si le PR sonne faux → faille dans l'intention.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₄</span>
+          <span class="not-tag">PR jamais relu → dérive silencieuse</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Produit · 1x + crises · Source : Amazon / Bezos (1997+)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1997</strong></td><td>Jeff Bezos impose le PR-FAQ chez Amazon — "on commence par la fin"</td></tr>
+          <tr><td><strong>2004</strong></td><td>Généralisé dans toutes les Business Units Amazon</td></tr>
+          <tr><td><strong>2010+</strong></td><td>Adoption Silicon Valley via ex-Amazoniens</td></tr>
+          <tr><td><strong>2015+</strong></td><td>Simplifié en "One-Pager" dans les startups B2B</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Ritualisé mais risque de devenir performatif</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r1-jtbd" class="proto-content" data-group="r1" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Quel travail l'utilisateur cherche-t-il à accomplir — indépendamment de nos features ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — "Quand [situation], j'essaie de [job], mais [obstacle]" → Jobs fonctionnels + émotionnels identifiés par interviews. Ces jobs contraignent la priorisation.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₄ + A₅</span>
+          <span class="not-tag">Interviews biaisées → confirmation bias</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Job × Marché · Annuel · Source : Christensen (Harvard, 1990s)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1990s</strong></td><td>Christensen développe JTBD — "milkshake example"</td></tr>
+          <tr><td><strong>2005</strong></td><td>Tony Ulwick formalise l'Outcome-Driven Innovation</td></tr>
+          <tr><td><strong>2016</strong></td><td>"When Coffee and Kale Compete" (Klement) — JTBD narratif</td></tr>
+          <tr><td><strong>2016</strong></td><td>Bob Moesta & Spiek — Switch interviews popularisées</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Intégré dans Continuous Discovery (Teresa Torres)</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r1-bml" class="proto-content" data-group="r1" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Notre hypothèse de valeur est-elle confirmée par le comportement réel ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Hypothèse falsifiable → Build (MVP) → Measure (métriques comportementales) → Learn (pivot ou persevere). Cycle 2–4 semaines. Hypothèse formulée AVANT le Build.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₅</span>
+          <span class="not-tag">Vanity metrics → fausse validation</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Hypothèse · 2–4 sem. · Source : Eric Ries / Steve Blank (2008+)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>2003</strong></td><td>Steve Blank — "Customer Development" (embryon BML)</td></tr>
+          <tr><td><strong>2011</strong></td><td>Eric Ries — "The Lean Startup" — BML formalisé + Pivot</td></tr>
+          <tr><td><strong>2012</strong></td><td>Lean Startup mainstream Silicon Valley</td></tr>
+          <tr><td><strong>2015+</strong></td><td>"Lean Analytics" (Croll & Yoskovitz) — BML + métriques</td></tr>
+          <tr><td><strong>2020+</strong></td><td>BML intégré dans les discovery frameworks continus</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r1-northstar" class="proto-content" data-group="r1" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Si nous n'avions qu'une seule métrique pour mesurer la valeur créée, laquelle serait-ce ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Identifier la métrique qui corrèle valeur utilisateur et croissance long terme. Ex : Airbnb = nuits réservées. Tous les OKRs et features servent cette métrique unique.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₄ + A₅</span>
+          <span class="not-tag">Changements fréquents → instabilité org</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Org × Annuel · Source : Sean Ellis / GrowthHackers (2010s)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>2010</strong></td><td>Sean Ellis popularise "North Star Metric" (growth hacking)</td></tr>
+          <tr><td><strong>2015</strong></td><td>Amplitude adopte et diffuse le framework</td></tr>
+          <tr><td><strong>2017</strong></td><td>"North Star Playbook" — input metrics formalisées</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Standard dans les orgs product-led (PLG)</td></tr>
+          <tr><td><strong>2023+</strong></td><td>Critiqué pour simplification excessive (produits multi-segments)</td></tr>
+        </tbody></table>
+      </div>
+
+      <!-- ══════════ BRD ══════════ -->
+      <p class="solid-title" style="margin-top:24px;">BRD — Business Requirements Document</p>
+      <div class="info-box" style="margin-bottom:14px; font-size:12px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">Question fondamentale</strong> — "Quels objectifs business et features stratégiques répondent à cette opportunité marché ?"</div>
+          <div><strong style="color:#58a6ff;">Nature</strong> — Filtrage stratégique · Réduit <em>intentionnellement</em> le scope du MRD</div>
+          <div><strong style="color:#58a6ff;">Grain</strong> — Produit × 9–12 mois · Mutabilité : Modérée · 15–30 pages</div>
+          <div style="color:#8b949e; font-size:11px; margin-top:2px;">Impl. contemporaines : Epic-level planning · Product Strategy Doc · OKR Key Results + Epic backlog</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
+        <span class="not-tag">≠ analyse marché → MRD</span>
+        <span class="not-tag">≠ spec produit → PRD</span>
+        <span class="not-tag">≠ user stories → PRD/SRD</span>
+        <span class="not-tag">≠ document technique → SRD</span>
+      </div>
+      <p class="solid-title">Sommaire canonique</p>
+      <table class="ref-table" style="margin-bottom:14px; font-size:12px;">
+        <thead><tr><th>Section</th><th>Question structurante</th><th>Garde-fou</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Executive Summary</strong></td><td>Quel problème MRD ? Quelle réduction stratégique ? Quel ROI attendu ?</td><td>> 5 phrases = pas un résumé</td></tr>
+          <tr><td><strong>Business Objectives</strong></td><td>Quels objectifs mesurables à 9–12 mois ?</td><td>Objectifs sans métrique = invalide</td></tr>
+          <tr><td><strong>Business Case / ROI</strong></td><td>Pourquoi maintenant ? Coût de ne pas faire ?</td><td>ROI sans hypothèses explicites = invalide</td></tr>
+          <tr><td><strong>Stakeholder Requirements</strong></td><td>Qui approuve quoi ? Quelles contraintes métier/légales ?</td><td>Stakeholders listés sans contraintes = inutile</td></tr>
+          <tr><td><strong>Feature Scope (In/Out)</strong></td><td>Quelles features sont IN pour v1 ? Qu'est-ce qui est OUT ?</td><td>Pas d'Out of Scope = scope illimité</td></tr>
+          <tr><td><strong>Release Roadmap</strong></td><td>Séquence des phases à 9–12 mois ?</td><td>Roadmap sans critères de passage = invalide</td></tr>
+        </tbody>
+      </table>
+      <div class="ker-im-grid">
+        <div class="ker-im-box"><div class="ker-im-label">Ker — reste dans BRD</div><div style="color:#c9d1d9;">Epic/Theme structure · Stakeholder mapping · Constraints légales/tech · Release roadmap · Business Case/ROI</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Héritage R1 → BRD</div><div style="color:#c9d1d9;">OKRs · PR-FAQ · JTBD · Lean BML</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Im → PRD via R2</div><div style="color:#c9d1d9;">Impact Mapping · USM · JTBD · North Star</div></div>
+      </div>
+      <p class="solid-title">Historiographie</p>
+      <table class="ref-table" style="margin-bottom:6px; font-size:12px;">
+        <thead><tr><th>Période</th><th>État</th><th>Rupture</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1980–1995</strong></td><td>Document IT pour systèmes d'information enterprise</td><td>Business Analyst comme rôle distinct</td></tr>
+          <tr><td><strong>1995–2005</strong></td><td>Web — BRD devient "Functional Spec"</td><td>Confusion BRD/PRD dans les startups dot-com</td></tr>
+          <tr><td><strong>2005–2015</strong></td><td>Agile — allégé en "Product Vision" + Epic backlog</td><td>Scrum substitue le Product Goal au BRD formel</td></tr>
+          <tr><td><strong>2015–2020</strong></td><td>OKRs comme proxy BRD dans les scale-ups</td><td>Impact Mapping popularisé comme alternative</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Product Strategy Doc dans la majorité des orgs</td><td>SAFe maintient le BRD formel pour grands programmes</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ══════════ RUPTURE R2 ══════════ -->
+      <div class="rupture-connector">
+        <span class="rupture-id-badge">R2</span>
+        <span style="color:#c9d1d9; font-size:12px; font-weight:600;">Arbitrage Features</span>
+        <span style="color:#8b949e; font-size:11px;">BRD → PRD · BRD ∩ PRD = P_R2</span>
+        <span style="color:#8b949e; font-size:11px; margin-left:auto;">A₅</span>
+      </div>
+      <div class="proto-nav">
+        <button class="proto-btn active" data-group="r2" onclick="switchProto('r2','impactmap',this)">Impact Mapping</button>
+        <button class="proto-btn" data-group="r2" onclick="switchProto('r2','usm',this)">User Story Mapping</button>
+        <button class="proto-btn" data-group="r2" onclick="switchProto('r2','jtbd2',this)">JTBD</button>
+        <button class="proto-btn" data-group="r2" onclick="switchProto('r2','northstar2',this)">North Star</button>
+      </div>
+      <div id="proto-r2-impactmap" class="proto-content" data-group="r2" style="display:block; font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Quelles features livrent réellement l'impact business défini dans le BRD ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — 4 niveaux : WHY (goal) → WHO (acteurs) → HOW (impacts comportementaux) → WHAT (features). Feature sans impact sur un acteur qui sert le goal = exclure.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₅</span>
+          <span class="not-tag">Goal flou → toutes les features semblent justifiées</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Goal · Par initiative · Source : Gojko Adzic (2012)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>2012</strong></td><td>Gojko Adzic publie "Impact Mapping" — livre fondateur</td></tr>
+          <tr><td><strong>2013</strong></td><td>Adoption dans les équipes BDD (Behaviour-Driven Development)</td></tr>
+          <tr><td><strong>2015+</strong></td><td>Standard de priorisation agile</td></tr>
+          <tr><td><strong>2018+</strong></td><td>Combiné avec OKRs (goal = OKR Objective, impacts = Key Results)</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Intégré dans SAFe comme outil de PI Planning</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r2-usm" class="proto-content" data-group="r2" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Comment organiser les user stories pour livrer une expérience cohérente par tranches de valeur ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Axe H = parcours utilisateur (activités → tâches). Axe V = niveau de détail (stories). Les "slices" H = versions minimales livrant une expérience complète — pas des features isolées.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(63,185,80,0.1); border-radius:4px; padding:2px 8px; color:#3fb950;">Garantit A₄ + A₅</span>
+          <span class="not-tag">User journey artificiel → slices incohérentes</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">User journey · Par cycle · Source : Jeff Patton (2005+)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>2005</strong></td><td>Jeff Patton développe le Story Mapping chez Tomax</td></tr>
+          <tr><td><strong>2007</strong></td><td>Première publication publique du concept</td></tr>
+          <tr><td><strong>2014</strong></td><td>"User Story Mapping" (Patton) — livre de référence</td></tr>
+          <tr><td><strong>2015+</strong></td><td>Standard de structuration de backlog Agile</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Pont standard entre dual-track discovery et delivery</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r2-jtbd2" class="proto-content" data-group="r2" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Quels jobs utilisateurs les features PRD doivent-elles servir ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Rôle à R2</strong> — Les jobs identifiés en R1 (MRD) servent de filtre de priorisation des features BRD→PRD. Chaque feature candidate est évaluée : "quel job sert-elle ?" Si aucun → candidat à l'exclusion.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">JTBD présent en R1 et R2 — même outil, deux usages distincts</span>
+        </div>
+      </div>
+      <div id="proto-r2-northstar2" class="proto-content" data-group="r2" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Les features PRD candidates font-elles bouger la North Star ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Rôle à R2</strong> — La North Star définie en R1 sert de critère de priorisation : chaque feature est testée contre les input metrics qui font bouger la North Star. Features qui n'impactent aucune input metric = backlog bas.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">North Star = unificateur R1+R2 — définie en R1, utilisée comme filtre en R2</span>
+        </div>
+      </div>
+
+      <!-- ══════════ PRD ══════════ -->
+      <p class="solid-title" style="margin-top:24px;">PRD — Product Requirements Document</p>
+      <div class="info-box" style="margin-bottom:14px; font-size:12px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">Question fondamentale</strong> — "Qu'est-ce exactement que le produit doit faire pour l'utilisateur, et comment ?"</div>
+          <div><strong style="color:#58a6ff;">Nature</strong> — Spécification produit · Traduit les objectifs business en comportements utilisateur précis</div>
+          <div><strong style="color:#58a6ff;">Grain</strong> — Produit × 3–6 mois · Mutabilité : Fréquente · 30–100 pages (ou équivalent Jira)</div>
+          <div style="color:#8b949e; font-size:11px; margin-top:2px;">Impl. contemporaines : User Story Map · Product Spec · Feature Brief · Figma + User Stories</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
+        <span class="not-tag">≠ analyse marché → MRD</span>
+        <span class="not-tag">≠ objectifs business → BRD</span>
+        <span class="not-tag">≠ architecture technique → SRD</span>
+        <span class="not-tag">≠ prototype final → Design</span>
+      </div>
+      <p class="solid-title">Sommaire canonique</p>
+      <table class="ref-table" style="margin-bottom:14px; font-size:12px;">
+        <thead><tr><th>Section</th><th>Question structurante</th><th>Garde-fou</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Product Vision</strong></td><td>Pour qui, quel problème, différenciateur clé — en 1 phrase ?</td><td>> 2 phrases = pas une vision</td></tr>
+          <tr><td><strong>Personas</strong></td><td>Qui sont les utilisateurs cibles ? Quels jobs-to-be-done ?</td><td>Personas sans comportements = décoratif</td></tr>
+          <tr><td><strong>Features & User Stories</strong></td><td>"En tant que [X], je veux [Y] pour [Z]" — avec acceptance criteria ?</td><td>Feature sans AC = non-testable</td></tr>
+          <tr><td><strong>User Workflows</strong></td><td>Parcours complet utilisateur avant/après, edge cases inclus ?</td><td>Workflow sans edge cases = incomplet</td></tr>
+          <tr><td><strong>Non-Functional Requirements</strong></td><td>Performance, sécurité, accessibilité, scalabilité chiffrés ?</td><td>NFR absents = découverts trop tard</td></tr>
+          <tr><td><strong>Out of Scope</strong></td><td>Qu'est-ce qui est explicitement exclu de cette version ?</td><td>Pas d'Out of Scope = scope illimité</td></tr>
+        </tbody>
+      </table>
+      <div class="ker-im-grid">
+        <div class="ker-im-box"><div class="ker-im-label">Ker — reste dans PRD</div><div style="color:#c9d1d9;">Personas · Wireframes/flows · Data models · API specs haut niveau · Performance requirements · Décisions UX</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Héritage R2 → PRD</div><div style="color:#c9d1d9;">Impact Mapping · USM · JTBD · North Star</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Im → SRD via R3</div><div style="color:#c9d1d9;">User Stories + Acceptance Criteria → Backlog Refinement</div></div>
+      </div>
+      <p class="solid-title">Historiographie</p>
+      <table class="ref-table" style="margin-bottom:6px; font-size:12px;">
+        <thead><tr><th>Période</th><th>État</th><th>Rupture</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1970–1990</strong></td><td>PRD = "Functional Spec" — 100+ pages avant tout code</td><td>Waterfall : spécification totale avant implémentation</td></tr>
+          <tr><td><strong>1990–2000</strong></td><td>"Spec Writing" culture Microsoft (Joel Spolsky)</td><td>Specs réduites mais encore volumineuses</td></tr>
+          <tr><td><strong>2000–2010</strong></td><td>Agile — PRD explose en user stories + acceptance criteria</td><td>XP + Scrum : "just enough documentation"</td></tr>
+          <tr><td><strong>2010–2020</strong></td><td>Dual-track Agile — Discovery (PRD vivant) vs Delivery</td><td>Teresa Torres popularise le continuous discovery</td></tr>
+          <tr><td><strong>2020+</strong></td><td>PRD = Figma + User Stories dans Jira</td><td>Le document PRD disparaît, la fonction reste</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ══════════ RUPTURE R3 ══════════ -->
+      <div class="rupture-connector">
+        <span class="rupture-id-badge">R3</span>
+        <span style="color:#c9d1d9; font-size:12px; font-weight:600;">Décomposition Agile</span>
+        <span style="color:#8b949e; font-size:11px;">PRD → SRD · Epic→Stories→Tasks · via Scrum R3a/R3b/R3c</span>
+        <span style="color:#8b949e; font-size:11px; margin-left:auto;">A₄ + A₅ + A₆</span>
+      </div>
+      <div class="proto-nav">
+        <button class="proto-btn active" data-group="r3" onclick="switchProto('r3','refinement',this)">Backlog Refinement</button>
+        <button class="proto-btn" data-group="r3" onclick="switchProto('r3','planning',this)">Sprint Planning</button>
+        <button class="proto-btn" data-group="r3" onclick="switchProto('r3','daily',this)">Daily Scrum</button>
+        <button class="proto-btn" data-group="r3" onclick="switchProto('r3','dor',this)">Gate DoR</button>
+      </div>
+      <div id="proto-r3-refinement" class="proto-content" data-group="r3" style="display:block; font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Les stories PRD sont-elles suffisamment précises pour être planifiées au prochain sprint ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Activité continue (~10% capacité sprint). Équipe + PO clarifient les AC, estiment la complexité (story points), vérifient que le DoR peut être atteint. Epics → Stories SRD-prêtes.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">R3a · Dev Team + PO · ~10% sprint</span>
+          <span class="not-tag">Stories jamais décomposées → DoR jamais atteint</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Source : Scrum Guide 2020 (activité, non événement officiel)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1993–2000</strong></td><td>Backlog non-raffiné — planification au dernier moment</td></tr>
+          <tr><td><strong>2000–2010</strong></td><td>"Backlog Grooming" émerge comme pratique informelle</td></tr>
+          <tr><td><strong>2011</strong></td><td>Scrum Guide 2011 — Backlog Grooming officialisé (~10% capacity)</td></tr>
+          <tr><td><strong>2017</strong></td><td>Scrum Guide 2017 — "Grooming" renommé "Refinement"</td></tr>
+          <tr><td><strong>2020</strong></td><td>Scrum Guide 2020 — Refinement reste activité, non événement</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r3-planning" class="proto-content" data-group="r3" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Qu'allons-nous livrer ce sprint et comment allons-nous le faire ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Partie 1 (PO + Dev) : sélectionner les stories qui forment le Sprint Goal. Partie 2 (Dev) : décomposer chaque story en tâches techniques. Timebox : 8h (sprint 1 mois).</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">R3b · Scrum Team · 8h max (sprint 1 mois)</span>
+          <span class="not-tag">Stories non-DoR acceptées → engagement fictif</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Output : Sprint Goal + Sprint Backlog</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1993</strong></td><td>Premier Sprint Planning chez Easel Corporation (Schwaber)</td></tr>
+          <tr><td><strong>1995</strong></td><td>Scrum formalisé — Sprint Planning = événement central</td></tr>
+          <tr><td><strong>2010</strong></td><td>Scrum Guide — Sprint Planning formalisé en 2 parties</td></tr>
+          <tr><td><strong>2020</strong></td><td>Scrum Guide 2020 — Sprint Goal rendu obligatoire</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Shift : Goal first, stories en support (non inverse)</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r3-daily" class="proto-content" data-group="r3" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Le Sprint est-il sur la bonne trajectoire pour atteindre le Sprint Goal ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — 15 min fixes, même heure. Les développeurs inspectent la progression vers le Sprint Goal et adaptent le Sprint Backlog si nécessaire. Format libre — les 3 questions classiques sont un exemple, pas une règle.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">R3c · Développeurs · 15 min strictes</span>
+          <span class="not-tag">Rapport de statut vers management → perte d'ownership</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1993</strong></td><td>Stand-up informel chez Easel — inspiré des réunions militaires debout</td></tr>
+          <tr><td><strong>2001</strong></td><td>XP + Scrum convergent — daily stand-up standard</td></tr>
+          <tr><td><strong>2010</strong></td><td>Scrum Guide — 15 min, focus Sprint Goal</td></tr>
+          <tr><td><strong>2020</strong></td><td>Scrum Guide 2020 — 3 questions supprimées du guide officiel</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Équipe libre de son format si Sprint Goal inspecté</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r3-dor" class="proto-content" data-group="r3" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Gate DoR — Definition of Ready</strong> — "Cette story est-elle prête à être planifiée ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Checklist qu'une Story doit satisfaire pour entrer en Sprint Planning. Critères typiques : AC rédigés · Estimation faite · Dépendances identifiées · Maquettes disponibles · Taille ≤ 1 sprint.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Gate R3a→R3b · Co-créé par Scrum Team · Évolue tous les 2–3 sprints</span>
+          <span class="not-tag">DoR trop strict → aucune story ne passe</span>
+          <span class="not-tag">DoR absent → Sprint Planning fictif</span>
+        </div>
+      </div>
+
+      <!-- ══════════ SRD ══════════ -->
+      <p class="solid-title" style="margin-top:24px;">SRD — Software Requirements Document</p>
+      <div class="info-box" style="margin-bottom:14px; font-size:12px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">Question fondamentale</strong> — "Comment le système doit-il être construit pour implémenter les features PRD ?"</div>
+          <div><strong style="color:#58a6ff;">Nature</strong> — Décomposition technique · Traduit les comportements utilisateur en contraintes d'implémentation précises</div>
+          <div><strong style="color:#58a6ff;">Grain</strong> — Sprint × 2 semaines · Mutabilité : Très fréquente · Jira/Backlog</div>
+          <div style="color:#8b949e; font-size:11px; margin-top:2px;">Impl. contemporaines : Backlog raffiné + DoR/DoD · ADR · Technical Spec · Infrastructure as Code</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
+        <span class="not-tag">≠ spec produit → PRD</span>
+        <span class="not-tag">≠ document utilisateur → PRD</span>
+        <span class="not-tag">≠ code lui-même → Code</span>
+        <span class="not-tag">≠ document de déploiement → DevOps</span>
+      </div>
+      <p class="solid-title">Sommaire canonique</p>
+      <table class="ref-table" style="margin-bottom:14px; font-size:12px;">
+        <thead><tr><th>Section</th><th>Question structurante</th><th>Garde-fou</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Architecture</strong></td><td>Quels composants, interfaces, dépendances ?</td><td>Architecture sans justification trade-offs = gold plating</td></tr>
+          <tr><td><strong>Technology Stack</strong></td><td>Quels choix tech et pourquoi vs alternatives ?</td><td>Stack listé sans trade-offs = copié-collé</td></tr>
+          <tr><td><strong>Data Model</strong></td><td>Quelles entités, relations, contraintes d'intégrité ?</td><td>Schéma sans contraintes = données incohérentes</td></tr>
+          <tr><td><strong>API Specification</strong></td><td>Quels endpoints, formats, codes d'erreur ?</td><td>API sans gestion d'erreurs = intégration impossible</td></tr>
+          <tr><td><strong>DoR / DoD</strong></td><td>Definition of Ready + Done pour ce sprint ?</td><td>DoR/DoD absents = stories non-terminables</td></tr>
+          <tr><td><strong>Technical Debt</strong></td><td>Quelles limitations connues, quels compromis documentés ?</td><td>Dette non-documentée = surprise en production</td></tr>
+        </tbody>
+      </table>
+      <div class="ker-im-grid">
+        <div class="ker-im-box"><div class="ker-im-label">Ker — reste dans SRD</div><div style="color:#c9d1d9;">Tasks décomposées · DoR/DoD · Sprint planning · Architecture decisions · Technical debt</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Héritage R3 → SRD</div><div style="color:#c9d1d9;">User Stories + AC via Backlog Refinement</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Im → Code via R4</div><div style="color:#c9d1d9;">Tasks DoR-ready · DoD vérifiable</div></div>
+      </div>
+      <p class="solid-title">Historiographie</p>
+      <table class="ref-table" style="margin-bottom:6px; font-size:12px;">
+        <thead><tr><th>Période</th><th>État</th><th>Rupture</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1970–1985</strong></td><td>Document de conformité militaire (MIL-STD-498)</td><td>IEEE 830 — premier standard software requirements</td></tr>
+          <tr><td><strong>1985–2000</strong></td><td>Enterprise — Functional Design Document</td><td>CASE tools (Rational Rose) pour générer le SRD</td></tr>
+          <tr><td><strong>2000–2010</strong></td><td>XP/Scrum — SRD remplacé par Backlog + Tasks</td><td>"Working software over comprehensive documentation"</td></tr>
+          <tr><td><strong>2010–2020</strong></td><td>ADR émergent comme SRD léger</td><td>DoR/DoD formalisés dans le Scrum Guide</td></tr>
+          <tr><td><strong>2020+</strong></td><td>SRD = Backlog Jira + ADR dans le repo git</td><td>DevOps : la spec technique vit dans le code (IaC)</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ══════════ RUPTURE R4 ══════════ -->
+      <div class="rupture-connector">
+        <span class="rupture-id-badge">R4</span>
+        <span style="color:#c9d1d9; font-size:12px; font-weight:600;">Livraison & Feedback</span>
+        <span style="color:#8b949e; font-size:11px;">SRD → Code · Incrément → Backlog</span>
+        <span style="color:#8b949e; font-size:11px; margin-left:auto;">A₄ + A₅ + A₆</span>
+      </div>
+      <div class="proto-nav">
+        <button class="proto-btn active" data-group="r4" onclick="switchProto('r4','review',this)">Sprint Review</button>
+        <button class="proto-btn" data-group="r4" onclick="switchProto('r4','retro',this)">Rétrospective</button>
+        <button class="proto-btn" data-group="r4" onclick="switchProto('r4','dod',this)">Gate DoD</button>
+      </div>
+      <div id="proto-r4-review" class="proto-content" data-group="r4" style="display:block; font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "L'Incrément livré répond-il aux besoins des stakeholders, et que doit-on ajuster dans le Product Backlog ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — L'équipe présente l'Incrément Done aux stakeholders. Discussion collaborative : qu'est-ce qui est livré ? Qu'est-ce qui a changé dans le marché/contexte ? Product Backlog adapté en conséquence.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Scrum Team + Stakeholders · 4h (sprint 1 mois) · Output : PB révisé</span>
+          <span class="not-tag">Démo formelle sans feedback réel → boucle coupée</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1993</strong></td><td>Demo informelle de fin de sprint (pas de nom, pas de format)</td></tr>
+          <tr><td><strong>2001</strong></td><td>"Sprint Review" formalisé dans Scrum</td></tr>
+          <tr><td><strong>2010</strong></td><td>Scrum Guide — Sprint Review = 4 activités + PB update obligatoire</td></tr>
+          <tr><td><strong>2015</strong></td><td>Dual-track Agile — Review comme signal discovery</td></tr>
+          <tr><td><strong>2020</strong></td><td>Scrum Guide 2020 — Sprint Review = collaboration, pas démo</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r4-retro" class="proto-content" data-group="r4" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Question</strong> — "Comment améliorer nos processus et interactions pour le prochain sprint ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Inspecte 3 axes : personnes + interactions · processus + outils · définition du Done. Formats : Start/Stop/Continue, DAKI, 4L. Output obligatoire : ≥ 1 action concrète pour le prochain sprint.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Scrum Team (sans stakeholders) · 3h (sprint 1 mois)</span>
+          <span class="not-tag">Rétro sans actions → perte de confiance → désertée</span>
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Couche orthogonale process (≠ nilpotent, ≠ cyclique)</span>
+        </div>
+        <table class="ref-table" style="font-size:11px;"><thead><tr><th>Période</th><th>État</th></tr></thead><tbody>
+          <tr><td><strong>1986</strong></td><td>"After Action Review" — US Army (inspection post-mission)</td></tr>
+          <tr><td><strong>1993</strong></td><td>Rétrospective informelle en fin de sprint Scrum</td></tr>
+          <tr><td><strong>2006</strong></td><td>"Agile Retrospectives" (Derby & Larsen) — 5 phases formalisées</td></tr>
+          <tr><td><strong>2020</strong></td><td>Scrum Guide 2020 — Rétro peut modifier le DoD</td></tr>
+          <tr><td><strong>2020+</strong></td><td>Remote retros (Miro, EasyRetro) — standard post-pandémie</td></tr>
+        </tbody></table>
+      </div>
+      <div id="proto-r4-dod" class="proto-content" data-group="r4" style="font-size:12px;">
+        <div style="margin-bottom:8px;"><strong style="color:#58a6ff;">Gate DoD — Definition of Done</strong> — "Cet Incrément est-il vraiment terminé ?"</div>
+        <div style="margin-bottom:8px; color:#8b949e;"><strong style="color:#c9d1d9;">Mécanisme</strong> — Checklist qu'un Incrément doit satisfaire pour être "Done". Critères typiques : Code review passé · Tests unitaires verts · Documentation mise à jour · Déployé en staging · NFR respectés.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; font-size:11px;">
+          <span style="background:rgba(255,255,255,0.04); border-radius:4px; padding:2px 8px; color:#8b949e;">Gate R3c→R4 · Standard org-level (pas seulement équipe)</span>
+          <span class="not-tag">DoD trop laxiste → "Done" ne signifie plus rien</span>
+          <span class="not-tag">DoD non-partagé → Increments hétérogènes</span>
+        </div>
+      </div>
+
+      <!-- ══════════ CODE ══════════ -->
+      <p class="solid-title" style="margin-top:24px;">Code — Terminus de la Chaîne</p>
+      <div class="info-box" style="margin-bottom:14px; font-size:12px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">Question fondamentale</strong> — "L'implémentation est-elle conforme aux specs SRD, et quels implicites révèle-t-elle ?"</div>
+          <div><strong style="color:#58a6ff;">Nature</strong> — Terminus nilpotent · Incertitude zéro · <em>Révélateur d'implicites</em> : expose ce que les documents amont n'ont pas explicité</div>
+          <div><strong style="color:#58a6ff;">Grain</strong> — Feature × Jour · Mutabilité : Continue · Repository git</div>
+          <div style="color:#8b949e; font-size:11px; margin-top:2px;">Impl. contemporaines : Repository git · Tests · CI/CD · Infrastructure as Code · Observability</div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;">
+        <span class="not-tag">≠ spécification → SRD</span>
+        <span class="not-tag">≠ vérité sur le produit voulu → PRD</span>
+        <span class="not-tag">≠ stratégie → BRD/MRD</span>
+        <span class="not-tag">≠ documentation → sauf si self-documenting</span>
+      </div>
+      <p class="solid-title">Sommaire canonique</p>
+      <table class="ref-table" style="margin-bottom:14px; font-size:12px;">
+        <thead><tr><th>Section</th><th>Question structurante</th><th>Garde-fou</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Implementation</strong></td><td>Chaque feature SRD est-elle couverte ?</td><td>Feature orpheline = spec SRD manquante</td></tr>
+          <tr><td><strong>Tests</strong></td><td>Les DoD sont-ils vérifiables par les tests ?</td><td>Tests sans DoD = coverage sans sens</td></tr>
+          <tr><td><strong>Révélateurs d'implicites</strong></td><td>Quels bugs/edge cases révèlent des ambiguïtés SRD/PRD ?</td><td>Bug non-remonté = dette documentaire</td></tr>
+          <tr><td><strong>Métriques runtime</strong></td><td>Les NFR du PRD sont-ils mesurés en production ?</td><td>NFR non-mesurées = contrat PRD non-vérifié</td></tr>
+        </tbody>
+      </table>
+      <div class="ker-im-grid">
+        <div class="ker-im-box"><div class="ker-im-label">Ker — reste dans Code</div><div style="color:#c9d1d9;">Syntaxe · Patterns · Tests · Révélateurs d'implicites · Métriques runtime</div></div>
+        <div class="ker-im-box"><div class="ker-im-label">Im → feedback upstream</div><div style="color:#c9d1d9;">Bugs → SRD (DoD préciser) → PRD (AC corriger) → BRD (scope réviser) — itération nilpotente inverse, pas un cycle</div></div>
+      </div>
+      <div class="info-box-warn" style="font-size:12px; margin-bottom:14px;">
+        <strong>Révélateur d'implicites.</strong> Le Code est le seul artefact qui force la résolution de toutes les ambiguïtés. Ce qui était flou dans le PRD ("chargement rapide") devient une contrainte précise ("&lt; 200ms sur 4G") dès que le test de performance tourne.
+      </div>
+      <p class="solid-title">Historiographie</p>
+      <table class="ref-table" style="margin-bottom:14px; font-size:12px;">
+        <thead><tr><th>Période</th><th>État</th><th>Rupture</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1950–1970</strong></td><td>Instructions machine directes, aucune spec amont</td><td>Premier compilateur (Grace Hopper, 1952)</td></tr>
+          <tr><td><strong>1970–1985</strong></td><td>Structured programming — code comme traduction de specs</td><td>Dijkstra : la correction est prouvable</td></tr>
+          <tr><td><strong>1985–2000</strong></td><td>OOP — le code comme modèle du domaine</td><td>Design Patterns (GoF, 1994)</td></tr>
+          <tr><td><strong>2000–2010</strong></td><td>TDD — les tests comme spécification exécutable</td><td>Kent Beck : le test précède l'implémentation</td></tr>
+          <tr><td><strong>2010–2020</strong></td><td>DevOps — le code inclut l'infrastructure (IaC)</td><td>Git comme source de vérité unique</td></tr>
+          <tr><td><strong>2020+</strong></td><td>AI-assisted coding — code généré depuis les specs</td><td>Copilot, Claude Code : rupture R3/R4 compressée</td></tr>
+        </tbody>
+      </table>
+
+      <div style="font-size:11px; color:#8b949e; margin-top:8px;">
+        Sources : fiches spec / ATLAS · raw.md protocoles-nilpotence-globale · Scrum Guide 2020 · Christensen · Ries · Patton · Adzic · Doerr · Bezos · IEEE 830
+      </div>
+    </div><!-- /leg-documents -->
+
   </div><!-- /tab-legendes -->
 
   <!-- ══════════════════════════════════════
@@ -2756,6 +3289,14 @@ function switchSolidSubTab(name, btn) {
   document.querySelectorAll('#leg-solid .solid-sub-btn').forEach(el => el.classList.remove('active'));
   document.getElementById('leg-solid-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
+}
+
+function switchProto(group, name, btn) {
+  document.querySelectorAll('.proto-content[data-group="' + group + '"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.proto-btn[data-group="' + group + '"]').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('proto-' + group + '-' + name);
+  if (target) target.style.display = 'block';
+  btn.classList.add('active');
 }
 
 function copy(text) {
