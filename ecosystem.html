@@ -1696,6 +1696,7 @@
       <button class="leg-nav-btn" onclick="switchLegTab('theoremes', this)">🔬 Théorèmes</button>
       <button class="leg-nav-btn" onclick="switchLegTab('rolesit', this)">🧑‍💻 Rôles IT</button>
       <button class="leg-nav-btn" onclick="switchLegTab('phasespec', this)">📋 Phase Spec</button>
+      <button class="leg-nav-btn" onclick="switchLegTab('teamcharter', this)">🤝 Team Charter</button>
     </div>
 
     <!-- SOMMAIRE -->
@@ -1705,7 +1706,8 @@
         <div style="margin-bottom:10px"><strong style="color:#c9d1d9">📐 SOLID &amp; Pipeline</strong> — Vocabulaire DAG, DDD, paradigmes, POO, patterns GoF, découpe universelle et natures de projets. Découpé en 4 sous-onglets : Pipeline · Code · Architecture · Projets.</div>
         <div style="margin-bottom:10px"><strong style="color:#c9d1d9">🔬 Théorèmes</strong> — Atlas des 53 théorèmes mathématiques fondateurs de la data science, organisés en 3 actes : N1 Matière · N2 Mouvement · N3 Jonction.</div>
         <div style="margin-bottom:10px"><strong style="color:#c9d1d9">🧑‍💻 Rôles IT</strong> — Historiographie et taxonomie complète des 54 métiers IT de 1945 à 2026, organisés en 6 familles et 7 ères.</div>
-        <div style="margin-bottom:10px"><strong style="color:#c9d1d9">📋 Phase Spec</strong> — Chaîne nilpotente documentaire MRD→BRD→PRD→SRD→Code. 2 tables Kimball : Phase (5 lignes × dimensions intrinsèques + artefacts) et Rupture (6 transitions × rituels Scrum + garanties nilpotentes). Vérifié fmaths.</div>
+        <div style="margin-bottom:10px"><strong style="color:#c9d1d9">📋 Phase Spec</strong> — Chaîne nilpotente documentaire MRD→BRD→PRD→SRD→Code. 2 tables : Phase (5 lignes × dimensions intrinsèques + artefacts Ker/Im) et Rupture (R1–R4 × protocoles garantisseurs + garanties nilpotentes). Vérifié fmaths.</div>
+        <div style="margin-bottom:10px"><strong style="color:#c9d1d9">🤝 Team Charter</strong> — Document 6 : couche orthogonale stationnaire. Gouverne les processus de l'équipe sans participer à la chaîne nilpotente. Historiographie 1960→2026 + 6 sections minimales.</div>
       </div>
     </div>
 
@@ -2465,6 +2467,12 @@
         <span style="color:#c9d1d9; font-weight:600; font-size:15px;">Code</span>
         <span style="color:#8b949e; font-size:11px;"> espace 1</span>
         <div style="font-size:11px; color:#8b949e; margin-top:6px;">∞ → N → M → K → 1 — convergence en k=4 transformations</div>
+        <div style="font-size:11px; color:#8b949e; margin-top:10px; font-family:monospace; line-height:1.7;">
+          <span style="color:#8b949e;">MRD ──→ BRD ──→ PRD ──→ SRD ──→ Code</span><br>
+          <span style="color:#8b949e;">↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑</span><br>
+          <span style="color:#8b949e;">└─────────────────────────────────────┘</span><br>
+          <span style="color:#d29922; font-weight:600;">🤝 TEAM CHARTER</span><span style="color:#8b949e;"> — gouvernance + processus partagés (couche ⊥)</span>
+        </div>
       </div>
 
       <div class="info-box" style="margin-bottom:20px;">
@@ -2567,6 +2575,94 @@
         Sources : chaine-nilpotente-documentaire.md · protocole-spec-solo.md · protocoles-nilpotence-globale.md · team-charter-couche-orthogonale.md · vault/2-CONCEPTS · N2.md (axiomes A₄–A₁₃) · RESUME-EXECUTIF-ONE-PAGER.md · ATLAS-DOCUMENTATION-PRODUIT-SYNTHESE.md (Claude.ai / fmaths) · Scrum Guide 2020 (scrum.org) · Grove/Doerr — OKRs · Christensen 1997 — JTBD · Ries 2011 — Lean Startup · Adzic 2012 — Impact Mapping · Patton 2005 — User Story Mapping · Ellis — North Star Framework
       </div>
     </div><!-- /leg-phasespec -->
+
+    <!-- TEAM CHARTER -->
+    <div id="leg-teamcharter" class="leg-section">
+      <p class="solid-title">🤝 Team Charter — Couche Orthogonale Stationnaire</p>
+
+      <div class="dag-flow" style="font-size:12px; margin-bottom:16px; padding:12px; font-family:monospace; line-height:1.8;">
+        <div style="text-align:center; color:#8b949e;">
+          MRD ──→ BRD ──→ PRD ──→ SRD ──→ Code<br>
+          ↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+          └─────────────────────────────────────┘
+        </div>
+        <div style="text-align:center; margin-top:4px;">
+          <span style="color:#d29922; font-weight:600;">🤝 TEAM CHARTER</span>
+          <span style="color:#8b949e;"> — gouvernance + processus partagés</span>
+        </div>
+        <div style="text-align:center; font-size:11px; color:#8b949e; margin-top:6px;">
+          TC ⊥ chaîne nilpotente — couche orthogonale, non nilpotente, non cyclique
+        </div>
+      </div>
+
+      <div class="info-box" style="margin-bottom:20px;">
+        <strong style="color:#c9d1d9;">Nature formelle</strong>
+        <div style="margin-top:8px; font-size:12px; display:flex; flex-direction:column; gap:4px;">
+          <div><strong style="color:#58a6ff;">Stationnaire</strong> — TC(t) = TC(t-1) + δ_mutations &nbsp;où δ_mutations ≪ 1</div>
+          <div><strong style="color:#58a6ff;">Pas nilpotent</strong> — ne réduit pas l'espace des possibles ; il le contraint stablement</div>
+          <div><strong style="color:#58a6ff;">Pas cyclique</strong> — pas de feedback automatique (contrairement à Scrum Rétrospective)</div>
+          <div><strong style="color:#58a6ff;">Grain</strong> — 1 équipe cross-functional × 1 mission produit · horizon 6–12 mois</div>
+          <div style="color:#8b949e; margin-top:4px; font-size:11px;">Source : team-charter-couche-orthogonale.md · Haiku 4.5 fmaths 2026-05-13</div>
+        </div>
+      </div>
+
+      <p class="solid-title">6 Sections minimales</p>
+      <table class="ref-table" style="margin-bottom:20px; font-size:12px;">
+        <thead>
+          <tr><th>Section</th><th>Grain</th><th>Mutabilité</th><th>Tracé dans</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Vision / Mission</strong></td><td>Équipe × 18 mois</td><td>Rare (pivot)</td><td>BRD</td></tr>
+          <tr><td><strong>Principes</strong></td><td>Équipe × 12 mois</td><td>Modérée</td><td>Confluence</td></tr>
+          <tr><td><strong>Processus / Rituels</strong></td><td>Équipe × 6 mois</td><td>Fréquent</td><td>Jira / Wiki</td></tr>
+          <tr><td><strong>Responsabilités</strong></td><td>Équipe × 9 mois</td><td>Modérée (turnover)</td><td>Wiki</td></tr>
+          <tr><td><strong>Limites / Frontières</strong></td><td>Équipe × 12 mois</td><td>Modérée</td><td>BRD / PRD</td></tr>
+          <tr><td><strong>Révision du TC</strong></td><td>Statique</td><td>Statique</td><td>Confluence</td></tr>
+        </tbody>
+      </table>
+
+      <p class="solid-title">Historiographie — de l'oral à l'écrit (1960→2026)</p>
+      <table class="ref-table" style="margin-bottom:20px; font-size:12px;">
+        <thead>
+          <tr><th>Période</th><th>État</th><th>Rupture ayant forcé la formalisation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1960–1980</strong></td>
+            <td>Waterfall hiérarchique — pas de charter</td>
+            <td>Centralisation échoue au-delà de 50 personnes</td>
+          </tr>
+          <tr>
+            <td><strong>1981–1995</strong></td>
+            <td>Prototypage itératif — autonomie locale</td>
+            <td>Les processus se co-construisent, pas par décret</td>
+          </tr>
+          <tr>
+            <td><strong>1995–2005</strong></td>
+            <td>XP + Scrum → TC non-écrit émerge</td>
+            <td>"Comment décidons-nous ensemble ?" devient critique</td>
+          </tr>
+          <tr>
+            <td><strong>2005–2015</strong></td>
+            <td>SAFe / LeSS / Spotify — TC explicite et tracé</td>
+            <td>Scaling Agile → gouvernance imbriquée nécessaire</td>
+          </tr>
+          <tr>
+            <td><strong>2015–2026</strong></td>
+            <td>Post-Agile — TC risque de devenir performatif</td>
+            <td>Dette d'intention du TC lui-même (écrire ≠ vivre)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box-warn" style="font-size:12px; margin-bottom:12px;">
+        <strong>⚠️ Paradoxe de la formalisation.</strong> Plus le TC est formalisé, plus le risque de dette d'intention croît : on écrit "transparence" et on cache les métriques. Les meilleures équipes maintiennent un TC vivant — révision légère toutes les 6 semaines : "Est-ce qu'on s'y reconnaît encore ?"
+      </div>
+
+      <div style="font-size:11px; color:#8b949e;">
+        Sources : team-charter-couche-orthogonale.md · protocoles-nilpotence-globale.md · vault/2-CONCEPTS · Haiku 4.5 fmaths (2026-05-13) · SAFe / LeSS / Spotify Model · Scrum Guide 2020
+      </div>
+    </div><!-- /leg-teamcharter -->
 
   </div><!-- /tab-legendes -->
 
