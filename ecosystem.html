@@ -516,6 +516,49 @@
     #tab-atlas .dcell{max-width:220px;color:#8b949e;font-size:11px}
     #tab-atlas .nores{text-align:center;color:#6e7681;padding:32px;font-size:13px;font-style:italic}
 
+    /* ── PROJETS sous-onglets ── */
+    #tab-projets .leg-section { display: none; }
+    #tab-projets .leg-section.active { display: block; }
+
+    /* ── ARCHITECTURE ── */
+    .archi-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    @media(max-width:700px){ .archi-cols { grid-template-columns:1fr; } }
+    .archi-block { background: #0d1117; border: 1px solid #21262d; border-radius: 10px; padding: 16px; }
+    .archi-block-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #8b949e; margin-bottom: 12px; }
+    .archi-tree { font-family: 'Courier New', monospace; font-size: 11.5px; line-height: 1.9; }
+    .atr { display: flex; gap: 6px; align-items: baseline; }
+    .atr .indent { color: #30363d; }
+    .atr .fname { color: #e6edf3; }
+    .atr .ftype { font-size: 10px; padding: 1px 5px; border-radius: 3px; font-weight: 600; font-family: sans-serif; }
+    .ftype-cf { background: rgba(210,153,34,.15); color: #d29922; }
+    .ftype-sk { background: rgba(88,166,255,.15); color: #58a6ff; }
+    .ftype-mem { background: rgba(63,185,80,.15); color: #3fb950; }
+    .ftype-code { background: rgba(210,168,255,.15); color: #d2a8ff; }
+    .ftype-lake { background: rgba(91,212,164,.15); color: #5bd4a4; }
+    .atr .fdesc { font-size: 10px; color: #484f58; font-family: sans-serif; margin-left: 2px; }
+    .hook-flow { display: flex; flex-direction: column; gap: 0; }
+    .hook-step { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #161b22; }
+    .hook-step:last-child { border-bottom: none; }
+    .hook-event { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; min-width: 130px; }
+    .hev-submit { background: rgba(88,166,255,.15); color: #58a6ff; }
+    .hev-pre    { background: rgba(210,168,255,.15); color: #d2a8ff; }
+    .hev-post   { background: rgba(63,185,80,.15); color: #3fb950; }
+    .hev-stop   { background: rgba(248,81,73,.15); color: #f85149; }
+    .hev-claude { background: rgba(139,148,158,.1); color: #8b949e; border: 1px dashed #30363d; }
+    .hook-desc { font-size: 11px; color: #8b949e; line-height: 1.5; }
+    .hook-arrow { text-align: center; color: #30363d; font-size: 12px; padding: 2px 0; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 10px; }
+    .sk-card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px; padding: 12px; }
+    .sk-name { font-size: 12px; font-weight: 600; color: #58a6ff; margin-bottom: 4px; }
+    .sk-type { font-size: 10px; color: #484f58; margin-bottom: 6px; }
+    .sk-desc { font-size: 11px; color: #8b949e; line-height: 1.4; }
+    .noeud-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 10px; }
+    .noeud-item { display: flex; align-items: center; gap: 10px; padding: 10px; background: #0d1117; border: 1px solid #21262d; border-radius: 8px; }
+    .noeud-emoji { font-size: 18px; }
+    .noeud-info { flex: 1; }
+    .noeud-name { font-size: 11px; font-weight: 600; color: #e6edf3; }
+    .noeud-path { font-size: 10px; color: #484f58; font-family: monospace; }
+
     /* ── PROJETS TAB ── */
     .proj-cerveau { margin-bottom: 32px; }
     .proj-cerveau-title {
@@ -3298,6 +3341,13 @@
 </div>
 
 <div id="tab-projets" class="tab-content">
+  <div class="leg-nav" style="margin-bottom:20px">
+    <button class="leg-nav-btn active" onclick="switchProjTab('projets', this)">🗂️ Projets</button>
+    <button class="leg-nav-btn" onclick="switchProjTab('archi', this)">🏗️ Architecture Claude</button>
+  </div>
+
+  <!-- ── SUB-TAB 1 : PROJETS ── -->
+  <div id="proj-projets" class="leg-section active">
   <p class="solid-title">🗂️ Projets — Vue Globale</p>
 
   <!-- C1 PRO -->
@@ -3422,7 +3472,107 @@
       </div>
     </div>
   </div>
-</div>
+  </div><!-- /proj-projets -->
+
+  <!-- ── SUB-TAB 2 : ARCHITECTURE CLAUDE ── -->
+  <div id="proj-archi" class="leg-section">
+    <p class="solid-title">🏗️ Architecture Claude Code — Structure Canonique Anthropic</p>
+
+    <div class="archi-cols">
+      <!-- Arbre fichiers -->
+      <div class="archi-block">
+        <div class="archi-block-title">📁 Nœuds canoniques</div>
+        <div class="archi-tree">
+          <div class="atr"><span class="indent">~/.claude/</span></div>
+          <div class="atr"><span class="indent">├─ </span><span class="fname">CLAUDE.md</span><span class="ftype ftype-cf">CF</span><span class="fdesc">43L · instructions globales</span></div>
+          <div class="atr"><span class="indent">├─ </span><span class="fname">settings.json</span><span class="ftype ftype-cf">CF</span><span class="fdesc">hooks × 4</span></div>
+          <div class="atr"><span class="indent">├─ skills/</span></div>
+          <div class="atr"><span class="indent">│ ├─ </span><span class="fname">geo-bp/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">garde-fou</span></div>
+          <div class="atr"><span class="indent">│ ├─ </span><span class="fname">pwf/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">planning files</span></div>
+          <div class="atr"><span class="indent">│ ├─ </span><span class="fname">cpe-sprint/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">contrat sprint</span></div>
+          <div class="atr"><span class="indent">│ ├─ </span><span class="fname">fmath/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">décomposition formelle</span></div>
+          <div class="atr"><span class="indent">│ ├─ </span><span class="fname">n1n4/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">vault pipeline</span></div>
+          <div class="atr"><span class="indent">│ └─ </span><span class="fname">decodeur-narratif/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">narrativisation</span></div>
+          <div class="atr"><span class="indent">└─ projects/[hash]/memory/</span></div>
+          <div class="atr"><span class="indent">&nbsp;&nbsp;├─ </span><span class="fname">MEMORY.md</span><span class="ftype ftype-mem">MEM</span><span class="fdesc">index 8 entrées</span></div>
+          <div class="atr"><span class="indent">&nbsp;&nbsp;└─ </span><span class="fname">project_*.md</span><span class="ftype ftype-mem">MEM</span><span class="fdesc">auto-chargé</span></div>
+          <div class="atr" style="margin-top:10px"><span class="indent">Drive/memory/</span><span class="ftype ftype-mem">MEM</span><span class="fdesc">12 fichiers · hook</span></div>
+          <div class="atr" style="margin-top:6px"><span class="indent">C:\projects\claire/</span><span class="ftype ftype-code">CODE</span><span class="fdesc">git → GitHub</span></div>
+          <div class="atr"><span class="indent">C:\projects\my-claude-config/</span><span class="ftype ftype-code">CODE</span><span class="fdesc">backup infra</span></div>
+          <div class="atr" style="margin-top:6px"><span class="indent">vault/1-CONVERSATIONS/</span><span class="ftype ftype-lake">LAKE</span><span class="fdesc">raw</span></div>
+          <div class="atr"><span class="indent">vault/2-CONCEPTS/</span><span class="ftype ftype-lake">LAKE</span><span class="fdesc">49 concepts tagués</span></div>
+        </div>
+      </div>
+
+      <!-- Hooks lifecycle -->
+      <div class="archi-block">
+        <div class="archi-block-title">⚡ Cycle des hooks (settings.json)</div>
+        <div class="hook-flow">
+          <div class="hook-step">
+            <span class="hook-event hev-submit">UserPromptSubmit</span>
+            <span class="hook-desc">Drive/memory index injecté · task_plan.md injecté si présent</span>
+          </div>
+          <div class="hook-arrow">↓</div>
+          <div class="hook-step">
+            <span class="hook-event hev-claude">Claude pense</span>
+            <span class="hook-desc">Choisit l'outil · applique les skills</span>
+          </div>
+          <div class="hook-arrow">↓</div>
+          <div class="hook-step">
+            <span class="hook-event hev-pre">PreToolUse</span>
+            <span class="hook-desc">task_plan.md re-injecté avant Write/Edit/Bash</span>
+          </div>
+          <div class="hook-arrow">↓</div>
+          <div class="hook-step">
+            <span class="hook-event hev-claude">Tool exécuté</span>
+            <span class="hook-desc">Fichier créé · Bash lancé · etc.</span>
+          </div>
+          <div class="hook-arrow">↓</div>
+          <div class="hook-step">
+            <span class="hook-event hev-post">PostToolUse</span>
+            <span class="hook-desc">Rappel update progress.md après Write/Edit</span>
+          </div>
+          <div class="hook-arrow">↓</div>
+          <div class="hook-step">
+            <span class="hook-event hev-stop">Stop</span>
+            <span class="hook-desc">Bilan phases complètes/totales affiché</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nœuds DAG -->
+    <div class="archi-block" style="margin-bottom:20px">
+      <div class="archi-block-title">🗺️ DAG — 10 types de nœuds</div>
+      <div class="noeud-map">
+        <div class="noeud-item"><span class="noeud-emoji">📱</span><div class="noeud-info"><div class="noeud-name">SOURCE</div><div class="noeud-path">prompts · exports · clés API</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🚚</span><div class="noeud-info"><div class="noeud-name">TRANSPORT</div><div class="noeud-path">déplace sans transformer</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🪨</span><div class="noeud-info"><div class="noeud-name">STORE_RAW</div><div class="noeud-path">vault/1-CONVERSATIONS/</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">⚙️</span><div class="noeud-info"><div class="noeud-name">TRANSFORM</div><div class="noeud-path">~/.claude/skills/ (/n1n4 /fmath)</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🗄️</span><div class="noeud-info"><div class="noeud-name">STORE_STRUCT</div><div class="noeud-path">vault/2-CONCEPTS/ · memory/</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🎯</span><div class="noeud-info"><div class="noeud-name">SERVE</div><div class="noeud-path">ecosystem.html · claire-app</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🧠</span><div class="noeud-info"><div class="noeud-name">CONSUME</div><div class="noeud-path">Claude Code · toi</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🔑</span><div class="noeud-info"><div class="noeud-name">IAM</div><div class="noeud-path">my-claude-config · secrets</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🎼</span><div class="noeud-info"><div class="noeud-name">ORCHESTRATION</div><div class="noeud-path">~/.claude/ · CLAUDE.md</div></div></div>
+        <div class="noeud-item"><span class="noeud-emoji">🏗️</span><div class="noeud-info"><div class="noeud-name">INFRA</div><div class="noeud-path">GitHub · Drive · C:\projects\</div></div></div>
+      </div>
+    </div>
+
+    <!-- Skills actifs -->
+    <div class="archi-block">
+      <div class="archi-block-title">⚙️ Skills actifs (6)</div>
+      <div class="skills-grid">
+        <div class="sk-card"><div class="sk-name">/geo-bp</div><div class="sk-type">protocol · I1/I2/I3/I4</div><div class="sk-desc">Garde-fou — 4 invariants · 5 intentions dangereuses</div></div>
+        <div class="sk-card"><div class="sk-name">/pwf</div><div class="sk-type">protocol · planning</div><div class="sk-desc">Planning with Files — task_plan + findings + progress</div></div>
+        <div class="sk-card"><div class="sk-name">/cpe-sprint</div><div class="sk-type">protocol · sprint</div><div class="sk-desc">Contrat sprint CPE — μA/μV scoring</div></div>
+        <div class="sk-card"><div class="sk-name">/fmath</div><div class="sk-type">transform · formalisme</div><div class="sk-desc">Décomposition en invariants via 8 étapes formelles</div></div>
+        <div class="sk-card"><div class="sk-name">/n1n4</div><div class="sk-type">transform · vault</div><div class="sk-desc">Conversation brute → note permanente indexée</div></div>
+        <div class="sk-card"><div class="sk-name">/decodeur-narratif</div><div class="sk-type">transform · narration</div><div class="sk-desc">Analyse formelle → récit expert lisible</div></div>
+      </div>
+    </div>
+  </div><!-- /proj-archi -->
+
+</div><!-- /tab-projets -->
 
 <div id="toast">✅ Chemin copié !</div>
 
@@ -3436,6 +3586,13 @@ function switchTab(name) {
 
 let _legTab = 'sommaire';
 let _solidSubTab = 'pipeline';
+
+function switchProjTab(name, btn) {
+  document.querySelectorAll('#tab-projets .leg-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#tab-projets .leg-nav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('proj-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
 
 function switchLegTab(name, btn) {
   _legTab = name;
