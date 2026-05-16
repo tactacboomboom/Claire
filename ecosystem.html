@@ -617,6 +617,14 @@
     .pm-metric-v{font-size:22px;font-weight:700}
     .pm-metric-v.pass{color:#3fb950}.pm-metric-v.warn{color:#e3b341}.pm-metric-v.na{color:#484f58;font-size:16px}
     .pm-metric-k{font-size:10px;color:#8b949e;margin-top:2px}
+    .pm-tabs{display:flex;gap:4px;margin:10px 0;border-bottom:1px solid #21262d;padding-bottom:8px}
+    .pm-tab{background:none;border:none;color:#8b949e;font-size:11px;cursor:pointer;padding:4px 10px;border-radius:4px;transition:color .15s}
+    .pm-tab:hover{color:#e6edf3;background:rgba(255,255,255,.05)}
+    .pm-tab.active{color:#e6edf3;background:rgba(255,255,255,.08)}
+    .pm-tp{padding-top:14px}
+    .pm-file-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:6px;margin-bottom:5px;background:#161b22;border:1px solid #21262d}
+    .pm-sess-row{display:flex;align-items:flex-start;gap:10px;padding:10px;border-radius:6px;margin-bottom:6px;background:#161b22;border:1px solid #21262d}
+    .pm-sess-n{width:20px;height:20px;background:#21262d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#8b949e;flex-shrink:0;margin-top:2px}
   </style>
 </head>
 <body>
@@ -4584,42 +4592,90 @@ function renderAtlas(rows) {
 
 const ROLE_PAIRS = computeRolePairs(ATLAS_DATA);
 
-/* ── PM Dashboard ── */
+/* ── PM Dashboard v2 ── */
 const PM_DATA = {
-  job:{ name:'Job Hunting', cerveau:'C1', cluster:'pro-emploi',
+  job:{name:'Job Hunting',cerveau:'C1',cluster:'pro-emploi',rang:'N2',
+    skills:['geo','router'],
     specs:[{k:'SRD',st:'partial',d:'Intention posée · DoD incomplet'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Candidatures actives', wip:1, next:'Cibler rôles AI Engineer / TPM — CV à jour', mu_a:null, mu_v:null },
-  khaldoun:{ name:'Khaldoun Restaurant', cerveau:'C1', cluster:'pro-client',
+    docs:[{k:'Phase Spec',st:false,d:'Sprint contract non créé'},{k:'Team Charter',st:false,d:'Rôles non définis'},{k:'DoD global',st:false,d:'Conditions de succès non posées'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'Définir le DoD Job Hunting',dur:'30 min',skill:'/cpe-sprint',type:'spec'},{n:2,titre:'Rédiger SRD complet',dur:'45 min',skill:'/pwf',type:'spec'},{n:3,titre:'Roadmap candidatures 4 semaines',dur:'1h',skill:'aucun',type:'exec'}],
+    phase:'Candidatures actives',wip:1,next:'Cibler AI Engineer / TPM — CV à jour',mu_a:null,mu_v:null},
+  khaldoun:{name:'Khaldoun Restaurant',cerveau:'C1',cluster:'pro-client',rang:'N2',
+    skills:['geo','pwf','router'],
     specs:[{k:'SRD',st:'done',d:'Specs digitales · TheFork → réservation maison'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Digitalisation · 1er client réel', wip:1, next:'Landing page réservation maison', mu_a:0.3, mu_v:0.8 },
-  certif:{ name:'Certifications PO IT', cerveau:'C1', cluster:'pro-emploi',
-    specs:[{k:'SRD',st:false,d:'N/A — livré'},{k:'PRD',st:false,d:'N/A'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
-    phase:'Terminé ✅', wip:0, next:null, mu_a:null, mu_v:null },
-  claire:{ name:'Claire / Ecosystem', cerveau:'C2', cluster:'organisation-cerveaux',
-    specs:[{k:'SRD',st:'done',d:'task_plan.md · findings.md · progress.md'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Phase 8 — ecosystem.html · feat/atlas-concepts', wip:2, next:'PM Dashboard (ce sprint) → Linéage', mu_a:0.4, mu_v:0.9 },
-  'claire-app':{ name:'claire-app Next.js', cerveau:'C2', cluster:'software-engineering',
+    docs:[{k:'Phase Spec',st:false,d:'Sprint contract non créé'},{k:'Team Charter',st:false,d:'Yanis + Claude Code · non formalisé'},{k:'DoD global',st:'partial',d:'Landing fonctionnelle + SEO local'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'SRD — fonctionnalités réservation',dur:'45 min',skill:'/cpe-sprint',type:'spec'},{n:2,titre:'Développement landing page',dur:'2h',skill:'/pwf',type:'exec'},{n:3,titre:'SEO local + Google Maps',dur:'1h',skill:'/geo',type:'exec'}],
+    phase:'Digitalisation · 1er client réel',wip:1,next:'Landing page réservation maison',mu_a:0.3,mu_v:0.8},
+  certif:{name:'Certifications PO IT',cerveau:'C1',cluster:'pro-emploi',rang:'N2',
+    skills:[],specs:[{k:'SRD',st:false,d:'N/A'},{k:'PRD',st:false,d:'N/A'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
+    docs:[{k:'Phase Spec',st:'done',d:'Terminé'},{k:'Team Charter',st:false,d:'N/A'},{k:'DoD global',st:'done',d:'Certifications validées'}],
+    pwf:{task_plan:false,findings:false,progress:false},sessions:[],
+    phase:'Terminé ✅',wip:0,next:null,mu_a:null,mu_v:null},
+  claire:{name:'Claire / Ecosystem',cerveau:'C2',cluster:'organisation-cerveaux',rang:'N2',
+    skills:['geo','pwf','router','fmath','cpe-sprint','n1n4','decodeur-narratif'],
+    specs:[{k:'SRD',st:'done',d:'task_plan.md · findings.md · progress.md',url:'https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/task_plan.md'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    docs:[{k:'Phase Spec',st:'partial',d:'Phase 8 définie · sprint contract informel'},{k:'Team Charter',st:false,d:'Non rédigé — Yanis + Claude Code'},{k:'DoD global',st:'partial',d:'Repo GitHub public · dashboard fonctionnel'}],
+    pwf:{task_plan:{exists:true,url:'https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/task_plan.md'},findings:{exists:true,url:'https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/findings.md'},progress:{exists:false,url:null}},
+    sessions:[{n:1,titre:'PM Dashboard onglets enrichis',dur:'1h',skill:'/pwf',type:'exec'},{n:2,titre:'Skill /lineage — traçabilité artefacts',dur:'45 min',skill:'/cpe-sprint',type:'build'},{n:3,titre:'Graphify sur vault/2-CONCEPTS',dur:'30 min',skill:'/fmath',type:'explore'}],
+    phase:'Phase 8 — ecosystem.html · feat/atlas-concepts',wip:2,next:'PM Dashboard onglets → /lineage skill',mu_a:0.4,mu_v:0.9},
+  'claire-app':{name:'claire-app Next.js',cerveau:'C2',cluster:'software-engineering',rang:'N2',
+    skills:['geo','pwf'],
     specs:[{k:'SRD',st:'partial',d:'Architecture définie · refactor parqué'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Parqué — Phase 5 SOLID (lib/llm.ts, personas)', wip:0, next:'lib/llm.ts interface LLMProvider (principe D)', mu_a:null, mu_v:null },
-  vault:{ name:'Vault Obsidian', cerveau:'C2', cluster:'vault-pipeline',
+    docs:[{k:'Phase Spec',st:'partial',d:'Phase 5 SOLID définie · parqué'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'lib/llm.ts — interface LLMProvider',dur:'30 min',skill:'/geo',type:'exec'},{n:2,titre:'lib/generate.ts + lib/personas/',dur:'1h',skill:'/pwf',type:'exec'},{n:3,titre:'Tests SOLID compliance',dur:'45 min',skill:'/geo',type:'test'}],
+    phase:'Parqué — Phase 5 SOLID (lib/llm.ts, personas)',wip:0,next:'lib/llm.ts interface LLMProvider (principe D)',mu_a:null,mu_v:null},
+  vault:{name:'Vault Obsidian',cerveau:'C2',cluster:'vault-pipeline',rang:'N2',
+    skills:['n1n4','fmath','decodeur-narratif'],
     specs:[{k:'SRD',st:false,d:'49 concepts tagués · structure informelle'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'49 concepts · 6 clusters · graphify P2', wip:0, next:'Lancer graphify sur vault/2-CONCEPTS', mu_a:null, mu_v:null },
-  'conv-vault':{ name:'Conversation-to-Vault', cerveau:'C2', cluster:'vault-pipeline',
+    docs:[{k:'Phase Spec',st:false,d:'Non défini'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'Graphify sur vault/2-CONCEPTS',dur:'20 min',skill:'/fmath',type:'explore'},{n:2,titre:'Rédiger MRD vault',dur:'45 min',skill:'/cpe-sprint',type:'spec'}],
+    phase:'49 concepts · 6 clusters · graphify P2',wip:0,next:'Lancer graphify sur vault/2-CONCEPTS',mu_a:null,mu_v:null},
+  'conv-vault':{name:'Conversation-to-Vault',cerveau:'C2',cluster:'vault-pipeline',rang:'N2',
+    skills:['n1n4','fmath'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Vision — non démarré · 1000+ convs IA', wip:0, next:'Rédiger MRD — scope /n1n4', mu_a:null, mu_v:null },
-  router:{ name:'/router Skill', cerveau:'C2', cluster:'organisation-cerveaux',
-    specs:[{k:'SRD',st:'done',d:'SKILL.md complet · livré Sprint S4'},{k:'PRD',st:false,d:'N/A — skill'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
-    phase:'Livré Sprint S4 ✅', wip:0, next:null, mu_a:null, mu_v:null },
-  islam:{ name:'App Temps Islam', cerveau:'C3', cluster:'perso-foi',
+    docs:[{k:'Phase Spec',st:false,d:'Non défini'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'Rédiger MRD — 1000+ convs → vault vivant',dur:'45 min',skill:'/cpe-sprint',type:'spec'},{n:2,titre:'Prototype /n1n4 sur 10 convs',dur:'1h',skill:'/n1n4',type:'exec'}],
+    phase:'Vision — non démarré · 1000+ convs IA',wip:0,next:'Rédiger MRD — scope /n1n4',mu_a:null,mu_v:null},
+  router:{name:'/router Skill',cerveau:'C2',cluster:'organisation-cerveaux',rang:'N4',
+    skills:['geo'],
+    specs:[{k:'SRD',st:'done',d:'SKILL.md complet · livré Sprint S4'},{k:'PRD',st:false,d:'N/A'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
+    docs:[{k:'Phase Spec',st:'done',d:'Sprint S4 terminé'},{k:'Team Charter',st:false,d:'N/A'},{k:'DoD global',st:'done',d:'Dispatch C1/C2/C3 + I4 actif'}],
+    pwf:{task_plan:false,findings:false,progress:false},sessions:[],
+    phase:'Livré Sprint S4 ✅',wip:0,next:null,mu_a:null,mu_v:null},
+  islam:{name:'App Temps Islam',cerveau:'C3',cluster:'perso-foi',rang:'N2',
+    skills:['geo','pwf','cpe-sprint'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Séquence #4 — après job + logement', wip:0, next:'Débloquer après séquences C1', mu_a:null, mu_v:null },
-  notes:{ name:'Obsidian Notes Permanentes', cerveau:'C3', cluster:'perso-vision',
+    docs:[{k:'Phase Spec',st:false,d:'Séquence #4 — en attente'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'Rédiger MRD App Temps Islam',dur:'1h',skill:'/cpe-sprint',type:'spec'}],
+    phase:'Séquence #4 — après job + logement',wip:0,next:'Débloquer après séquences C1',mu_a:null,mu_v:null},
+  notes:{name:'Obsidian Notes Permanentes',cerveau:'C3',cluster:'perso-vision',rang:'N2',
+    skills:['n1n4','fmath'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Séquence #5 — après job + logement', wip:0, next:'Débloquer après séquences C1', mu_a:null, mu_v:null },
-  livre:{ name:'Livre · YouTube · Agence Voyage', cerveau:'C3', cluster:'perso-voyage',
+    docs:[{k:'Phase Spec',st:false,d:'Séquence #5 — en attente'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'Rédiger MRD Notes Permanentes',dur:'45 min',skill:'/cpe-sprint',type:'spec'}],
+    phase:'Séquence #5 — après job + logement',wip:0,next:'Débloquer après séquences C1',mu_a:null,mu_v:null},
+  livre:{name:'Livre · YouTube · Agence Voyage',cerveau:'C3',cluster:'perso-voyage',rang:'N2',
+    skills:['fmath','decodeur-narratif'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
-    phase:'Séquences #6–8 · long terme · 2 ans', wip:0, next:'2 ans de voyage → livre → masterclass → agence', mu_a:null, mu_v:null }
+    docs:[{k:'Phase Spec',st:false,d:'Séquences #6–8'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'2 ans voyage → livre → masterclass → agence'}],
+    pwf:{task_plan:false,findings:false,progress:false},
+    sessions:[{n:1,titre:'Rédiger Vision Document (MRD)',dur:'1h',skill:'/fmath',type:'spec'}],
+    phase:'Séquences #6–8 · long terme · 2 ans',wip:0,next:'2 ans voyage → livre → masterclass → agence',mu_a:null,mu_v:null}
 };
+
+function switchPMTab(t,el) {
+  document.querySelectorAll('#pm-panel .pm-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#pm-panel .pm-tp').forEach(p=>p.style.display='none');
+  el.classList.add('active');
+  document.getElementById('pmt-'+t).style.display='block';
+}
 
 function openPM(id) {
   const d = PM_DATA[id]; if(!d) return;
@@ -4629,24 +4685,74 @@ function openPM(id) {
     ? `<div class="pm-metric"><div class="pm-metric-v na">—</div><div class="pm-metric-k">${k}</div></div>`
     : `<div class="pm-metric"><div class="pm-metric-v ${v>=t?'pass':'warn'}">${v.toFixed(1)}</div><div class="pm-metric-k">${k} ${v>=t?'✅':'⚠️'}</div></div>`;
   const cv = d.cerveau.toLowerCase();
+  const rc = {'N4':'#d2a8ff','N3':'#79c0ff','N2':'#56d364','N1':'#e3b341'}[d.rang]||'#8b949e';
+  const pwf = d.pwf;
+  const pwfFiles = [
+    {k:'task_plan.md',...(typeof pwf.task_plan==='object'?pwf.task_plan:{exists:pwf.task_plan,url:null})},
+    {k:'findings.md',...(typeof pwf.findings==='object'?pwf.findings:{exists:pwf.findings,url:null})},
+    {k:'progress.md',...(typeof pwf.progress==='object'?pwf.progress:{exists:pwf.progress,url:null})}
+  ];
+  const tc = {spec:'#79c0ff',exec:'#56d364',build:'#d2a8ff',explore:'#e3b341',test:'#f0883e'};
   document.getElementById('pm-panel').innerHTML = `
     <button class="pm-close" onclick="closePM()">✕</button>
-    <div><span class="proj-badge ${cv}" style="font-size:10px;padding:2px 8px;border-radius:4px">${d.cerveau}</span>
-      <div style="font-size:9px;color:#484f58;margin-top:2px">${d.cluster}</div></div>
+    <div>
+      <span class="proj-badge ${cv}" style="font-size:10px;padding:2px 8px;border-radius:4px">${d.cerveau}</span>
+      <span style="font-size:10px;color:${rc};margin-left:8px;font-weight:700">${d.rang}</span>
+      <div style="font-size:9px;color:#484f58;margin-top:2px">${d.cluster}</div>
+    </div>
     <div class="pm-title">${d.name}</div>
-    <div class="pm-sep"></div>
-    <div class="pm-lbl">Spec Rang (MRD → BRD → PRD → SRD)</div>
-    ${d.specs.map(s=>`<div class="pm-spec-row ${sc(s.st)}">
-      <span class="pm-spec-icon">${si(s.st)}</span>
-      <div><div class="pm-spec-name">${s.k}</div><div class="pm-spec-desc">${s.d}</div></div>
-    </div>`).join('')}
-    <div class="pm-sep"></div>
-    <div class="pm-lbl">Phase actuelle</div>
-    <div class="pm-phase">${d.phase}${d.wip>0?`<div class="pm-phase-wip">WIP actif : ${d.wip} tâche(s)</div>`:''}</div>
-    ${d.next?`<div class="pm-action"><div class="pm-action-lbl">→ Prochaine action</div><div class="pm-action-txt">${d.next}</div></div>`:''}
-    <div class="pm-sep"></div>
-    <div class="pm-lbl">Métriques CPE</div>
-    <div class="pm-metrics">${mu(d.mu_a,'μA · Actualité',0.2)}${mu(d.mu_v,'μV · Valeur',0.4)}</div>
+    <div style="height:1px;background:#21262d;margin:10px 0 0"></div>
+    <div class="pm-tabs">
+      <button class="pm-tab active" onclick="switchPMTab('apercu',this)">Aperçu</button>
+      <button class="pm-tab" onclick="switchPMTab('pwf',this)">📁 PWF</button>
+      <button class="pm-tab" onclick="switchPMTab('sessions',this)">🎯 Sessions</button>
+      <button class="pm-tab" onclick="switchPMTab('specs',this)">📋 Specs</button>
+    </div>
+    <div id="pmt-apercu" class="pm-tp">
+      <div class="pm-lbl">Phase actuelle</div>
+      <div class="pm-phase">${d.phase}${d.wip>0?`<div class="pm-phase-wip">WIP actif : ${d.wip} tâche(s)</div>`:''}</div>
+      ${d.next?`<div class="pm-action"><div class="pm-action-lbl">→ Prochaine action</div><div class="pm-action-txt">${d.next}</div></div>`:''}
+      <div class="pm-sep"></div>
+      <div class="pm-lbl">Skills actifs</div>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">${(d.skills||[]).length>0?d.skills.map(s=>`<span style="background:#161b22;border:1px solid #30363d;border-radius:4px;padding:3px 8px;font-size:10px;color:#79c0ff">/${s}</span>`).join(''):'<span style="color:#484f58;font-size:11px">—</span>'}</div>
+      <div class="pm-sep"></div>
+      <div class="pm-lbl">Métriques CPE</div>
+      <div class="pm-metrics">${mu(d.mu_a,'μA · Actualité',0.2)}${mu(d.mu_v,'μV · Valeur',0.4)}</div>
+    </div>
+    <div id="pmt-pwf" class="pm-tp" style="display:none">
+      <div class="pm-lbl">Planning with Files (N1)</div>
+      ${pwfFiles.map(f=>`<div class="pm-file-row">
+        <span class="pm-spec-icon">${f.exists?'✅':'○'}</span>
+        <div style="flex:1"><div class="pm-spec-name">${f.k}</div></div>
+        ${f.url&&f.exists?`<a href="${f.url}" target="_blank" style="font-size:10px;color:#58a6ff;text-decoration:none">voir ↗</a>`:''}
+      </div>`).join('')}
+      <div class="pm-sep"></div>
+      <div class="pm-lbl">Contrats Sprint archivés</div>
+      <div style="color:#484f58;font-size:11px;padding:6px 0">Aucun contrat archivé — sprint-SN.md à créer</div>
+    </div>
+    <div id="pmt-sessions" class="pm-tp" style="display:none">
+      <div class="pm-lbl">Sessions recommandées (1 session = 1 tâche)</div>
+      ${d.sessions.length>0?d.sessions.map(s=>`<div class="pm-sess-row">
+        <span class="pm-sess-n">${s.n}</span>
+        <div style="flex:1">
+          <div style="font-size:12px;color:#e6edf3;font-weight:600">${s.titre}</div>
+          <div style="font-size:10px;color:#8b949e;margin-top:2px">${s.dur} · ${s.skill} · <span style="color:${tc[s.type]||'#8b949e'}">${s.type}</span></div>
+        </div>
+      </div>`).join(''):'<div style="color:#484f58;font-size:12px;text-align:center;padding:20px 0">Aucune session planifiée</div>'}
+    </div>
+    <div id="pmt-specs" class="pm-tp" style="display:none">
+      <div class="pm-lbl">Spec Rang (MRD → BRD → PRD → SRD)</div>
+      ${d.specs.map(s=>`<div class="pm-spec-row ${sc(s.st)}">
+        <span class="pm-spec-icon">${si(s.st)}</span>
+        <div><div class="pm-spec-name">${s.k}</div><div class="pm-spec-desc">${s.d}</div></div>
+      </div>`).join('')}
+      <div class="pm-sep"></div>
+      <div class="pm-lbl">Documents CPE</div>
+      ${d.docs.map(doc=>`<div class="pm-spec-row ${sc(doc.st)}">
+        <span class="pm-spec-icon">${si(doc.st)}</span>
+        <div><div class="pm-spec-name">${doc.k}</div><div class="pm-spec-desc">${doc.d}</div></div>
+      </div>`).join('')}
+    </div>
   `;
   document.getElementById('pm-overlay').style.display='flex';
   document.body.style.overflow='hidden';
