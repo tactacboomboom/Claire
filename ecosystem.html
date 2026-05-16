@@ -592,6 +592,31 @@
     .proj-seq { font-size: 10px; color: #484f58; background: rgba(255,255,255,.04); padding: 2px 6px; border-radius: 4px; }
     .proj-link { font-size: 10px; color: #58a6ff; text-decoration: none; }
     .proj-link:hover { text-decoration: underline; }
+    /* PM Dashboard */
+    .proj-card { cursor:pointer; }
+    #pm-overlay { position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;justify-content:flex-end;backdrop-filter:blur(3px); }
+    #pm-panel { width:420px;max-width:95vw;height:100vh;overflow-y:auto;background:#0d1117;border-left:1px solid #30363d;padding:24px;animation:pmIn .18s ease; }
+    @keyframes pmIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+    .pm-close{float:right;background:none;border:none;color:#8b949e;font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+    .pm-close:hover{color:#e6edf3}
+    .pm-title{font-size:16px;font-weight:700;color:#e6edf3;margin:6px 0 3px}
+    .pm-sep{height:1px;background:#21262d;margin:16px 0}
+    .pm-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#484f58;margin-bottom:8px}
+    .pm-spec-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;margin-bottom:5px;background:#161b22;border:1px solid #21262d}
+    .pm-spec-row.s-done{border-color:rgba(35,134,54,.6)}.pm-spec-row.s-partial{border-color:rgba(158,106,3,.6)}
+    .pm-spec-icon{font-size:13px;width:18px;text-align:center}
+    .pm-spec-name{font-size:12px;font-weight:700;color:#e6edf3}
+    .pm-spec-desc{font-size:10px;color:#8b949e;margin-top:1px}
+    .pm-phase{background:#161b22;border:1px solid #21262d;border-radius:6px;padding:10px 12px;font-size:12px;color:#e6edf3}
+    .pm-phase-wip{font-size:10px;color:#e3b341;margin-top:5px}
+    .pm-action{background:rgba(35,134,54,.08);border:1px solid rgba(35,134,54,.3);border-radius:6px;padding:10px 12px;margin-top:6px}
+    .pm-action-lbl{font-size:10px;color:#3fb950;font-weight:700;margin-bottom:3px}
+    .pm-action-txt{font-size:12px;color:#e6edf3}
+    .pm-metrics{display:flex;gap:8px;margin-top:6px}
+    .pm-metric{flex:1;background:#161b22;border:1px solid #21262d;border-radius:6px;padding:10px;text-align:center}
+    .pm-metric-v{font-size:22px;font-weight:700}
+    .pm-metric-v.pass{color:#3fb950}.pm-metric-v.warn{color:#e3b341}.pm-metric-v.na{color:#484f58;font-size:16px}
+    .pm-metric-k{font-size:10px;color:#8b949e;margin-top:2px}
   </style>
 </head>
 <body>
@@ -3354,7 +3379,7 @@
   <div class="proj-cerveau">
     <div class="proj-cerveau-title c1">C1 PRO — Emploi &amp; Freelance</div>
     <div class="proj-grid">
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('job')">
         <div class="proj-top">
           <span class="proj-badge c1">C1</span>
           <span class="proj-status urgent">🔴 Urgent</span>
@@ -3363,7 +3388,7 @@
         <div class="proj-desc">CDI/Freelance ≥65k€ — Enabler financier critique. Condition relationnelle (couple).</div>
         <div class="proj-footer"><span class="proj-seq">#2 roadmap</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('khaldoun')">
         <div class="proj-top">
           <span class="proj-badge c1">C1</span>
           <span class="proj-status actif">🟢 Actif</span>
@@ -3372,7 +3397,7 @@
         <div class="proj-desc">Digitalisation restaurant libanais rue Mouffetard. Remplacement TheFork, réservation maison, SEO local.</div>
         <div class="proj-footer"><span class="proj-seq">hors séquence · 1er client réel</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('certif')">
         <div class="proj-top">
           <span class="proj-badge c1">C1</span>
           <span class="proj-status done">✅ Done</span>
@@ -3388,7 +3413,7 @@
   <div class="proj-cerveau">
     <div class="proj-cerveau-title c2">C2 PRODUIT — Build &amp; Système</div>
     <div class="proj-grid">
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('claire')">
         <div class="proj-top">
           <span class="proj-badge c2">C2</span>
           <span class="proj-status actif">🟢 Actif</span>
@@ -3400,7 +3425,7 @@
           <span class="proj-seq">C:\projects\claire</span>
         </div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('claire-app')">
         <div class="proj-top">
           <span class="proj-badge c2">C2</span>
           <span class="proj-status vision">🟡 Parqué</span>
@@ -3409,7 +3434,7 @@
         <div class="proj-desc">Next.js — Traducteur intention→exécution. Refactor SOLID en attente (lib/llm.ts, personas).</div>
         <div class="proj-footer"><span class="proj-seq">Phase 5 task_plan.md</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('vault')">
         <div class="proj-top">
           <span class="proj-badge c2">C2</span>
           <span class="proj-status actif">🟢 Actif</span>
@@ -3418,7 +3443,7 @@
         <div class="proj-desc">49 concepts tagués C2/C3 · 6 clusters · Drive + auto-memory Claude Code.</div>
         <div class="proj-footer"><span class="proj-seq">vault/2-CONCEPTS</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('conv-vault')">
         <div class="proj-top">
           <span class="proj-badge c2">C2</span>
           <span class="proj-status vision">🟡 Vision</span>
@@ -3427,7 +3452,7 @@
         <div class="proj-desc">Input: 1000+ convs IA (Claude/GPT/Gemini) → Output: vault Obsidian vivant. Protocole /n1n4 existant.</div>
         <div class="proj-footer"><span class="proj-seq">Projet B · SaaS potentiel</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('router')">
         <div class="proj-top">
           <span class="proj-badge c2">C2</span>
           <span class="proj-status done">✅ Done</span>
@@ -3443,7 +3468,7 @@
   <div class="proj-cerveau">
     <div class="proj-cerveau-title c3">C3 PERSO — Vision &amp; Vie</div>
     <div class="proj-grid">
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('islam')">
         <div class="proj-top">
           <span class="proj-badge c3">C3</span>
           <span class="proj-status parque">⏸ Séquence #4</span>
@@ -3452,7 +3477,7 @@
         <div class="proj-desc">OS islamique — 5 prières, semaine, mois lunaire. Portfolio PO. Projet le plus aligné aux invariants.</div>
         <div class="proj-footer"><span class="proj-seq">Après job + logement</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('notes')">
         <div class="proj-top">
           <span class="proj-badge c3">C3</span>
           <span class="proj-status parque">⏸ Séquence #5</span>
@@ -3461,7 +3486,7 @@
         <div class="proj-desc">Structuration complète du savoir — système de pensée à vie.</div>
         <div class="proj-footer"><span class="proj-seq">Après job + logement</span></div>
       </div>
-      <div class="proj-card">
+      <div class="proj-card" onclick="openPM('livre')">
         <div class="proj-top">
           <span class="proj-badge c3">C3</span>
           <span class="proj-status parque">⏸ Séquences #6–8</span>
@@ -4558,7 +4583,83 @@ function renderAtlas(rows) {
 }
 
 const ROLE_PAIRS = computeRolePairs(ATLAS_DATA);
+
+/* ── PM Dashboard ── */
+const PM_DATA = {
+  job:{ name:'Job Hunting', cerveau:'C1', cluster:'pro-emploi',
+    specs:[{k:'SRD',st:'partial',d:'Intention posée · DoD incomplet'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Candidatures actives', wip:1, next:'Cibler rôles AI Engineer / TPM — CV à jour', mu_a:null, mu_v:null },
+  khaldoun:{ name:'Khaldoun Restaurant', cerveau:'C1', cluster:'pro-client',
+    specs:[{k:'SRD',st:'done',d:'Specs digitales · TheFork → réservation maison'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Digitalisation · 1er client réel', wip:1, next:'Landing page réservation maison', mu_a:0.3, mu_v:0.8 },
+  certif:{ name:'Certifications PO IT', cerveau:'C1', cluster:'pro-emploi',
+    specs:[{k:'SRD',st:false,d:'N/A — livré'},{k:'PRD',st:false,d:'N/A'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
+    phase:'Terminé ✅', wip:0, next:null, mu_a:null, mu_v:null },
+  claire:{ name:'Claire / Ecosystem', cerveau:'C2', cluster:'organisation-cerveaux',
+    specs:[{k:'SRD',st:'done',d:'task_plan.md · findings.md · progress.md'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Phase 8 — ecosystem.html · feat/atlas-concepts', wip:2, next:'PM Dashboard (ce sprint) → Linéage', mu_a:0.4, mu_v:0.9 },
+  'claire-app':{ name:'claire-app Next.js', cerveau:'C2', cluster:'software-engineering',
+    specs:[{k:'SRD',st:'partial',d:'Architecture définie · refactor parqué'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Parqué — Phase 5 SOLID (lib/llm.ts, personas)', wip:0, next:'lib/llm.ts interface LLMProvider (principe D)', mu_a:null, mu_v:null },
+  vault:{ name:'Vault Obsidian', cerveau:'C2', cluster:'vault-pipeline',
+    specs:[{k:'SRD',st:false,d:'49 concepts tagués · structure informelle'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'49 concepts · 6 clusters · graphify P2', wip:0, next:'Lancer graphify sur vault/2-CONCEPTS', mu_a:null, mu_v:null },
+  'conv-vault':{ name:'Conversation-to-Vault', cerveau:'C2', cluster:'vault-pipeline',
+    specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Vision — non démarré · 1000+ convs IA', wip:0, next:'Rédiger MRD — scope /n1n4', mu_a:null, mu_v:null },
+  router:{ name:'/router Skill', cerveau:'C2', cluster:'organisation-cerveaux',
+    specs:[{k:'SRD',st:'done',d:'SKILL.md complet · livré Sprint S4'},{k:'PRD',st:false,d:'N/A — skill'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
+    phase:'Livré Sprint S4 ✅', wip:0, next:null, mu_a:null, mu_v:null },
+  islam:{ name:'App Temps Islam', cerveau:'C3', cluster:'perso-foi',
+    specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Séquence #4 — après job + logement', wip:0, next:'Débloquer après séquences C1', mu_a:null, mu_v:null },
+  notes:{ name:'Obsidian Notes Permanentes', cerveau:'C3', cluster:'perso-vision',
+    specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Séquence #5 — après job + logement', wip:0, next:'Débloquer après séquences C1', mu_a:null, mu_v:null },
+  livre:{ name:'Livre · YouTube · Agence Voyage', cerveau:'C3', cluster:'perso-voyage',
+    specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
+    phase:'Séquences #6–8 · long terme · 2 ans', wip:0, next:'2 ans de voyage → livre → masterclass → agence', mu_a:null, mu_v:null }
+};
+
+function openPM(id) {
+  const d = PM_DATA[id]; if(!d) return;
+  const si = s => s==='done'?'✅':s==='partial'?'⚠️':'○';
+  const sc = s => s==='done'?'s-done':s==='partial'?'s-partial':'';
+  const mu = (v,k,t) => v===null
+    ? `<div class="pm-metric"><div class="pm-metric-v na">—</div><div class="pm-metric-k">${k}</div></div>`
+    : `<div class="pm-metric"><div class="pm-metric-v ${v>=t?'pass':'warn'}">${v.toFixed(1)}</div><div class="pm-metric-k">${k} ${v>=t?'✅':'⚠️'}</div></div>`;
+  const cv = d.cerveau.toLowerCase();
+  document.getElementById('pm-panel').innerHTML = `
+    <button class="pm-close" onclick="closePM()">✕</button>
+    <div><span class="proj-badge ${cv}" style="font-size:10px;padding:2px 8px;border-radius:4px">${d.cerveau}</span>
+      <div style="font-size:9px;color:#484f58;margin-top:2px">${d.cluster}</div></div>
+    <div class="pm-title">${d.name}</div>
+    <div class="pm-sep"></div>
+    <div class="pm-lbl">Spec Rang (MRD → BRD → PRD → SRD)</div>
+    ${d.specs.map(s=>`<div class="pm-spec-row ${sc(s.st)}">
+      <span class="pm-spec-icon">${si(s.st)}</span>
+      <div><div class="pm-spec-name">${s.k}</div><div class="pm-spec-desc">${s.d}</div></div>
+    </div>`).join('')}
+    <div class="pm-sep"></div>
+    <div class="pm-lbl">Phase actuelle</div>
+    <div class="pm-phase">${d.phase}${d.wip>0?`<div class="pm-phase-wip">WIP actif : ${d.wip} tâche(s)</div>`:''}</div>
+    ${d.next?`<div class="pm-action"><div class="pm-action-lbl">→ Prochaine action</div><div class="pm-action-txt">${d.next}</div></div>`:''}
+    <div class="pm-sep"></div>
+    <div class="pm-lbl">Métriques CPE</div>
+    <div class="pm-metrics">${mu(d.mu_a,'μA · Actualité',0.2)}${mu(d.mu_v,'μV · Valeur',0.4)}</div>
+  `;
+  document.getElementById('pm-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closePM() {
+  document.getElementById('pm-overlay').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closePM(); });
 (function() { renderAtlas(ATLAS_DATA); })();
 </script>
+<div id="pm-overlay" style="display:none" onclick="closePM()">
+  <div id="pm-panel" onclick="event.stopPropagation()"></div>
+</div>
 </body>
 </html>
