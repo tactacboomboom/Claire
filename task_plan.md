@@ -8,7 +8,7 @@ Créer le repo de documentation Claire qui formalise la méthode CPE (Canonical 
 
 ## 📍 Current Phase
 
-**Sprint S9 — Tab Environnement (Pyramide + Drive Tree)**
+**Sprint S10 complete — graphify vault/2-CONCEPTS ✅ · next: S10b IDs stables ou S11 Marts**
 
 ## 🗓 Phases
 
@@ -133,16 +133,24 @@ Sources : clear-sky (21 fiches) + saas-traduction (15 templates)
 - [x] PM_DATA corrigé : drive:null pour projets inexistants
 - **Status:** complete
 
-### Phase S9: Sprint "Tab Environnement" ← EN COURS
-- [ ] Nouveau tab 🏔️ dans ecosystem.html
-- [ ] Pyramide visuelle N4 → N2(3 cerveaux) → N1
-- [ ] Drive tree — G:\Mon Drive\10 - Claude\ hardcodé (réel)
-- [ ] Chaque projet = nœud cliquable → openPM()
-- **Status:** in_progress
-- **DoD:** Tab visible, nœuds cliquables, chemins réels, commit+push
-- **Durée:** 1h
+### Phase S9: Sprint "Tab Environnement" ✅
+- [x] Nouveau tab 🏔️ dans ecosystem.html
+- [x] Pyramide visuelle N4 → N2(3 cerveaux) → N1
+- [x] Drive tree — G:\Mon Drive\10 - Claude\ hardcodé (réel)
+- [x] Chaque projet = nœud cliquable → openPM()
+- [x] SKILL_DATA + openSkill() + skills cliquables N4
+- **Status:** complete
 
-### Phase S10: Sprint "IDs stables" (BACKLOG — 30 min)
+### Phase S10: Sprint "Activation" ✅
+- [x] Vérifier 8 skills présents + SKILL.md valides
+- [x] Vérifier 5 hooks actifs (settings.json)
+- [x] Installer graphify (pip install graphifyy)
+- [x] Skill /graphify installé (~/.claude/skills/graphify/)
+- [x] /graphify vault/2-CONCEPTS — 52 nœuds, 7 communautés, graph.json ✅
+- [x] ecosystem.html : graphify ✅ dans N4
+- **Status:** complete
+
+### Phase S10b: Sprint "IDs stables" (BACKLOG — 30 min)
 - [ ] Vérifier cohérence T001-T053, R001-R054, Z001-Z008
 - [ ] Ajouter IDs SOLID S001-S005, GoF G001-G014
 - **Status:** pending
