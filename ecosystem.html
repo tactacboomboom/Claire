@@ -4594,60 +4594,61 @@ const ROLE_PAIRS = computeRolePairs(ATLAS_DATA);
 
 /* ── PM Dashboard v2 ── */
 const PM_DATA = {
-  job:{name:'Job Hunting',cerveau:'C1',cluster:'pro-emploi',rang:'N2',
+  job:{name:'Job Hunting',cerveau:'C1',cluster:'pro-emploi',rang:'N2',drive:'G:/Mon Drive/10 - Claude/projects/job-hunting/',lineage:false,
     skills:['geo','router'],
     specs:[{k:'SRD',st:'partial',d:'Intention posée · DoD incomplet'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Sprint contract non créé'},{k:'Team Charter',st:false,d:'Rôles non définis'},{k:'DoD global',st:false,d:'Conditions de succès non posées'}],
     pwf:{task_plan:false,findings:false,progress:false},
     sessions:[{n:1,titre:'Définir le DoD Job Hunting',dur:'30 min',skill:'/cpe-sprint',type:'spec'},{n:2,titre:'Rédiger SRD complet',dur:'45 min',skill:'/pwf',type:'spec'},{n:3,titre:'Roadmap candidatures 4 semaines',dur:'1h',skill:'aucun',type:'exec'}],
     phase:'Candidatures actives',wip:1,next:'Cibler AI Engineer / TPM — CV à jour',mu_a:null,mu_v:null},
-  khaldoun:{name:'Khaldoun Restaurant',cerveau:'C1',cluster:'pro-client',rang:'N2',
+  khaldoun:{name:'Khaldoun Restaurant',cerveau:'C1',cluster:'pro-client',rang:'N2',drive:'G:/Mon Drive/10 - Claude/projects/khaldoun/',lineage:false,
     skills:['geo','pwf','router'],
     specs:[{k:'SRD',st:'done',d:'Specs digitales · TheFork → réservation maison'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Sprint contract non créé'},{k:'Team Charter',st:false,d:'Yanis + Claude Code · non formalisé'},{k:'DoD global',st:'partial',d:'Landing fonctionnelle + SEO local'}],
     pwf:{task_plan:false,findings:false,progress:false},
     sessions:[{n:1,titre:'SRD — fonctionnalités réservation',dur:'45 min',skill:'/cpe-sprint',type:'spec'},{n:2,titre:'Développement landing page',dur:'2h',skill:'/pwf',type:'exec'},{n:3,titre:'SEO local + Google Maps',dur:'1h',skill:'/geo',type:'exec'}],
     phase:'Digitalisation · 1er client réel',wip:1,next:'Landing page réservation maison',mu_a:0.3,mu_v:0.8},
-  certif:{name:'Certifications PO IT',cerveau:'C1',cluster:'pro-emploi',rang:'N2',
+  certif:{name:'Certifications PO IT',cerveau:'C1',cluster:'pro-emploi',rang:'N2',drive:null,lineage:false,
     skills:[],specs:[{k:'SRD',st:false,d:'N/A'},{k:'PRD',st:false,d:'N/A'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
     docs:[{k:'Phase Spec',st:'done',d:'Terminé'},{k:'Team Charter',st:false,d:'N/A'},{k:'DoD global',st:'done',d:'Certifications validées'}],
     pwf:{task_plan:false,findings:false,progress:false},sessions:[],
     phase:'Terminé ✅',wip:0,next:null,mu_a:null,mu_v:null},
-  claire:{name:'Claire / Ecosystem',cerveau:'C2',cluster:'organisation-cerveaux',rang:'N2',
+  claire:{name:'Claire / Ecosystem',cerveau:'C2',cluster:'organisation-cerveaux',rang:'N2',drive:'G:/Mon Drive/10 - Claude/projects/Claire/',lineage:true,
     skills:['geo','pwf','router','fmath','cpe-sprint','n1n4','decodeur-narratif'],
     specs:[{k:'SRD',st:'done',d:'task_plan.md · findings.md · progress.md',url:'https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/task_plan.md'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:'partial',d:'Phase 8 définie · sprint contract informel'},{k:'Team Charter',st:false,d:'Non rédigé — Yanis + Claude Code'},{k:'DoD global',st:'partial',d:'Repo GitHub public · dashboard fonctionnel'}],
     pwf:{task_plan:{exists:true,url:'https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/task_plan.md'},findings:{exists:true,url:'https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/findings.md'},progress:{exists:false,url:null}},
     sessions:[{n:1,titre:'PM Dashboard onglets enrichis',dur:'1h',skill:'/pwf',type:'exec'},{n:2,titre:'Skill /lineage — traçabilité artefacts',dur:'45 min',skill:'/cpe-sprint',type:'build'},{n:3,titre:'Graphify sur vault/2-CONCEPTS',dur:'30 min',skill:'/fmath',type:'explore'}],
     phase:'Phase 8 — ecosystem.html · feat/atlas-concepts',wip:2,next:'PM Dashboard onglets → /lineage skill',mu_a:0.4,mu_v:0.9},
-  'claire-app':{name:'claire-app Next.js',cerveau:'C2',cluster:'software-engineering',rang:'N2',
+  'claire-app':{name:'claire-app Next.js',cerveau:'C2',cluster:'software-engineering',rang:'N2',drive:'G:/Mon Drive/10 - Claude/projects/Claire/',lineage:false,
     skills:['geo','pwf'],
     specs:[{k:'SRD',st:'partial',d:'Architecture définie · refactor parqué'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:'partial',d:'Phase 5 SOLID définie · parqué'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
     pwf:{task_plan:false,findings:false,progress:false},
     sessions:[{n:1,titre:'lib/llm.ts — interface LLMProvider',dur:'30 min',skill:'/geo',type:'exec'},{n:2,titre:'lib/generate.ts + lib/personas/',dur:'1h',skill:'/pwf',type:'exec'},{n:3,titre:'Tests SOLID compliance',dur:'45 min',skill:'/geo',type:'test'}],
     phase:'Parqué — Phase 5 SOLID (lib/llm.ts, personas)',wip:0,next:'lib/llm.ts interface LLMProvider (principe D)',mu_a:null,mu_v:null},
-  vault:{name:'Vault Obsidian',cerveau:'C2',cluster:'vault-pipeline',rang:'N2',
+  vault:{name:'Vault Obsidian',cerveau:'C2',cluster:'vault-pipeline',rang:'N2',drive:'G:/Mon Drive/10 - Claude/vault/',lineage:false,
     skills:['n1n4','fmath','decodeur-narratif'],
     specs:[{k:'SRD',st:false,d:'49 concepts tagués · structure informelle'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Non défini'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
     pwf:{task_plan:false,findings:false,progress:false},
     sessions:[{n:1,titre:'Graphify sur vault/2-CONCEPTS',dur:'20 min',skill:'/fmath',type:'explore'},{n:2,titre:'Rédiger MRD vault',dur:'45 min',skill:'/cpe-sprint',type:'spec'}],
     phase:'49 concepts · 6 clusters · graphify P2',wip:0,next:'Lancer graphify sur vault/2-CONCEPTS',mu_a:null,mu_v:null},
-  'conv-vault':{name:'Conversation-to-Vault',cerveau:'C2',cluster:'vault-pipeline',rang:'N2',
+  'conv-vault':{name:'Conversation-to-Vault',cerveau:'C2',cluster:'vault-pipeline',rang:'N2',drive:'G:/Mon Drive/10 - Claude/projects/conv-vault/',lineage:false,
     skills:['n1n4','fmath'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Non défini'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
     pwf:{task_plan:false,findings:false,progress:false},
     sessions:[{n:1,titre:'Rédiger MRD — 1000+ convs → vault vivant',dur:'45 min',skill:'/cpe-sprint',type:'spec'},{n:2,titre:'Prototype /n1n4 sur 10 convs',dur:'1h',skill:'/n1n4',type:'exec'}],
     phase:'Vision — non démarré · 1000+ convs IA',wip:0,next:'Rédiger MRD — scope /n1n4',mu_a:null,mu_v:null},
-  router:{name:'/router Skill',cerveau:'C2',cluster:'organisation-cerveaux',rang:'N4',
+  router:{name:'/router Skill',cerveau:'C2',cluster:'organisation-cerveaux',rang:'N4',drive:'~/.claude/skills/router/',lineage:false,
     skills:['geo'],
     specs:[{k:'SRD',st:'done',d:'SKILL.md complet · livré Sprint S4'},{k:'PRD',st:false,d:'N/A'},{k:'BRD',st:false,d:'N/A'},{k:'MRD',st:false,d:'N/A'}],
     docs:[{k:'Phase Spec',st:'done',d:'Sprint S4 terminé'},{k:'Team Charter',st:false,d:'N/A'},{k:'DoD global',st:'done',d:'Dispatch C1/C2/C3 + I4 actif'}],
     pwf:{task_plan:false,findings:false,progress:false},sessions:[],
     phase:'Livré Sprint S4 ✅',wip:0,next:null,mu_a:null,mu_v:null},
   islam:{name:'App Temps Islam',cerveau:'C3',cluster:'perso-foi',rang:'N2',
+    drive:'G:/Mon Drive/10 - Claude/projects/app-temps-islam/',lineage:false,
     skills:['geo','pwf','cpe-sprint'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Séquence #4 — en attente'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
@@ -4655,6 +4656,7 @@ const PM_DATA = {
     sessions:[{n:1,titre:'Rédiger MRD App Temps Islam',dur:'1h',skill:'/cpe-sprint',type:'spec'}],
     phase:'Séquence #4 — après job + logement',wip:0,next:'Débloquer après séquences C1',mu_a:null,mu_v:null},
   notes:{name:'Obsidian Notes Permanentes',cerveau:'C3',cluster:'perso-vision',rang:'N2',
+    drive:'G:/Mon Drive/10 - Claude/projects/obsidian-notes/',lineage:false,
     skills:['n1n4','fmath'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Séquence #5 — en attente'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'Non défini'}],
@@ -4662,6 +4664,7 @@ const PM_DATA = {
     sessions:[{n:1,titre:'Rédiger MRD Notes Permanentes',dur:'45 min',skill:'/cpe-sprint',type:'spec'}],
     phase:'Séquence #5 — après job + logement',wip:0,next:'Débloquer après séquences C1',mu_a:null,mu_v:null},
   livre:{name:'Livre · YouTube · Agence Voyage',cerveau:'C3',cluster:'perso-voyage',rang:'N2',
+    drive:'G:/Mon Drive/10 - Claude/projects/livre-voyage/',lineage:false,
     skills:['fmath','decodeur-narratif'],
     specs:[{k:'SRD',st:false,d:'Non rédigé'},{k:'PRD',st:false,d:'Non rédigé'},{k:'BRD',st:false,d:'Non rédigé'},{k:'MRD',st:false,d:'Non rédigé'}],
     docs:[{k:'Phase Spec',st:false,d:'Séquences #6–8'},{k:'Team Charter',st:false,d:'Non rédigé'},{k:'DoD global',st:false,d:'2 ans voyage → livre → masterclass → agence'}],
@@ -4718,6 +4721,16 @@ function openPM(id) {
       <div class="pm-sep"></div>
       <div class="pm-lbl">Métriques CPE</div>
       <div class="pm-metrics">${mu(d.mu_a,'μA · Actualité',0.2)}${mu(d.mu_v,'μV · Valeur',0.4)}</div>
+      ${d.drive?`<div class="pm-sep"></div>
+      <div class="pm-lbl">Dossier Drive local</div>
+      <div style="display:flex;align-items:center;gap:8px;background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px 10px">
+        <span style="font-size:11px;color:#8b949e;flex:1;word-break:break-all">${d.drive}</span>
+        <button onclick="navigator.clipboard.writeText('${d.drive}').then(()=>{this.textContent='✅';setTimeout(()=>this.textContent='⎘',1200)})" style="background:#21262d;border:1px solid #30363d;border-radius:4px;color:#79c0ff;font-size:11px;padding:3px 8px;cursor:pointer;white-space:nowrap">⎘</button>
+        <a href="file:///${d.drive.replace(/\//g,'\\\\')}" style="font-size:11px;color:#58a6ff;text-decoration:none;white-space:nowrap" title="Ouvrir en local">📂</a>
+      </div>
+      <div style="margin-top:6px;font-size:10px;color:${d.lineage?'#56d364':'#484f58'}">
+        ${d.lineage?'✅ LINEAGE.md présent':'○ LINEAGE.md absent — invoquer /lineage'}
+      </div>`:''}
     </div>
     <div id="pmt-pwf" class="pm-tp" style="display:none">
       <div class="pm-lbl">Planning with Files (N1)</div>
