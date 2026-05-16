@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>claude-mem — Analyse fmaths + décodeur</title>
+<style>
+  :root {
+    --bg: #1e1e1e; --surface: #252526; --surface2: #2d2d30;
+    --border: #3e3e42; --accent: #007acc; --accent2: #0e639c;
+    --green: #4ec9b0; --yellow: #dcdcaa; --orange: #ce9178;
+    --red: #f44747; --purple: #c586c0; --blue: #9cdcfe;
+    --text: #d4d4d4; --text-dim: #858585; --tag-bg: #37373d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+  .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; gap: 0; position: sticky; top: 0; z-index: 100; height: 44px; }
+  .topbar-title { font-size: 13px; color: var(--text-dim); margin-right: 24px; white-space: nowrap; }
+  .topbar-title span { color: var(--green); font-weight: 600; }
+  .tab-btn { background: none; border: none; color: var(--text-dim); padding: 0 16px; height: 44px; cursor: pointer; font-size: 13px; border-bottom: 2px solid transparent; transition: color .15s, border-color .15s; white-space: nowrap; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+  .content { display: none; padding: 32px 40px; max-width: 960px; margin: 0 auto; }
+  .content.active { display: block; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 20px 24px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+  .morphism { font-family: 'Courier New', monospace; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 12px 16px; font-size: 13px; color: var(--green); margin-bottom: 12px; }
+  .tag { display: inline-block; background: var(--tag-bg); border-radius: 3px; padding: 2px 8px; font-size: 11px; margin: 2px; }
+  .tag.green { color: var(--green); } .tag.blue { color: var(--blue); } .tag.orange { color: var(--orange); } .tag.purple { color: var(--purple); } .tag.yellow { color: var(--yellow); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-dim); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .layer-num { color: var(--accent); font-weight: 700; font-size: 12px; }
+  .tension { color: var(--orange); }
+  .invariant { color: var(--green); }
+  .attractor { color: var(--purple); }
+  h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--text); }
+  h3 { font-size: 14px; font-weight: 600; margin: 20px 0 10px; color: var(--yellow); }
+  p { margin-bottom: 12px; color: var(--text); }
+  .verdict-score { font-size: 32px; font-weight: 700; color: var(--green); }
+  .verdict-label { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+  .pipeline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+  .pipe-node { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 6px 12px; font-size: 12px; font-family: monospace; }
+  .pipe-arrow { color: var(--text-dim); }
+  .hook-list { list-style: none; }
+  .hook-list li { padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .hook-list li:last-child { border-bottom: none; }
+  .hook-event { color: var(--blue); font-family: monospace; font-size: 12px; margin-right: 8px; }
+  code { background: var(--surface2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 6px; font-size: 12px; font-family: 'Courier New', monospace; color: var(--orange); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-title">Analyse — <span>claude-mem v13.2.0</span></div>
+  <button class="tab-btn active" onclick="show('fmaths', this)">🔬 fmaths</button>
+  <button class="tab-btn" onclick="show('decodeur', this)">📖 Décodeur narratif</button>
+  <button class="tab-btn" onclick="show('architecture', this)">🏗️ Architecture</button>
+  <button class="tab-btn" onclick="show('verdict', this)">🎯 Verdict PM</button>
+</div>
+
+<!-- TAB 1 : FMATHS -->
+<div id="fmaths" class="content active">
+  <h2>Analyse fmaths — 8 couches</h2>
+
+  <div class="card">
+    <div class="card-title">O1 — Morphisme</div>
+    <div class="morphism">claude_mem : Ω_sessions_volatiles → Ω_mémoire_persistante_indexée</div>
+    <table>
+      <tr><th>Dimension</th><th>Contenu</th></tr>
+      <tr><td><span class="layer-num">Domaine</span></td><td>Sessions Claude Code — conversations éphémères, observations d'outils, décisions, contexte de sprint</td></tr>
+      <tr><td><span class="layer-num">Codomaine</span></td><td>Mémoire compressée, indexée, recherchable par similarité sémantique — réutilisable cross-sessions</td></tr>
+      <tr><td><span class="layer-num">Nilpotence</span></td><td>Appliquer claude-mem à une session déjà capturée = idempotent. L'espace mémoire n'est pas altéré par une re-indexation.</td></tr>
+      <tr><td><span class="layer-num">Propriété</span></td><td>Transformateur non-destructif · la session disparaît, la connaissance reste</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">8 couches analytiques</div>
+    <table>
+      <tr><th>#</th><th>Couche</th><th>Analyse claude-mem</th></tr>
+      <tr>
+        <td><span class="layer-num">1</span></td>
+        <td>Domaine réel</td>
+        <td>La context window de Claude Code = mémoire RAM volatile. Chaque session repart de zéro. Le problème est structurel : <em>L = λW</em> (Little) — plus le WIP cognitif croît, plus la convergence est impossible sans persistance.</td>
+      </tr>
+      <tr>
+        <td><span class="layer-num">2</span></td>
+        <td class="tension">Tension principale</td>
+        <td><strong>Volatilité vs Pertinence</strong> — capturer trop = bruit (SQLite surchargé). Capturer trop peu = perte de signal. La compression sémantique résout partiellement cette tension via Chroma (embeddings).</td>
+      </tr>
+      <tr>
+        <td><span class="layer-num">3</span></td>
+        <td class="invariant">Invariant</td>
+        <td>La compression préserve l'essentiel sémantique. Le résumé d'une session reste isomorphe à son contenu pour les requêtes futures — propriété de <strong>fidélité de rang</strong> (T007 Eckart-Young).</td>
+      </tr>
+      <tr>
+        <td><span class="layer-num">4</span></td>
+        <td>Morphisme interne</td>
+        <td>
+          <div class="pipeline">
+            <span class="pipe-node">tool_call</span><span class="pipe-arrow">→</span>
+            <span class="pipe-node">observation</span><span class="pipe-arrow">→</span>
+            <span class="pipe-node">compression</span><span class="pipe-arrow">→</span>
+            <span class="pipe-node">embedding</span><span class="pipe-arrow">→</span>
+            <span class="pipe-node">SQLite+Chroma</span><span class="pipe-arrow">→</span>
+            <span class="pipe-node">retrieval</span>
+          </div>
+          Chaque nœud = transformation irréversible vers un espace plus abstrait.
+        </td>
+      </tr>
+      <tr>
+        <td><span class="layer-num">5</span></td>
+        <td>Topologie</td>
+        <td>DAG orienté : capture → index → serve. Pas de cycle (une session n'est pas réindexée après compression). Le graphe est acyclique par construction — compatible T016 Kahn.</td>
+      </tr>
+      <tr>
+        <td><span class="layer-num">6</span></td>
+        <td>Ker (ce qui disparaît)</td>
+        <td>Le verbatim exact des échanges, le style conversationnel, les hésitations. Seul l'essentiel sémantique = observations factuelles, décisions, patterns — survit à la compression.</td>
+      </tr>
+      <tr>
+        <td><span class="layer-num">7</span></td>
+        <td>Im (ce qui est produit)</td>
+        <td>Mémoire indexée : <code>search()</code> / <code>timeline()</code> / <code>get_observations()</code> via MCP. Injectée automatiquement dans les futures sessions via SessionStart hook.</td>
+      </tr>
+      <tr>
+        <td><span class="layer-num attractor">8</span></td>
+        <td class="attractor">Attracteur global</td>
+        <td>À chaque session, le graphe de connaissance s'enrichit. Avec Graphify dessus : <strong>visualisation topologique des clusters de pensée</strong> — l'ontologie personnelle become navigable.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Tags analytiques</div>
+    <span class="tag green">nilpotent (sessions)</span>
+    <span class="tag orange">tension volatilité/pertinence</span>
+    <span class="tag blue">DAG Kahn-compatible</span>
+    <span class="tag purple">RAG local-first</span>
+    <span class="tag yellow">attracteur = graphe de pensée</span>
+  </div>
+</div>
+
+<!-- TAB 2 : DÉCODEUR NARRATIF -->
+<div id="decodeur" class="content">
+  <h2>Décodeur narratif</h2>
+
+  <div class="card">
+    <h3>Le problème qu'il résout</h3>
+    <p>Chaque conversation avec Claude Code commence dans le vide. Tu expliques ton contexte, tes conventions, tes décisions — encore et encore. C'est du <em>cognitive tax</em> payé à chaque session. Claude sait tout ce qu'on lui dit dans la session, et rien de ce qu'on lui a dit avant.</p>
+    <p>Claude-mem est la mémoire à long terme que Claude n'a pas nativement. Il observe ce qui se passe pendant la session — chaque lecture de fichier, chaque modification de code, chaque décision — et il compresse ça en observations sémantiques persistantes.</p>
+  </div>
+
+  <div class="card">
+    <h3>Comment ça fonctionne en pratique</h3>
+    <p>Five hooks s'accrochent au cycle de vie de Claude Code. À chaque démarrage de session, claude-mem injecte le contexte mémorisé. À chaque action d'outil, il capture une observation. À l'arrêt, il comprime tout et l'indexe.</p>
+    <p>Le résultat : quand tu reviens le lendemain sur un projet, claude-mem te redonne le contexte — "lors de la dernière session, tu travaillais sur le sprint C9, tu avais résolu un conflit CSS sur #metiers-it, et tu avais décidé de ne pas hardcoder les paths Drive".</p>
+  </div>
+
+  <div class="card">
+    <h3>La vision long terme : Graphify tes conversations</h3>
+    <p>Claude-mem stocke tout en SQLite. Graphify peut lire ce SQLite et construire un graphe de connaissance de ta pensée : quels concepts reviennent, quels projets sont liés, quels patterns se répètent. La topologie de ton intelligence devient <em>navigable</em>.</p>
+    <p>C'est le Coran numérique que tu voulais faire — mais appliqué à toi-même. Ton corpus = tes conversations. L'analyse = vectorielle + graphe. La visualisation = clusters thématiques. Le but = comprendre comment tu penses pour mieux te penser.</p>
+  </div>
+
+  <div class="card">
+    <h3>Lien avec ton système existant</h3>
+    <p>Ton auto-memory (fichiers .md dans <code>~/.claude/projects/.../memory/</code>) = mémoire éditoriale, curatée à la main. Claude-mem = mémoire observationnelle, capturée automatiquement. Les deux sont complémentaires : l'un pour ce que tu veux retenir, l'autre pour ce qui s'est vraiment passé.</p>
+  </div>
+</div>
+
+<!-- TAB 3 : ARCHITECTURE -->
+<div id="architecture" class="content">
+  <h2>Architecture technique</h2>
+
+  <div class="card">
+    <div class="card-title">Pipeline de données</div>
+    <div class="pipeline" style="font-size:13px;">
+      <span class="pipe-node">Claude Code session</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">5 lifecycle hooks</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">Worker (Bun:37777)</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">SQLite (~/.claude-mem)</span>
+      <span class="pipe-arrow">+</span>
+      <span class="pipe-node">Chroma (embeddings)</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">MCP tools</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">Injection future session</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">5 Hooks lifecycle</div>
+    <ul class="hook-list">
+      <li><span class="hook-event">SessionStart</span>Charge la mémoire mémorisée → injecte le contexte des sessions précédentes</li>
+      <li><span class="hook-event">UserPromptSubmit</span>Recherche dans la mémoire indexée → contexte pertinent injecté dans le prompt</li>
+      <li><span class="hook-event">PostToolUse</span>Capture l'observation de chaque outil utilisé (read, edit, bash, etc.)</li>
+      <li><span class="hook-event">Stop</span>Comprime la session → stocke dans SQLite</li>
+      <li><span class="hook-event">SessionEnd</span>Sync final + mise à jour Chroma</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">4 outils MCP exposés</div>
+    <table>
+      <tr><th>Outil</th><th>Usage</th><th>Tokens</th></tr>
+      <tr><td><code>search</code></td><td>Index compact — recherche sémantique rapide</td><td>~50-100</td></tr>
+      <tr><td><code>timeline</code></td><td>Contexte chronologique des sessions</td><td>variable</td></tr>
+      <tr><td><code>get_observations</code></td><td>Détails complets filtrés par type/date/projet</td><td>variable</td></tr>
+      <tr><td><code>store</code></td><td>Stockage manuel d'une observation</td><td>—</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Stockage local</div>
+    <table>
+      <tr><th>Chemin</th><th>Contenu</th></tr>
+      <tr><td><code>~/.claude-mem/</code></td><td>Répertoire racine</td></tr>
+      <tr><td><code>~/.claude-mem/database.sqlite</code></td><td>Observations + sessions + métadonnées</td></tr>
+      <tr><td><code>~/.claude-mem/chroma/</code></td><td>Vecteurs embeddings (recherche sémantique)</td></tr>
+      <tr><td><code>http://localhost:37777</code></td><td>Visualiseur temps réel (interface UI)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Bridge vers Graphify (à construire — ~1h)</div>
+    <div class="pipeline">
+      <span class="pipe-node">~/.claude-mem/database.sqlite</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">export_conversations.py</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">conversations/*.json</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">/graphify conversations/</span>
+      <span class="pipe-arrow">→</span>
+      <span class="pipe-node">graph.json + clusters</span>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4 : VERDICT PM -->
+<div id="verdict" class="content">
+  <h2>Verdict PM</h2>
+
+  <div class="card" style="display:flex; gap:40px; align-items:flex-start;">
+    <div>
+      <div class="verdict-score">8.5/10</div>
+      <div class="verdict-label">Score d'adéquation au projet</div>
+    </div>
+    <div style="flex:1;">
+      <p>Claude-mem résout le problème numéro 1 de ton workflow : la perte de contexte entre sessions. Il s'installe en 5 minutes, s'intègre nativement dans Claude Code via hooks, et ouvre la voie à la vision graphify-conversations.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Forces</div>
+    <table>
+      <tr><th>Force</th><th>Impact</th></tr>
+      <tr><td>Local-first (zéro réseau obligatoire)</td><td class="invariant">Compatible contrainte I1 nœud DAG</td></tr>
+      <tr><td>5 hooks natifs Claude Code</td><td class="invariant">Zéro friction — capture automatique</td></tr>
+      <tr><td>SQLite exportable</td><td class="invariant">Bridge Graphify possible nativement</td></tr>
+      <tr><td>Recherche hybride (vector + full-text)</td><td class="invariant">Pertinence élevée même sans requête exacte</td></tr>
+      <tr><td>Port 37777 — UI temps réel</td><td class="invariant">Visible → tu sais ce qui est capturé</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Risques</div>
+    <table>
+      <tr><th>Risque</th><th>Mitigation</th></tr>
+      <tr><td class="tension">Bun/Windows compat fragile (Zod v4 bug)</td><td>Fixé : zod downgrade v3 + 2 stubs créés</td></tr>
+      <tr><td class="tension">Overlap avec auto-memory existante</td><td>Complémentaires : observationnel vs éditorial</td></tr>
+      <tr><td class="tension">Worker à redémarrer après reboot machine</td><td>Ajouter <code>npx claude-mem start</code> au SessionStart hook</td></tr>
+      <tr><td class="tension">SQLite grandit sans bound</td><td>Prévoir purge périodique (> 6 mois)</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Roadmap recommandée</div>
+    <table>
+      <tr><th>Sprint</th><th>Action</th><th>Durée</th></tr>
+      <tr><td>Immédiat</td><td>Ajouter <code>npx claude-mem start</code> dans SessionStart hook (auto-restart)</td><td>5 min</td></tr>
+      <tr><td>S+1</td><td>Configurer storage path → Drive (cross-machine sync)</td><td>15 min</td></tr>
+      <tr><td>S+2</td><td>Script <code>sqlite → JSON → /graphify</code></td><td>1h</td></tr>
+      <tr><td>S+3</td><td>Skill <code>/recall</code> — recherche dans claude-mem depuis Claude Code</td><td>30 min</td></tr>
+      <tr><td>Vision</td><td>Graphify sur conversations/ → clusters thématiques → topologie de pensée</td><td>&gt; 1 jour</td></tr>
+    </table>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
