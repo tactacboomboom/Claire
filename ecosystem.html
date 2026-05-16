@@ -975,11 +975,53 @@
     .dtv-st-parked { color:#e3b341; font-size:11px; }
     .dtv-st-arch   { color:#484f58; font-size:11px; }
     .dtv-sep { height:1px; background:#21262d; margin:6px 0; }
+
+    /* ── STICKY BAR ── */
+    .env-sticky-bar { position:sticky; top:0; z-index:20; background:#0d1117; border-bottom:1px solid #21262d; padding:8px 0 10px; margin-bottom:20px; }
+    .env-sticky-session { display:flex; align-items:center; gap:8px; font-size:11px; color:#e6edf3; margin-bottom:4px; }
+    .env-sticky-dot { color:#56d364; font-size:14px; line-height:1; text-shadow:0 0 8px #56d36488; }
+    .env-sticky-hooks { font-size:10px; color:#484f58; }
+    .env-hook-tag { background:#1a2e4a; border:1px solid #1f6feb; color:#79c0ff; border-radius:3px; padding:0 5px; font-size:9px; font-weight:600; }
+    .env-stag { background:#2d1f5e; border:1px solid #6e40c9; color:#d2a8ff; border-radius:3px; padding:0 5px; font-size:9px; font-family:monospace; }
+
+    /* ── CASCADE ── */
+    .env-skill-chip { transition:all .15s; }
+    .env-skill-chip.cascade-on { background:#3d2a7a !important; border-color:#a78bfa !important; box-shadow:0 0 10px #6e40c966; }
+    .env-node { transition:all .15s; }
+    .env-node.cascade-lit { background:#16243a !important; border-left:2px solid #6e40c9; padding-left:6px; }
+
+    /* ── FRAMEWORK PILLS ── */
+    .env-fw-row { display:flex; gap:3px; margin-top:4px; flex-wrap:wrap; }
+    .env-fw-pill { font-size:8px; padding:1px 5px; border-radius:2px; font-weight:700; letter-spacing:.03em; }
+    .env-fw-pill.ok { background:#0f2a14; color:#56d364; border:1px solid #238636; }
+    .env-fw-pill.miss { background:#161b22; color:#484f58; border:1px solid #30363d; }
+    .env-fw-pill.warn { background:#2d1a0a; color:#e3b341; border:1px solid #9e6a03; }
   </style>
 
   <div class="env-page">
+
+    <!-- STICKY BAR -->
+    <div class="env-sticky-bar">
+      <div class="env-sticky-session">
+        <span class="env-sticky-dot">●</span>
+        <span>Session active : <b>Claire · feat/atlas-concepts</b></span>
+        <span style="font-size:10px;background:#0f2a14;border:1px solid #238636;border-radius:4px;padding:1px 6px;color:#56d364;margin-left:6px">WIP:2</span>
+      </div>
+      <div class="env-sticky-hooks">
+        Prochain prompt →
+        <span class="env-hook-tag">UserPromptSubmit</span> [pwf] 1 ligne ·
+        Outils →
+        <span class="env-hook-tag">PreToolUse</span> [geo] I1-I4 ·
+        Skills armés :
+        <span class="env-stag">/pwf</span>
+        <span class="env-stag">/lineage</span>
+        <span class="env-stag">/cpe-sprint</span>
+        <span class="env-stag">/fmath</span>
+      </div>
+    </div>
+
     <p class="solid-title" style="margin-bottom:4px">🏔️ Environnement — Pyramide N4→N1</p>
-    <p style="font-size:11px;color:#484f58;margin-bottom:20px">Chaque projet = nœud cliquable → PM panel · Chemins réels uniquement (T022 BCNF)</p>
+    <p style="font-size:11px;color:#484f58;margin-bottom:20px">Survole un skill → voit les projets qui l'héritent · Cliquer un projet → PM panel</p>
 
     <div class="env-pyr">
 
@@ -992,14 +1034,14 @@
         </div>
         <div style="font-size:9px;color:#6e40c9;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Skills — cliquer pour détails</div>
         <div class="env-skills-row">
-          <span class="env-skill-chip" onclick="openSkill('geo')" style="cursor:pointer" title="Voir /geo">/geo</span>
-          <span class="env-skill-chip" onclick="openSkill('pwf')" style="cursor:pointer" title="Voir /pwf">/pwf</span>
-          <span class="env-skill-chip" onclick="openSkill('router')" style="cursor:pointer" title="Voir /router">/router</span>
-          <span class="env-skill-chip" onclick="openSkill('fmath')" style="cursor:pointer" title="Voir /fmath">/fmath</span>
-          <span class="env-skill-chip" onclick="openSkill('cpe-sprint')" style="cursor:pointer" title="Voir /cpe-sprint">/cpe-sprint</span>
-          <span class="env-skill-chip" onclick="openSkill('n1n4')" style="cursor:pointer" title="Voir /n1n4">/n1n4</span>
-          <span class="env-skill-chip" onclick="openSkill('decodeur-narratif')" style="cursor:pointer" title="Voir /decodeur-narratif">/decodeur-narratif</span>
-          <span class="env-skill-chip" onclick="openSkill('lineage')" style="cursor:pointer" title="Voir /lineage">/lineage</span>
+          <span class="env-skill-chip" data-skill="geo" onclick="openSkill('geo')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/geo</span>
+          <span class="env-skill-chip" data-skill="pwf" onclick="openSkill('pwf')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/pwf</span>
+          <span class="env-skill-chip" data-skill="router" onclick="openSkill('router')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/router</span>
+          <span class="env-skill-chip" data-skill="fmath" onclick="openSkill('fmath')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/fmath</span>
+          <span class="env-skill-chip" data-skill="cpe-sprint" onclick="openSkill('cpe-sprint')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/cpe-sprint</span>
+          <span class="env-skill-chip" data-skill="n1n4" onclick="openSkill('n1n4')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/n1n4</span>
+          <span class="env-skill-chip" data-skill="decodeur-narratif" onclick="openSkill('decodeur-narratif')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/decodeur-narratif</span>
+          <span class="env-skill-chip" data-skill="lineage" onclick="openSkill('lineage')" style="cursor:pointer" title="Hover = projets qui l'héritent · Clic = détails">/lineage</span>
         </div>
         <div class="env-hooks-row">hooks : SessionStart (portabilité) · UserPromptSubmit (PWF + drive-memory) · PreToolUse (geo guard) · PostToolUse (progress) · Stop (phases check)</div>
         <div style="height:1px;background:#6e40c922;margin:8px 0"></div>
@@ -1022,17 +1064,20 @@
           <div class="env-cerv-col c1">
             <div class="env-cerv-title">C1 — PRO</div>
             <div class="env-cerv-sub">emploi · clients · revenus</div>
-            <div class="env-node" onclick="openPM('job')">
+            <div class="env-node" data-pmid="job" onclick="openPM('job')">
               <span class="env-node-st">🔴</span>
-              <div class="env-node-info"><div class="env-node-name">job-hunting</div><div class="env-node-path">C1-PRO/job-hunting/</div></div>
+              <div class="env-node-info"><div class="env-node-name">job-hunting</div><div class="env-node-path">C1-PRO/job-hunting/</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('khaldoun')">
+            <div class="env-node" data-pmid="khaldoun" onclick="openPM('khaldoun')">
               <span class="env-node-st">🟢</span>
-              <div class="env-node-info"><div class="env-node-name">khaldoun</div><div class="env-node-path">C1-PRO/khaldoun/</div></div>
+              <div class="env-node-info"><div class="env-node-name">khaldoun</div><div class="env-node-path">C1-PRO/khaldoun/</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill ok">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('certif')">
+            <div class="env-node" data-pmid="certif" onclick="openPM('certif')">
               <span class="env-node-st">✅</span>
-              <div class="env-node-info"><div class="env-node-name">certif PO</div><div class="env-node-path">—</div></div>
+              <div class="env-node-info"><div class="env-node-name">certif PO</div><div class="env-node-path">—</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
           </div>
 
@@ -1040,21 +1085,25 @@
           <div class="env-cerv-col c2">
             <div class="env-cerv-title">C2 — PRODUIT</div>
             <div class="env-cerv-sub">build · code · système</div>
-            <div class="env-node" onclick="openPM('claire')">
+            <div class="env-node" data-pmid="claire" onclick="openPM('claire')">
               <span class="env-node-st">🟢</span>
-              <div class="env-node-info"><div class="env-node-name">claire</div><div class="env-node-path" style="color:#e3b341">⚠️ racine → C2-PRODUIT/</div></div>
+              <div class="env-node-info"><div class="env-node-name">claire</div><div class="env-node-path" style="color:#e3b341">⚠️ racine → C2-PRODUIT/</div>
+              <div class="env-fw-row"><span class="env-fw-pill ok">CLAUDE.md</span><span class="env-fw-pill ok">PWF</span><span class="env-fw-pill ok">LINEAGE</span><span class="env-fw-pill ok">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('claire-app')">
+            <div class="env-node" data-pmid="claire-app" onclick="openPM('claire-app')">
               <span class="env-node-st">🟡</span>
-              <div class="env-node-info"><div class="env-node-name">claire-app</div><div class="env-node-path">parqué · Phase 5</div></div>
+              <div class="env-node-info"><div class="env-node-name">claire-app</div><div class="env-node-path">parqué · Phase 5</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill ok">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('vault')">
+            <div class="env-node" data-pmid="vault" onclick="openPM('vault')">
               <span class="env-node-st">🟡</span>
-              <div class="env-node-info"><div class="env-node-name">vault</div><div class="env-node-path">vault/ (infra)</div></div>
+              <div class="env-node-info"><div class="env-node-name">vault</div><div class="env-node-path">vault/ (infra)</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill warn">PWF</span><span class="env-fw-pill ok">LINEAGE</span><span class="env-fw-pill ok">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('conv-vault')">
+            <div class="env-node" data-pmid="conv-vault" onclick="openPM('conv-vault')">
               <span class="env-node-st">○</span>
-              <div class="env-node-info"><div class="env-node-name">conv-vault</div><div class="env-node-path">à créer</div></div>
+              <div class="env-node-info"><div class="env-node-name">conv-vault</div><div class="env-node-path">à créer</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
           </div>
 
@@ -1062,21 +1111,25 @@
           <div class="env-cerv-col c3">
             <div class="env-cerv-title">C3 — PERSO</div>
             <div class="env-cerv-sub">foi · voyage · vision</div>
-            <div class="env-node" onclick="openPM('islam')">
+            <div class="env-node" data-pmid="islam" onclick="openPM('islam')">
               <span class="env-node-st">○</span>
-              <div class="env-node-info"><div class="env-node-name">app-islam</div><div class="env-node-path">à créer · séq. C1 d'abord</div></div>
+              <div class="env-node-info"><div class="env-node-name">app-islam</div><div class="env-node-path">à créer · séq. C1 d'abord</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('notes')">
+            <div class="env-node" data-pmid="notes" onclick="openPM('notes')">
               <span class="env-node-st">○</span>
-              <div class="env-node-info"><div class="env-node-name">obsidian-notes</div><div class="env-node-path">à créer</div></div>
+              <div class="env-node-info"><div class="env-node-name">obsidian-notes</div><div class="env-node-path">à créer</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
-            <div class="env-node" onclick="openPM('livre')">
+            <div class="env-node" data-pmid="livre" onclick="openPM('livre')">
               <span class="env-node-st">○</span>
-              <div class="env-node-info"><div class="env-node-name">livre-voyage</div><div class="env-node-path">à créer · long terme</div></div>
+              <div class="env-node-info"><div class="env-node-name">livre-voyage</div><div class="env-node-path">à créer · long terme</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
-            <div class="env-node" style="opacity:.5;cursor:default">
+            <div class="env-node" data-pmid="exploration" style="opacity:.5;cursor:default">
               <span class="env-node-st">📦</span>
-              <div class="env-node-info"><div class="env-node-name">exploration</div><div class="env-node-path">C3-PERSO/exploration/</div></div>
+              <div class="env-node-info"><div class="env-node-name">exploration</div><div class="env-node-path">C3-PERSO/exploration/</div>
+              <div class="env-fw-row"><span class="env-fw-pill miss">CLAUDE.md</span><span class="env-fw-pill miss">PWF</span><span class="env-fw-pill miss">LINEAGE</span><span class="env-fw-pill miss">Sessions</span></div></div>
             </div>
           </div>
 
@@ -5108,6 +5161,35 @@ function closePM() {
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closePM(); });
 (function() { renderAtlas(ATLAS_DATA); })();
+
+/* ── CASCADE : hover skill N4 → illumine projets héritiers ── */
+const SKILL_PROJECT_MAP = {
+  'geo':             ['job','khaldoun','claire','claire-app','vault','islam','notes','livre'],
+  'pwf':             ['claire','vault'],
+  'router':          ['claire','vault'],
+  'fmath':           ['claire','vault'],
+  'cpe-sprint':      ['claire','claire-app'],
+  'n1n4':            ['claire','vault'],
+  'decodeur-narratif':['claire','vault'],
+  'lineage':         ['claire','vault','khaldoun','job'],
+};
+(function initCascade() {
+  document.querySelectorAll('.env-skill-chip[data-skill]').forEach(chip => {
+    const skill = chip.dataset.skill;
+    const targets = SKILL_PROJECT_MAP[skill] || [];
+    chip.addEventListener('mouseenter', () => {
+      chip.classList.add('cascade-on');
+      targets.forEach(pmid => {
+        const node = document.querySelector('.env-node[data-pmid="' + pmid + '"]');
+        if (node) node.classList.add('cascade-lit');
+      });
+    });
+    chip.addEventListener('mouseleave', () => {
+      chip.classList.remove('cascade-on');
+      document.querySelectorAll('.env-node.cascade-lit').forEach(n => n.classList.remove('cascade-lit'));
+    });
+  });
+})();
 </script>
 <div id="pm-overlay" style="display:none" onclick="closePM()">
   <div id="pm-panel" onclick="event.stopPropagation()"></div>
