@@ -8,7 +8,7 @@ Créer le repo de documentation Claire qui formalise la méthode CPE (Canonical 
 
 ## 📍 Current Phase
 
-**Phase 8 — Sprints ecosystem.html (IDs + Atlas UX)**
+**Sprint S9 — Tab Environnement (Pyramide + Drive Tree)**
 
 ## 🗓 Phases
 
@@ -112,7 +112,42 @@ Sources : clear-sky (21 fiches) + saas-traduction (15 templates)
 - [x] Conserver computeRolePairs() pour usage futur en C8
 - **Status:** complete
 
-### Phase 11: Sprint C8 "Marts"
+### Phase S6: Sprint "Portabilité cross-machine" ✅
+- [x] SessionStart hook — détection skills manquants
+- [x] install.ps1 / install.sh dans my-claude-config
+- [x] Skill /geo (renommé depuis /geo-bp)
+- **Status:** complete
+
+### Phase S7: Sprint "Linéage" ✅
+- [x] Skill /lineage — SKILL.md complet (T016 Kahn + T022 BCNF)
+- [x] LINEAGE.md pour projet Claire (Drive, privé)
+- [x] drive: + lineage: ajoutés à PM_DATA (11 projets)
+- [x] Bloc Drive dans onglet Aperçu du PM panel
+- **Status:** complete
+
+### Phase S8: Sprint "Drive restructuration" ✅
+- [x] projects/C1-PRO/ + C2-PRODUIT/ + C3-PERSO/ créés
+- [x] CLAUDE.md à chaque niveau cerveau (SOLID + DDD Bounded Context)
+- [x] Moves : khaldoun→C1, job-hunting→C1, exploration→C3
+- [x] MASTER SKILLS supprimé (orphelin — déjà dans ~/.claude/skills/)
+- [x] PM_DATA corrigé : drive:null pour projets inexistants
+- **Status:** complete
+
+### Phase S9: Sprint "Tab Environnement" ← EN COURS
+- [ ] Nouveau tab 🏔️ dans ecosystem.html
+- [ ] Pyramide visuelle N4 → N2(3 cerveaux) → N1
+- [ ] Drive tree — G:\Mon Drive\10 - Claude\ hardcodé (réel)
+- [ ] Chaque projet = nœud cliquable → openPM()
+- **Status:** in_progress
+- **DoD:** Tab visible, nœuds cliquables, chemins réels, commit+push
+- **Durée:** 1h
+
+### Phase S10: Sprint "IDs stables" (BACKLOG — 30 min)
+- [ ] Vérifier cohérence T001-T053, R001-R054, Z001-Z008
+- [ ] Ajouter IDs SOLID S001-S005, GoF G001-G014
+- **Status:** pending
+
+### Phase S11: Sprint C8 "Marts"
 - [ ] Onglet dédié 🛒 MART
 - [ ] mart_role_stack — fiche complète d'un rôle (théorèmes + outils + zones + nœuds DAG)
 - [ ] mart_zone_coverage — pour chaque zone, quels théorèmes et rôles

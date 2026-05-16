@@ -639,6 +639,7 @@
 
   <div class="tab-bar">
     <button class="tab-btn active" onclick="switchTab('ecosystem')"><span class="tab-dag">🧠 CONSUME</span>🗺️ Ecosystem</button>
+    <button class="tab-btn" onclick="switchTab('env')"><span class="tab-dag">🏔️ N4→N1</span>🏔️ Env</button>
     <button class="tab-btn" onclick="switchTab('legendes')"><span class="tab-dag">🪨 LAKE</span>📚 Légendes</button>
     <button class="tab-btn" onclick="switchTab('nature')"><span class="tab-dag">📱 SOURCE</span>🧬 Nature</button>
     <button class="tab-btn" onclick="switchTab('metiers')"><span class="tab-dag">🛒 MART</span>👔 Métiers</button>
@@ -895,6 +896,242 @@
   </style>
 
   </div><!-- /tab-ecosystem -->
+
+  <!-- ══════════════════════════════════════
+       🏔️ ONGLET ENV — Pyramide + Drive Tree (Sprint S9)
+  ══════════════════════════════════════ -->
+  <div id="tab-env" class="tab-content">
+  <style>
+    .env-page { max-width:900px; margin:0 auto; padding:0 8px 40px; }
+    .env-section-title { font-size:13px; color:#8b949e; text-transform:uppercase; letter-spacing:.08em; margin:24px 0 12px; font-weight:600; }
+
+    /* ── PYRAMID ── */
+    .env-pyr { display:flex; flex-direction:column; gap:0; }
+    .env-level { border-radius:8px; padding:14px 16px; margin-bottom:4px; }
+    .env-level-n4 { background:#1a1224; border:1px solid #6e40c9; }
+    .env-level-n2 { background:#0d1117; border:1px solid #30363d; padding:14px 0; }
+    .env-level-n1 { background:#0f1a12; border:1px solid #238636; }
+    .env-level-hdr { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .env-level-lbl { font-size:11px; font-weight:700; letter-spacing:.06em; }
+    .env-level-n4 .env-level-lbl { color:#d2a8ff; }
+    .env-level-n2 .env-level-lbl { color:#79c0ff; padding:0 16px; }
+    .env-level-n1 .env-level-lbl { color:#56d364; }
+    .env-level-sub { font-size:10px; color:#484f58; margin-left:6px; font-weight:400; }
+    .env-skills-row { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px; }
+    .env-skill-chip { background:#2d1f5e; border:1px solid #6e40c9; border-radius:4px; padding:2px 8px; font-size:10px; color:#d2a8ff; font-family:monospace; cursor:default; }
+    .env-hooks-row { font-size:10px; color:#484f58; margin-bottom:8px; }
+    .env-gh-link { font-size:11px; color:#58a6ff; text-decoration:none; }
+    .env-gh-link:hover { text-decoration:underline; }
+
+    /* ── 3 CERVEAU COLUMNS ── */
+    .env-cerv-cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; }
+    .env-cerv-col { padding:12px 16px; border-right:1px solid #21262d; }
+    .env-cerv-col:last-child { border-right:none; }
+    .env-cerv-title { font-size:12px; font-weight:700; margin-bottom:2px; }
+    .env-cerv-col.c1 .env-cerv-title { color:#79c0ff; }
+    .env-cerv-col.c2 .env-cerv-title { color:#56d364; }
+    .env-cerv-col.c3 .env-cerv-title { color:#d2a8ff; }
+    .env-cerv-sub { font-size:9px; color:#484f58; margin-bottom:10px; }
+    .env-node { display:flex; align-items:center; gap:7px; padding:5px 8px; border-radius:5px; margin-bottom:4px; cursor:pointer; transition:background .12s; }
+    .env-node:hover { background:#21262d; }
+    .env-node.planned { cursor:default; opacity:.5; }
+    .env-node.planned:hover { background:transparent; }
+    .env-node-st { font-size:12px; flex-shrink:0; }
+    .env-node-info { flex:1; min-width:0; }
+    .env-node-name { font-size:11px; color:#e6edf3; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .env-node-path { font-size:9px; color:#484f58; margin-top:1px; }
+
+    /* ── ARROW ── */
+    .env-arrow { text-align:center; color:#30363d; font-size:18px; line-height:1; margin:4px 0; }
+
+    /* ── SESSION ROW ── */
+    .env-sess-row { display:flex; align-items:center; gap:10px; padding:4px 0; }
+    .env-sess-dot { width:8px; height:8px; border-radius:50%; background:#56d364; flex-shrink:0; box-shadow:0 0 6px #56d36488; }
+    .env-sess-txt { font-size:11px; color:#e6edf3; }
+    .env-sess-link { font-size:10px; color:#58a6ff; text-decoration:none; margin-left:4px; }
+
+    /* ── DRIVE TREE ── */
+    .env-tree { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:12px 16px; font-family:'Consolas','Courier New',monospace; }
+    .env-tree-root { font-size:12px; color:#79c0ff; font-weight:700; margin-bottom:8px; }
+    .dtv { display:flex; align-items:center; gap:6px; padding:3px 0; font-size:11px; }
+    .dtv.l1 { padding-left:16px; }
+    .dtv.l2 { padding-left:32px; }
+    .dtv.l3 { padding-left:48px; }
+    .dtv.clickable { cursor:pointer; border-radius:4px; padding-right:6px; }
+    .dtv.clickable:hover { background:#21262d; }
+    .dtv-ico { flex-shrink:0; font-size:11px; }
+    .dtv-name { color:#e6edf3; font-weight:500; }
+    .dtv-badge { font-size:9px; padding:1px 5px; border-radius:3px; font-weight:700; flex-shrink:0; }
+    .dtv-badge.c1 { background:#1a2e4a; color:#79c0ff; }
+    .dtv-badge.c2 { background:#0f2a14; color:#56d364; }
+    .dtv-badge.c3 { background:#2d1f5e; color:#d2a8ff; }
+    .dtv-ok { font-size:9px; color:#56d364; }
+    .dtv-warn { font-size:9px; color:#e3b341; }
+    .dtv-debt { font-size:9px; color:#f0883e; background:#2d1a0a; padding:1px 5px; border-radius:3px; }
+    .dtv-muted { color:#484f58 !important; }
+    .dtv-sub { font-size:9px; color:#484f58; margin-left:2px; }
+    .dtv-st-urgent { color:#f85149; font-size:11px; }
+    .dtv-st-actif  { color:#56d364; font-size:11px; }
+    .dtv-st-parked { color:#e3b341; font-size:11px; }
+    .dtv-st-arch   { color:#484f58; font-size:11px; }
+    .dtv-sep { height:1px; background:#21262d; margin:6px 0; }
+  </style>
+
+  <div class="env-page">
+    <p class="solid-title" style="margin-bottom:4px">🏔️ Environnement — Pyramide N4→N1</p>
+    <p style="font-size:11px;color:#484f58;margin-bottom:20px">Chaque projet = nœud cliquable → PM panel · Chemins réels uniquement (T022 BCNF)</p>
+
+    <div class="env-pyr">
+
+      <!-- N4 -->
+      <div class="env-level env-level-n4">
+        <div class="env-level-hdr">
+          <span class="env-level-lbl">N4 — GLOBAL</span>
+          <span class="env-level-sub">~/.claude/ · toutes sessions · toutes machines</span>
+          <a class="env-gh-link" href="https://github.com/tactacboomboom/-my-claude-config" target="_blank" style="margin-left:auto">my-claude-config ↗</a>
+        </div>
+        <div class="env-skills-row">
+          <span class="env-skill-chip">/geo</span>
+          <span class="env-skill-chip">/pwf</span>
+          <span class="env-skill-chip">/router</span>
+          <span class="env-skill-chip">/fmath</span>
+          <span class="env-skill-chip">/cpe-sprint</span>
+          <span class="env-skill-chip">/n1n4</span>
+          <span class="env-skill-chip">/decodeur-narratif</span>
+          <span class="env-skill-chip">/lineage</span>
+        </div>
+        <div class="env-hooks-row">hooks : SessionStart (portabilité) · UserPromptSubmit (PWF + drive-memory) · PreToolUse (geo guard) · PostToolUse (progress) · Stop (phases check)</div>
+      </div>
+
+      <div class="env-arrow">▼</div>
+
+      <!-- N2 — 3 cerveaux -->
+      <div class="env-level env-level-n2">
+        <div class="env-level-lbl">N2 — CERVEAUX <span class="env-level-sub">Drive · projects/ · 1 CLAUDE.md par contexte</span></div>
+        <div class="env-cerv-cols" style="margin-top:12px">
+
+          <!-- C1 -->
+          <div class="env-cerv-col c1">
+            <div class="env-cerv-title">C1 — PRO</div>
+            <div class="env-cerv-sub">emploi · clients · revenus</div>
+            <div class="env-node" onclick="openPM('job')">
+              <span class="env-node-st">🔴</span>
+              <div class="env-node-info"><div class="env-node-name">job-hunting</div><div class="env-node-path">C1-PRO/job-hunting/</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('khaldoun')">
+              <span class="env-node-st">🟢</span>
+              <div class="env-node-info"><div class="env-node-name">khaldoun</div><div class="env-node-path">C1-PRO/khaldoun/</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('certif')">
+              <span class="env-node-st">✅</span>
+              <div class="env-node-info"><div class="env-node-name">certif PO</div><div class="env-node-path">—</div></div>
+            </div>
+          </div>
+
+          <!-- C2 -->
+          <div class="env-cerv-col c2">
+            <div class="env-cerv-title">C2 — PRODUIT</div>
+            <div class="env-cerv-sub">build · code · système</div>
+            <div class="env-node" onclick="openPM('claire')">
+              <span class="env-node-st">🟢</span>
+              <div class="env-node-info"><div class="env-node-name">claire</div><div class="env-node-path" style="color:#e3b341">⚠️ racine → C2-PRODUIT/</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('claire-app')">
+              <span class="env-node-st">🟡</span>
+              <div class="env-node-info"><div class="env-node-name">claire-app</div><div class="env-node-path">parqué · Phase 5</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('vault')">
+              <span class="env-node-st">🟡</span>
+              <div class="env-node-info"><div class="env-node-name">vault</div><div class="env-node-path">vault/ (infra)</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('conv-vault')">
+              <span class="env-node-st">○</span>
+              <div class="env-node-info"><div class="env-node-name">conv-vault</div><div class="env-node-path">à créer</div></div>
+            </div>
+          </div>
+
+          <!-- C3 -->
+          <div class="env-cerv-col c3">
+            <div class="env-cerv-title">C3 — PERSO</div>
+            <div class="env-cerv-sub">foi · voyage · vision</div>
+            <div class="env-node" onclick="openPM('islam')">
+              <span class="env-node-st">○</span>
+              <div class="env-node-info"><div class="env-node-name">app-islam</div><div class="env-node-path">à créer · séq. C1 d'abord</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('notes')">
+              <span class="env-node-st">○</span>
+              <div class="env-node-info"><div class="env-node-name">obsidian-notes</div><div class="env-node-path">à créer</div></div>
+            </div>
+            <div class="env-node" onclick="openPM('livre')">
+              <span class="env-node-st">○</span>
+              <div class="env-node-info"><div class="env-node-name">livre-voyage</div><div class="env-node-path">à créer · long terme</div></div>
+            </div>
+            <div class="env-node" style="opacity:.5;cursor:default">
+              <span class="env-node-st">📦</span>
+              <div class="env-node-info"><div class="env-node-name">exploration</div><div class="env-node-path">C3-PERSO/exploration/</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="env-arrow">▼</div>
+
+      <!-- N1 -->
+      <div class="env-level env-level-n1">
+        <div class="env-level-hdr">
+          <span class="env-level-lbl">N1 — SESSIONS</span>
+          <span class="env-level-sub">1 session = 1 tâche · WIP ≤ 3</span>
+        </div>
+        <div class="env-sess-row">
+          <span class="env-sess-dot"></span>
+          <span class="env-sess-txt">Claire · feat/atlas-concepts · WIP:2</span>
+          <a class="env-sess-link" href="https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/task_plan.md" target="_blank">task_plan.md ↗</a>
+        </div>
+      </div>
+
+    </div><!-- /env-pyr -->
+
+    <!-- DRIVE TREE -->
+    <p class="env-section-title" style="margin-top:32px">📂 Drive — Structure réelle</p>
+    <div class="env-tree">
+      <div class="env-tree-root">📂 G:\Mon Drive\10 - Claude\</div>
+
+      <div class="dtv l1"><span class="dtv-ico">📁</span><span class="dtv-name">projects/</span></div>
+
+      <div class="dtv l2"><span class="dtv-ico">📁</span><span class="dtv-name">C1-PRO/</span><span class="dtv-badge c1">C1</span><span class="dtv-ok">CLAUDE.md ✅</span></div>
+      <div class="dtv l3 clickable" onclick="openPM('job')"><span class="dtv-ico">📁</span><span class="dtv-name">job-hunting/</span><span class="dtv-st-urgent">🔴</span><span class="dtv-sub">fiches-de-poste · software-engineering</span></div>
+      <div class="dtv l3 clickable" onclick="openPM('khaldoun')"><span class="dtv-ico">📁</span><span class="dtv-name">khaldoun/</span><span class="dtv-st-actif">🟢</span></div>
+
+      <div class="dtv l2"><span class="dtv-ico">📁</span><span class="dtv-name">C2-PRODUIT/</span><span class="dtv-badge c2">C2</span><span class="dtv-ok">CLAUDE.md ✅</span></div>
+      <div class="dtv l3"><span class="dtv-ico dtv-muted">—</span><span class="dtv-name dtv-muted">(vide — claire à déplacer)</span></div>
+
+      <div class="dtv l2"><span class="dtv-ico">📁</span><span class="dtv-name">C3-PERSO/</span><span class="dtv-badge c3">C3</span><span class="dtv-ok">CLAUDE.md ✅</span></div>
+      <div class="dtv l3"><span class="dtv-ico">📁</span><span class="dtv-name">exploration/</span><span class="dtv-st-arch">📦</span></div>
+
+      <div class="dtv l2"><span class="dtv-ico">⚠️</span><span class="dtv-name" style="color:#e3b341">Claire/</span><span class="dtv-debt">dette → C2-PRODUIT/claire/</span></div>
+      <div class="dtv l3 clickable" onclick="openPM('claire')"><span class="dtv-ico">📁</span><span class="dtv-name">ecosystem.html · task_plan.md · LINEAGE.md…</span><span class="dtv-st-actif">🟢</span></div>
+
+      <div class="dtv-sep"></div>
+
+      <div class="dtv l1"><span class="dtv-ico">📁</span><span class="dtv-name">vault/</span><span class="dtv-sub">infra partagée · N2</span></div>
+      <div class="dtv l2"><span class="dtv-ico">📁</span><span class="dtv-name">0-INBOX</span></div>
+      <div class="dtv l2"><span class="dtv-ico">📁</span><span class="dtv-name">1-CONVERSATIONS</span></div>
+      <div class="dtv l2 clickable" onclick="openPM('vault')"><span class="dtv-ico">📁</span><span class="dtv-name">2-CONCEPTS</span><span class="dtv-sub">49 fichiers · /n1n4 · graphify P3</span></div>
+      <div class="dtv l2"><span class="dtv-ico">📁</span><span class="dtv-name">3-PERSONNEL · 5-OUTILS</span></div>
+
+      <div class="dtv-sep"></div>
+
+      <div class="dtv l1"><span class="dtv-ico">📁</span><span class="dtv-name">memory/</span><span class="dtv-sub">auto-memory Claude Code · MEMORY.md index</span></div>
+
+      <div class="dtv-sep"></div>
+
+      <div class="dtv l1"><span class="dtv-ico">📄</span><span class="dtv-name">CLAUDE.md</span><span class="dtv-sub">règles globales Drive</span></div>
+      <div class="dtv l1"><span class="dtv-ico">📄</span><span class="dtv-name">MON-SETUP.md · gouvernance-regles.md · audit-architecture-2026-05-15.md</span></div>
+    </div>
+
+  </div><!-- /env-page -->
+  </div><!-- /tab-env -->
 
   <!-- tab-solid, tab-theoremes, tab-rolesit migrés dans tab-legendes (Sprint C6) -->
 
