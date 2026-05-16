@@ -3492,7 +3492,8 @@
           <div class="atr"><span class="indent">│ ├─ </span><span class="fname">cpe-sprint/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">contrat sprint</span></div>
           <div class="atr"><span class="indent">│ ├─ </span><span class="fname">fmath/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">décomposition formelle</span></div>
           <div class="atr"><span class="indent">│ ├─ </span><span class="fname">n1n4/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">vault pipeline</span></div>
-          <div class="atr"><span class="indent">│ └─ </span><span class="fname">decodeur-narratif/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">narrativisation</span></div>
+          <div class="atr"><span class="indent">│ ├─ </span><span class="fname">decodeur-narratif/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">narrativisation</span></div>
+          <div class="atr"><span class="indent">│ └─ </span><span class="fname">router/</span><span class="ftype ftype-sk">SK</span><span class="fdesc">dispatch C1/C2/C3 · I4</span></div>
           <div class="atr"><span class="indent">└─ projects/[hash]/memory/</span></div>
           <div class="atr"><span class="indent">&nbsp;&nbsp;├─ </span><span class="fname">MEMORY.md</span><span class="ftype ftype-mem">MEM</span><span class="fdesc">index 8 entrées</span></div>
           <div class="atr"><span class="indent">&nbsp;&nbsp;└─ </span><span class="fname">project_*.md</span><span class="ftype ftype-mem">MEM</span><span class="fdesc">auto-chargé</span></div>
@@ -3558,9 +3559,67 @@
       </div>
     </div>
 
+    <!-- Théorèmes fondateurs appliqués -->
+    <div class="archi-block" style="margin-bottom:20px">
+      <div class="archi-block-title">🔬 Théorèmes appliqués à cette architecture</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px">
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:11px;font-weight:700;color:#5B8FD4;margin-bottom:4px">T016 Kahn — Tri topologique</div>
+          <div style="font-size:11px;color:#8b949e">1 fichier = 1 nœud DAG. Aucun orphelin. Ordre d'exécution : skills → hooks → memory → consume.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:11px;font-weight:700;color:#5B8FD4;margin-bottom:4px">T022 BCNF — Formes normales</div>
+          <div style="font-size:11px;color:#8b949e">1 SKILL.md = 1 responsabilité. CLAUDE.md &lt;50L. Chaque nœud a exactement 1 rôle (CF/SK/MEM/CODE).</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:11px;font-weight:700;color:#D4A45B;margin-bottom:4px">T041 CAP — Brewer</div>
+          <div style="font-size:11px;color:#8b949e">Hooks choisissent la Cohérence : s'exécutent à chaque prompt même si coûteux. Disponibilité sacrifiée sur l'autel de la consistance.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:11px;font-weight:700;color:#D4A45B;margin-bottom:4px">T042 FLP — Impossibilité consensus</div>
+          <div style="font-size:11px;color:#8b949e">my-claude-config GitHub = backup. Claire hors Drive = fin du FLP. Sans ça le système ne peut pas converger en cas de panne.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:11px;font-weight:700;color:#D45B8F;margin-bottom:4px">T009 Shannon — Entropie</div>
+          <div style="font-size:11px;color:#8b949e">CLAUDE.md compressé 275→43L. H(système) réduit. Templates extraits dans /pwf — moins d'entropie par session.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:11px;font-weight:700;color:#D45B8F;margin-bottom:4px">T036 Little — L = λW</div>
+          <div style="font-size:11px;color:#8b949e">WIP max = 3 (I2 /geo-bp). Sans cette contrainte : L→∞, W→∞. /router détecte les ajouts de scope avant qu'ils explosent le WIP.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rôles IT -->
+    <div class="archi-block" style="margin-bottom:20px">
+      <div class="archi-block-title">👔 Rôles IT activés (F2 pivot)</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px">
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:#A478E0;margin-bottom:4px">R016 AI Engineer · F2 · score 24</div>
+          <div style="font-size:11px;color:#8b949e">Pilote : CLAUDE.md, hooks, skills, memory. Rôle pivot de l'équipe.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:#A478E0;margin-bottom:4px">R038 TPM · F5 · score 16</div>
+          <div style="font-size:11px;color:#8b949e">Sprints CPE, specs, traduction intention→exécution via /cpe-sprint.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:#A478E0;margin-bottom:4px">R020 DevOps · F3 · score 15</div>
+          <div style="font-size:11px;color:#8b949e">Backup GitHub, migration hors Drive, my-claude-config, CI hygiene.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:#A478E0;margin-bottom:4px">R013 Data Engineer · F2</div>
+          <div style="font-size:11px;color:#8b949e">Pipeline vault : vault/1 → /n1n4 → vault/2-CONCEPTS. ELT conversations IA.</div>
+        </div>
+        <div style="background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:#A478E0;margin-bottom:4px">R047 Staff Engineer · F6</div>
+          <div style="font-size:11px;color:#8b949e">Claude = PM orchestrateur. Vue transverse des 3 cerveaux. Arbitrage conflits de priorité.</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Skills actifs -->
     <div class="archi-block">
-      <div class="archi-block-title">⚙️ Skills actifs (6)</div>
+      <div class="archi-block-title">⚙️ Skills actifs (7)</div>
       <div class="skills-grid">
         <div class="sk-card"><div class="sk-name">/geo-bp</div><div class="sk-type">protocol · I1/I2/I3/I4</div><div class="sk-desc">Garde-fou — 4 invariants · 5 intentions dangereuses</div></div>
         <div class="sk-card"><div class="sk-name">/pwf</div><div class="sk-type">protocol · planning</div><div class="sk-desc">Planning with Files — task_plan + findings + progress</div></div>
