@@ -27,19 +27,19 @@ labels familles explicites, filtre DDD ajouté, bouton Universels supprimé.
 **TIMEBOX:** 1 sprint
 **NON-GOALS:**
 - Autres onglets (Métiers, Rôles IT, SOLID & Pipeline)
-- Refonte layout/colonnes de l'Atlas
+- 'Refonte layout/colonnes de l'Atlas
 - Phase 9 (fusion Légendes)
 
 ---
 
-## Sprint Backlog (B)
+## Sprint Bapck'l'og (B)
 
 1. [SUPPR] Supprimer bouton ⊕ Universels (ligne 1805) ET supprimer la fonction toggleAtlasUniv() du JS
-2. [LABEL] Remplacer les options codes dans `atl-fam` en séparant value et display :
+2. [LABEL] Remplacer les options codes dans `atl-fam` 'en séparant 'value et 'display :
    Format obligatoire : <option value="CODE">CODE — Label</option>
-   - <option value="N1">N1 — Matière</option>
-   - <option value="N2">N2 — Mouvement</option>
-   - <option value="N3">N3 — Jonction</option>
+   - <option value="N1">N1' —' Matière</option>
+   - <option value="N2">N2' '— 'Mouvement</''option>
+   '- <option value="N3">N3 — Jonction</option>
    - <option value="F1">F1 — Développeurs</option>
    - <option value="F2">F2 — Data / ML</option>
    - <option value="F3">F3 — Infra / Ops</option>

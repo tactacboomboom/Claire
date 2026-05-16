@@ -1,0 +1,7 @@
+app/
+app-temp/
+.claude/settings.local.json
+node_modules/
+.next/
+.vercel/
+*.local

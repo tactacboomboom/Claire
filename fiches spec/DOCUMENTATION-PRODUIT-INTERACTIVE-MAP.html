@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas de la Documentation Produit - Interactive Map</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d9ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 2000px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 1400px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .section h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #00d9ff;
+            border-bottom: 2px solid rgba(0, 217, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .section h3 {
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #66ff99;
+        }
+        
+        .doc-card {
+            background: rgba(0, 217, 255, 0.1);
+            border-left: 4px solid #00d9ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .doc-card:hover {
+            background: rgba(0, 217, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .doc-card strong {
+            color: #00d9ff;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .doc-card small {
+            opacity: 0.7;
+        }
+        
+        .anchor {
+            display: inline-block;
+            color: #0099ff;
+            text-decoration: none;
+            margin: 5px 5px 5px 0;
+            padding: 5px 10px;
+            background: rgba(0, 153, 255, 0.1);
+            border-radius: 3px;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        
+        .anchor:hover {
+            background: rgba(0, 153, 255, 0.3);
+        }
+        
+        .mermaid {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        .socle {
+            background: rgba(102, 255, 153, 0.1);
+            border-left: 4px solid #66ff99;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .socle strong {
+            color: #66ff99;
+        }
+        
+        .rupture {
+            background: rgba(255, 153, 102, 0.1);
+            border-left: 4px solid #ff9966;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .rupture strong {
+            color: #ff9966;
+        }
+        
+        .axis {
+            background: rgba(204, 153, 255, 0.1);
+            border-left: 4px solid #cc99ff;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+        
+        .checklist {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .checklist ul {
+            list-style-position: inside;
+            margin-left: 10px;
+        }
+        
+        .checklist li {
+            margin: 8px 0;
+            opacity: 0.85;
+        }
+        
+        .phase-box {
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.2) 0%, rgba(0, 217, 255, 0.1) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        
+        .phase-box strong {
+            color: #00d9ff;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            opacity: 0.6;
+            font-size: 0.9em;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            background: rgba(0, 153, 255, 0.15);
+            border: 1px solid rgba(0, 153, 255, 0.3);
+            color: #00d9ff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: rgba(0, 153, 255, 0.4);
+            border-color: rgba(0, 153, 255, 0.6);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📚 ATLAS DE LA DOCUMENTATION PRODUIT</h1>
+        <p>Cartographie complète : fmaths + protocole brainstorming</p>
+        <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.7;">
+            Comprendre MRD → BRD → PRD → SRD et leurs relations avec la rigueur mathématique
+        </p>
+    </div>
+
+    <div class="container">
+        <!-- COLONNE 1: VUE D'ENSEMBLE -->
+        <div>
+            <div class="section">
+                <h2>🗺️ Vue d'Ensemble</h2>
+                
+                <h3>Les 4 Documents Clés</h3>
+                <div class="doc-card">
+                    <strong>MRD — Market Requirements Document</strong>
+                    <small>Pourquoi + Pour qui ? | Marché, Problèmes, Opportunités</small>
+                    <div style="margin-top: 5px; font-size: 0.85em;">
+                        Audience: Marketing, Execs | Timeline: Stable (1+ année)
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <strong>BRD — Business Requirements Document</strong>
+                    <small>Business Case | Stratégie, Objectifs, Scope</small>
+                    <div style="margin-top: 5px; font-size: 0.85em;">
+                        Audience: PM, Execs | Timeline: Moyen (1-2 trim)
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <strong>PRD — Product Requirements Document</strong>
+                    <small>Quoi construire ? | Features, Workflows, UX</small>
+                    <div style="margin-top: 5px; font-size: 0.85em;">
+                        Audience: PM, UX, Dev | Timeline: Court (1-2 sprints)
+                    </div>
+                </div>
+                
+                <div class="doc-card">
+                    <strong>SRD — Software Requirements Document</strong>
+                    <small>Comment construire ? | Architecture, APIs, Data Model</small>
+                    <div style="margin-top: 5px; font-size: 0.85em;">
+                        Audience: Dev, Arch | Timeline: Court (live during coding)
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Les 3 Socles Immuables</h3>
+                <div class="socle">
+                    <strong>1. Cohérence d'Intention</strong>
+                    <div style="margin-top: 8px; opacity: 0.85;">
+                        Même idée à chaque niveau, juste plus détaillée.
+                        MRD→BRD→PRD→SRD→Code doivent tous dire la même chose.
+                    </div>
+                </div>
+                
+                <div class="socle">
+                    <strong>2. Traçabilité Bidirectionnelle</strong>
+                    <div style="margin-top: 8px; opacity: 0.85;">
+                        ✓ Vers le bas : Chaque requirement trace à une feature
+                        ✓ Vers le haut : Chaque feature trace à un objectif
+                    </div>
+                </div>
+                
+                <div class="socle">
+                    <strong>3. Non-Redondance</strong>
+                    <div style="margin-top: 8px; opacity: 0.85;">
+                        Chaque document a un rôle unique.
+                        MRD ≠ BRD ≠ PRD ≠ SRD (responsabilités bien séparées)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLONNE 2: RUPTURES & AXES -->
+        <div>
+            <div class="section">
+                <h2>⚡ Les 4 Ruptures Critiques</h2>
+                
+                <div class="rupture">
+                    <strong>Rupture 1: MRD → BRD</strong>
+                    <div style="margin-top: 8px; font-size: 0.95em;">
+                        <strong style="color: #ffcc99;">Transition:</strong> Marché → Stratégie interne
+                        <br><strong style="color: #ffcc99;">Risque:</strong> BRD ignore ce que MRD a découvert
+                        <br><strong style="color: #ffcc99;">Validation:</strong> BRD adresse tous les problèmes du MRD (même réduit en scope)
+                    </div>
+                </div>
+                
+                <div class="rupture">
+                    <strong>Rupture 2: BRD → PRD</strong>
+                    <div style="margin-top: 8px; font-size: 0.95em;">
+                        <strong style="color: #ffcc99;">Transition:</strong> Objectifs business → Features créatives
+                        <br><strong style="color: #ffcc99;">Risque:</strong> Features "orphelines" sans lien au BRD
+                        <br><strong style="color: #ffcc99;">Validation:</strong> Chaque feature trace à un objectif BRD
+                    </div>
+                </div>
+                
+                <div class="rupture">
+                    <strong>Rupture 3: PRD → SRD</strong>
+                    <div style="margin-top: 8px; font-size: 0.95em;">
+                        <strong style="color: #ffcc99;">Transition:</strong> Features → Architecture technique
+                        <br><strong style="color: #ffcc99;">Risque:</strong> Trade-offs cachés, spec trop ambitieuse
+                        <br><strong style="color: #ffcc99;">Validation:</strong> Trade-offs explicites, perf targets mesurables
+                    </div>
+                </div>
+                
+                <div class="rupture">
+                    <strong>Rupture 4: SRD → Code</strong>
+                    <div style="margin-top: 8px; font-size: 0.95em;">
+                        <strong style="color: #ffcc99;">Transition:</strong> Spec → Réalité du code
+                        <br><strong style="color: #ffcc99;">Risque:</strong> Révélateur d'implicites, découvertes tardives
+                        <br><strong style="color: #ffcc99;">Validation:</strong> Architecture réaliste pour le timeframe donné
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" style="margin-top: 30px;">
+                <h2>🎯 Les 5 Axes de Variation</h2>
+                
+                <div class="axis">
+                    <strong>Axe 1: Abstraction ↔ Concrétion</strong>
+                    <br>MRD très abstrait → SRD très concret
+                </div>
+                
+                <div class="axis">
+                    <strong>Axe 2: Business ↔ Technical</strong>
+                    <br>MRD/BRD langage métier → SRD langage technique
+                </div>
+                
+                <div class="axis">
+                    <strong>Axe 3: WHAT ↔ HOW</strong>
+                    <br>MRD/BRD/PRD répondent "WHAT" → SRD répond "HOW"
+                </div>
+                
+                <div class="axis">
+                    <strong>Axe 4: Large Scope ↔ Narrow Scope</strong>
+                    <br>MRD marché entier → SRD une feature
+                </div>
+                
+                <div class="axis">
+                    <strong>Axe 5: Timeline</strong>
+                    <br>MRD stable 1 an → SRD change pendant le coding
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION WORKFLOW -->
+    <div class="container" style="margin-top: 30px;">
+        <div class="section" style="grid-column: 1 / -1;">
+            <h2>🔄 Workflow de Brainstorming: Phase par Phase</h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab(0)">Phase 0: MRD</button>
+                <button class="tab-btn" onclick="switchTab(1)">Phase 1: BRD</button>
+                <button class="tab-btn" onclick="switchTab(2)">Phase 2: PRD</button>
+                <button class="tab-btn" onclick="switchTab(3)">Phase 3: SRD</button>
+                <button class="tab-btn" onclick="switchTab(4)">Checklist</button>
+            </div>
+
+            <div class="tab-content active" id="tab-0">
+                <div class="phase-box">
+                    <strong>APERTURE (Leadership + Direction)</strong>
+                    <div style="margin-top: 10px;">
+                        <strong>Durée:</strong> 15 min
+                        <br><strong>Participants:</strong> Toi + Product Owner / Executive
+                        <br><strong>Objectif:</strong> Établir le contexte, les enjeux, l'intention stratégique
+                    </div>
+                </div>
+                
+                <h3>Questions Clés</h3>
+                <ul style="margin-left: 20px; opacity: 0.85;">
+                    <li>Quel est le problème réel qu'on adresse ? (data-based)</li>
+                    <li>Qui le souffre le plus ? (segmentation)</li>
+                    <li>À quelle fréquence ? (magnitude)</li>
+                    <li>Quel coût si on ne résout pas ? (urgency)</li>
+                    <li>Market size ? (est-ce que ça vaut la peine ?)</li>
+                </ul>
+                
+                <h3>Artefact: PROJECT CHARTER</h3>
+                <div class="checklist">
+                    <strong>Contient:</strong>
+                    <ul>
+                        <li>Problem Statement (marché, segments, magnitude)</li>
+                        <li>Vision (état futur désiré)</li>
+                        <li>Stakeholders & Roles</li>
+                        <li>Contraintes fondamentales</li>
+                        <li>Success Criteria (fonctionnel, non-fonctionnel, adoption)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-1">
+                <div class="phase-box">
+                    <strong>DISCOVERY + DEFINE (Problèmes + Scope)</strong>
+                    <div style="margin-top: 10px;">
+                        <strong>Durée:</strong> 40-50 min brainstorm
+                        <br><strong>Participants:</strong> Toi + PM + Execs (stakeholder alignment)
+                        <br><strong>Objectif:</strong> Transformer les problèmes marché en objectifs business
+                    </div>
+                </div>
+                
+                <h3>Questions Clés</h3>
+                <ul style="margin-left: 20px; opacity: 0.85;">
+                    <li>De tous les segments du MRD, lequel on vise ? (Scope reduction)</li>
+                    <li>Quel est notre business case ? (Revenue, timeline, ROI)</li>
+                    <li>Quels objectifs business mesurables ? (Rétention, ARPU, market share)</li>
+                    <li>Stakeholder alignment: qui faut convaincre ?</li>
+                </ul>
+                
+                <h3>Pont avec le MRD</h3>
+                <div class="checklist">
+                    <strong>MRD dit:</strong> "Les devs perdent 2h/day à chercher du code"
+                    <br><strong>BRD doit dire:</strong> "Nous, on cible LEQUEL de ces devs ?
+                    <br>Python/JS only? France only? Startups only?"
+                    <br><strong>INSIGHT:</strong> BRD réduit intentionnellement le scope du MRD (c'est normal)
+                </div>
+                
+                <h3>Artefact: BRD (Business Requirements)</h3>
+                <div class="checklist">
+                    <strong>Contient:</strong>
+                    <ul>
+                        <li>Executive Summary</li>
+                        <li>Business Objectives & Target Segments</li>
+                        <li>Business Case (Revenue model, ROI)</li>
+                        <li>Stakeholder Requirements (Sales, Finance, CS)</li>
+                        <li>Phase 1 Scope Definition (In/Out)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-2">
+                <div class="phase-box">
+                    <strong>DEFINE + DESIGN (Features + Workflows)</strong>
+                    <div style="margin-top: 10px;">
+                        <strong>Durée:</strong> 50-60 min brainstorm
+                        <br><strong>Participants:</strong> Toi + PM + UX Designer (creative choices)
+                        <br><strong>Objectif:</strong> Transformer les objectifs business en features concrètes
+                    </div>
+                </div>
+                
+                <h3>Questions Clés</h3>
+                <ul style="margin-left: 20px; opacity: 0.85;">
+                    <li>Pour chaque objectif BRD, quelles features le réalisent ?</li>
+                    <li>Qui sont les personas utilisateur ? (Workflows différents par persona)</li>
+                    <li>Pour chaque feature, quel est le user workflow ?</li>
+                    <li>Quels acceptance criteria ? (testables, précis)</li>
+                </ul>
+                
+                <h3>Pont avec le BRD</h3>
+                <div class="checklist">
+                    <strong>BRD dit:</strong> "Objectif: Augmenter rétention de 20%"
+                    <br><strong>PRD doit dire:</strong> "Comment ? Via notifications ?
+                    <br>Via recommandations ? Via communauté ?
+                    <br>Nous choisissons : [Feature X, Y, Z]"
+                    <br><strong>INSIGHT:</strong> PRD fait un CHOIX CRÉATIF que BRD ne détermine pas
+                </div>
+                
+                <h3>Artefact: PRD (Product Requirements)</h3>
+                <div class="checklist">
+                    <strong>Contient:</strong>
+                    <ul>
+                        <li>Product Vision</li>
+                        <li>Personas & Pain Points</li>
+                        <li>User Stories & Acceptance Criteria</li>
+                        <li>User Workflows (Detailed)</li>
+                        <li>Out of Scope (Phase 2+)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-3">
+                <div class="phase-box">
+                    <strong>DESIGN + REVIEW (Architecture + Implementation)</strong>
+                    <div style="margin-top: 10px;">
+                        <strong>Durée:</strong> 50-60 min brainstorm
+                        <br><strong>Participants:</strong> Toi + Tech Lead + Architect (technical choices)
+                        <br><strong>Objectif:</strong> Transformer les features en architecture technique
+                    </div>
+                </div>
+                
+                <h3>Questions Clés</h3>
+                <ul style="margin-left: 20px; opacity: 0.85;">
+                    <li>Quels composants ? (Frontend, Backend, Database)</li>
+                    <li>Quel data model ? (Tables, relationships, constraints)</li>
+                    <li>Quel API design ? (Endpoints, request/response, errors)</li>
+                    <li>Quels non-functional targets ? (Performance, scalability, security)</li>
+                    <li>Quels trade-offs conscients ? ("Nous choisissons X sur Y parce que...")</li>
+                </ul>
+                
+                <h3>Pont avec le PRD</h3>
+                <div class="checklist">
+                    <strong>PRD dit:</strong> "Feature: Chercher snippets par langage"
+                    <br><strong>SRD doit dire:</strong> "Techniquement, comment ?
+                    <br>Database: SQLite or PostgreSQL?
+                    <br>Index strategy: B-tree on language?
+                    <br>Query latency target: 500ms?"
+                    <br><strong>INSIGHT:</strong> SRD fait des TRADE-OFFS TECHNIQUES
+                </div>
+                
+                <h3>Artefact: SRD (Software Requirements)</h3>
+                <div class="checklist">
+                    <strong>Contient:</strong>
+                    <ul>
+                        <li>System Architecture & Components</li>
+                        <li>Technology Choices & Trade-offs</li>
+                        <li>Data Model (SQL schema)</li>
+                        <li>API Specification (endpoints, requests, responses)</li>
+                        <li>Security & Performance Targets</li>
+                        <li>Deployment Plan</li>
+                        <li>Known Limitations & Future Improvements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-4">
+                <h3>✓ Checklist de Cohérence Intégrale</h3>
+                
+                <h4 style="color: #66ff99; margin-top: 20px;">Cohérence MRD ↔ BRD</h4>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ Chaque problème MRD est adressé dans le BRD</li>
+                        <li>☐ BRD justifie pourquoi on réduit le scope du MRD (stratégie consciente)</li>
+                        <li>☐ Objectifs business du BRD tracent directement au problème du MRD</li>
+                    </ul>
+                </div>
+                
+                <h4 style="color: #66ff99; margin-top: 20px;">Cohérence BRD ↔ PRD</h4>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ Chaque objectif business a au moins une feature PRD qui l'adresse</li>
+                        <li>☐ Aucune feature "orpheline" (cool mais non-justifiée)</li>
+                        <li>☐ User workflows du PRD réalisent les objectifs du BRD</li>
+                    </ul>
+                </div>
+                
+                <h4 style="color: #66ff99; margin-top: 20px;">Cohérence PRD ↔ SRD</h4>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ Chaque feature PRD peut être implémentée via l'architecture SRD</li>
+                        <li>☐ Acceptance criteria du PRD sont techniquement testables</li>
+                        <li>☐ Performance/scalability targets du SRD sont cohérentes</li>
+                    </ul>
+                </div>
+                
+                <h4 style="color: #66ff99; margin-top: 20px;">Absence de Redondance</h4>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ MRD ne parle pas de business case (c'est le BRD)</li>
+                        <li>☐ BRD ne spécifie pas des features (c'est le PRD)</li>
+                        <li>☐ PRD ne parle pas d'architecture (c'est le SRD)</li>
+                        <li>☐ SRD ne parle pas de code en détail (c'est pendant le coding)</li>
+                    </ul>
+                </div>
+                
+                <h4 style="color: #66ff99; margin-top: 20px;">Traçabilité Bidirectionnelle</h4>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ Vers le bas: Chaque requirement SRD trace à un feature PRD</li>
+                        <li>☐ Vers le haut: Chaque feature PRD trace à un objectif BRD</li>
+                        <li>☐ Réciproquement: Chaque problème MRD est couvert par une feature PRD</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION RESSOURCES -->
+    <div class="container" style="margin-top: 30px; margin-bottom: 60px;">
+        <div class="section" style="grid-column: 1 / -1;">
+            <h2>📖 Ressources & Documents Complets</h2>
+            
+            <h3>Documents Principaux (À Consulter)</h3>
+            <div class="doc-card">
+                <strong>FMATHS Passe 1 — Formalisme Mathématique</strong>
+                <small>Analyse structurelle complète en 8 étapes : Ensembles, Logique, Invariants, Axes, Ruptures, Catégories, Topologie, Probabilités</small>
+                <br><a class="anchor" href="#" onclick="alert('Voir FMATHS-DOCUMENTATION-PRODUIT-PASSE1.md')">Lire complet →</a>
+            </div>
+            
+            <div class="doc-card">
+                <strong>FMATHS Passe 2 — Décodeur Narrative</strong>
+                <small>9 actes qui expliquent le formalisme en français organique (podcast/essai). Rigueur mathématique, zéro symboles.</small>
+                <br><a class="anchor" href="#" onclick="alert('Voir FMATHS-DOCUMENTATION-PRODUIT-PASSE2.md')">Lire complet →</a>
+            </div>
+            
+            <div class="doc-card">
+                <strong>ATLAS Synthèse</strong>
+                <small>Fusion fmaths + protocole brainstorming. Cartographie complète avec templates, workflows, checklists.</small>
+                <br><a class="anchor" href="#" onclick="alert('Voir ATLAS-DOCUMENTATION-PRODUIT-SYNTHESE.md')">Lire complet →</a>
+            </div>
+            
+            <div class="doc-card">
+                <strong>PROTOCOL Brainstorming</strong>
+                <small>6 phases opérationnelles : Aperture, Discovery, Define, Design, Review, Deliver, Live</small>
+                <br><a class="anchor" href="#" onclick="alert('Voir PROTOCOL-BRAINSTORM-SPECS.md')">Lire complet →</a>
+            </div>
+
+            <h3 style="margin-top: 30px;">Cas d'Usage</h3>
+            
+            <h4 style="color: #66ff99;">Pour commencer un nouveau projet:</h4>
+            <ol style="margin-left: 20px; opacity: 0.85;">
+                <li>Remplis le <strong>MRD</strong> (15 min) → Valide avec execs</li>
+                <li>Brainstorm <strong>BRD</strong> (30-40 min) → Valide avec stakeholders</li>
+                <li>Brainstorm <strong>PRD</strong> (50 min) → Valide avec PM + UX</li>
+                <li>Brainstorm <strong>SRD</strong> (50 min) → Valide avec architecture</li>
+                <li><strong>Checklist</strong> de cohérence (10 min) → Identifie gaps</li>
+                <li>Coding session avec Claude Code (120+ min) → Implémente le SRD sans questions</li>
+            </ol>
+
+            <h4 style="color: #66ff99; margin-top: 20px;">Pour débugger un projet en difficulté:</h4>
+            <div style="margin-left: 20px; opacity: 0.85;">
+                <strong>"Le code ne matche pas le PRD"</strong> → Rupture 3 cassée (SRD flou) → Reviens à Architecture
+                <br><strong>"Le PRD ne matche pas les objectifs business"</strong> → Rupture 2 cassée (PRD mal defini) → Reviens à Features
+                <br><strong>"Features orphelines"</strong> → Rupture 2 cassée (PRD non-tracé au BRD) → Retrace
+                <br><strong>"Personne ne sait pourquoi on fait ça"</strong> → Rupture 1 cassée (BRD pas aligné au MRD) → Reclarifie intent
+            </div>
+
+            <h3 style="margin-top: 30px;">Concepts Clés</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="background: rgba(255, 200, 0, 0.1); padding: 15px; border-radius: 5px; border-left: 4px solid #ffc800;">
+                    <strong style="color: #ffc800;">Dette d'Intention</strong>
+                    <div style="margin-top: 8px; font-size: 0.9em;">
+                        Gap entre ce qu'on voulait faire (MRD) et ce qu'on a vraiment fait (Code). S'accumule à chaque rupture.
+                    </div>
+                </div>
+                
+                <div style="background: rgba(102, 255, 153, 0.1); padding: 15px; border-radius: 5px; border-left: 4px solid #66ff99;">
+                    <strong style="color: #66ff99;">Révélateur d'Implicites</strong>
+                    <div style="margin-top: 8px; font-size: 0.9em;">
+                        Le développeur découvre les choses que les specs ont oubliées. C'est un diagnostic, pas un blâme.
+                    </div>
+                </div>
+                
+                <div style="background: rgba(102, 204, 255, 0.1); padding: 15px; border-radius: 5px; border-left: 4px solid #66ccff;">
+                    <strong style="color: #66ccff;">Entropie Informationnelle</strong>
+                    <div style="margin-top: 8px; font-size: 0.9em;">
+                        L'ambiguïté diminue à chaque phase: MRD (très ambigu) → Code (zéro ambiguïté).
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 153, 102, 0.1); padding: 15px; border-radius: 5px; border-left: 4px solid #ff9966;">
+                    <strong style="color: #ff9966;">Feedback Loop</strong>
+                    <div style="margin-top: 8px; font-size: 0.9em;">
+                        Code révèle que SRD était irréaliste → revoir SRD → revoir PRD → revoir BRD. Essentiel mais court.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Atlas créé en appliquant le protocole fmaths (Passe 1: Formalisme + Passe 2: Décodeur)</p>
+        <p>Source: protocole fmaths.md + images MRD/BRD/PRD/SRD/PRD lifecycle</p>
+        <p style="margin-top: 10px; font-size: 0.85em;">
+            Deeplinks : Pour concepts avancés, voir FMATHS Passe 2, Acte 4 (Ruptures) | Acte 5 (Mécanique) | Acte 7 (Topologie)
+        </p>
+    </div>
+
+    <script>
+        function switchTab(tabIndex) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Deactivate all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabIndex}`).classList.add('active');
+            buttons[tabIndex].classList.add('active');
+        }
+        
+        // Initialize mermaid
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>
