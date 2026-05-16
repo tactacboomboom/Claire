@@ -167,3 +167,181 @@ Pas de 4ème famille possible — Concurrence = runtime, Persistance = infrastru
 | `vault/2 - CONCEPTS/ontologie-poo-minimale.md` | Concept — preuve de fermeture de l'ontologie POO |
 | `vault/2 - CONCEPTS/design-patterns-essentiels.md` | Concept — 14 patterns essentiels + fermeture |
 | `vault/REF/tags.md` | Ajout : `ontologie_poo_minimale` + `design_patterns_essentiels` dans #STRUCT |
+
+---
+
+## Session 2026-05-16 — Sprint S2 Kahn-0 + Taxonomie nommage
+
+### Sprint S2 — État (A0.1 + A0.2 validés)
+
+| Action | Résultat |
+| :--- | :--- |
+| `git push origin feat/atlas-concepts` | GitHub à jour — commit `1be02f2` ✅ |
+| `git clone → C:\projects\claire` | Claire hors Drive, sur `feat/atlas-concepts` ✅ |
+| `.gitignore` créé | `app/`, `app-temp/`, `*.local` exclus du repo Claire ✅ |
+| `math_atlas_narrative.html` × 4 → 1 | Canonique : `vault/5 - OUTILS/` ✅ |
+| `mindmap-atlas-50-theoremes.html` × 2 → 1 | Canonique : `vault/5 - OUTILS/` ✅ |
+
+### Taxonomie nommage — à valider par Yanis
+
+**Types d'artefacts**
+
+| Type | Convention | Exemples |
+| :--- | :--- | :--- |
+| Skill | `verb-noun` kebab | `geo`, `cpe-sprint` |
+| Concept | `noun-noun` kebab | `nilpotence-cognitive`, `kahn-dag` |
+| Config | UPPER_CASE | `CLAUDE.md`, `settings.json` |
+| Memory | `type_slug.md` | `project_atlas.md`, `user_profile.md` |
+| Template | `noun.md` | `task_plan.md`, `sprint-contract.md` |
+| Dashboard | `noun.html` | `ecosystem.html` |
+
+**Couches DDD → nœuds DAG**
+
+| DDD Layer | Nœud DAG | Chemin |
+| :--- | :--- | :--- |
+| Domain | vault/2-CONCEPTS | Théorèmes, méthodes, concepts purs |
+| Application | ~/.claude/skills/ | Skills invocables par Claude Code |
+| Infrastructure | my-claude-config (GitHub) | CLAUDE.md, settings.json, hooks |
+| Presentation | ecosystem.html, claire-app | UX, dashboards, API |
+
+**SOLID appliqué aux skills**
+
+| Principe | Règle |
+| :--- | :--- |
+| S | 1 SKILL.md = 1 responsabilité (geo = garde-fou SEULEMENT) |
+| O | Nouveau besoin → nouveau SKILL.md, jamais modifier l'existant |
+| L | Interface obligatoire : `name / description / type / input / output / allowed-tools` |
+| I | `allowed-tools:` limité au strict nécessaire — jamais `*` |
+| D | Skills dépendent de l'API Claude abstraite, pas d'un outil concret |
+
+### OOP appliqué à la structure de fichiers
+
+| Concept OOP | Traduction fichier |
+| :--- | :--- |
+| Classe | SKILL.md (contrat + interface) |
+| Objet | Instance d'un skill invoqué dans une session |
+| Méthode | Section du SKILL.md (protocole d'exécution) |
+| Interface | Frontmatter obligatoire (name/description/type/input/output) |
+| Héritage | skill B @extends skill A (import partiel) |
+| Encapsulation | `allowed-tools:` = surface exposée seulement |
+
+---
+
+## Session 2026-05-16 — Sprint S5 : Audit repos gouvernance
+
+### /fmath appliqué — 3 repos
+
+#### 1. obra/superpowers — Analyse fmaths
+
+**Ensemble minimal irréductible :**
+| Primitif | Rôle | Irréductible ? |
+| :--- | :--- | :--- |
+| SKILL.md | Contrat d'un comportement | ✅ |
+| Workflow | Séquence spec→plan→exécute | ✅ |
+| Subagent | Isolant d'exécution autonome | ✅ |
+| TDD cycle | Feedback loop RED→GREEN→REFACTOR | ✅ |
+
+**Fermeture** : {skill + workflow + subagent + TDD} génère la totalité du dev cycle. Rien ne manque, rien n'est superflu.
+
+**Tensions identifiées :**
+- Spec-first ↔ autonomie subagent → résolu par brainstorming itératif (approbation humaine avant worktree)
+- Flexibilité ↔ conformité → résolu par "check skills before task" (Δ₀ automatique)
+
+**Topologie :** cascade linéaire stricte — brain → plan → worktree → subagent → test → review. Pas de boucle implicite.
+
+**Invariant clé :** "The agent checks for relevant skills before any task" = Δ₀ appliqué automatiquement. Absent dans mes sessions actuelles → violation I3 répétée.
+
+---
+
+#### 2. thedotmack/claude-mem — Analyse fmaths
+
+**Ensemble minimal irréductible :**
+| Primitif | Rôle | Irréductible ? |
+| :--- | :--- | :--- |
+| Observation | Capture brute d'une action | ✅ |
+| Summary | Compression sémantique | ✅ |
+| Retrieval | Injection contextuelle ciblée | ✅ |
+| Hook lifecycle | Déclenchement automatique | ✅ |
+
+**Fermeture** : {observation + summary + retrieval + hooks} = couverture complète de la continuité mémoire inter-sessions.
+
+**Tensions identifiées :**
+- Complétude mémoire ↔ coût token → résolu par progressive disclosure 3 couches (index 50-100t → timeline → details 500-1000t/filtre)
+- Automatisme ↔ privacy → résolu par `<private>` tags
+
+**Topologie :** DAG : SessionStart → UserPromptSubmit → PostToolUse → Stop → compression → SQLite + Chroma → retrieval MCP → injection. Plus puissant que le hook actuel (~/.claude/settings.json qui lit seulement MEMORY.md).
+
+**Invariant clé :** T009 Shannon appliqué à la mémoire — compression maximale sans perte sémantique. 10x token savings mesuré.
+
+---
+
+#### 3. safishamsi/graphify — Analyse fmaths
+
+**Ensemble minimal irréductible :**
+| Primitif | Rôle | Irréductible ? |
+| :--- | :--- | :--- |
+| Node | Concept extrait | ✅ |
+| Edge (EXTRACTED/INFERRED/AMBIGUOUS) | Relation typée | ✅ |
+| Cluster (Leiden) | Cohérence thématique | ✅ |
+| God-node | Concept haute-densité (hub) | ⚠️ dérivé mais analytiquement distinct |
+
+**Fermeture** : {node + edge + cluster} couvre toute structure de connaissance. God-node = propriété émergente, pas primitif.
+
+**Tensions identifiées :**
+- Freshness du graphe ↔ coût recalcul → résolu par cache SHA256 + --update incrémental
+- Navigation libre ↔ structure imposée → résolu par modes query/path/explain + wiki
+
+**Topologie :** fichiers disparates → extraction multimodale (AST + vision + NLP) → graphe NetworkX → Leiden clustering → sorties (html/json/obsidian/wiki). Post-commit git hook pour sync automatique.
+
+**Invariant clé :** 71.5x réduction tokens = T009 Shannon. vault/2-CONCEPTS (49 fichiers) → graphe → navigation directe par concept sans lire 49 fichiers.
+
+---
+
+### Matrice gouvernance — repos × problèmes Yanis
+
+| Problème Yanis | BN/Invariant | superpowers | claude-mem | graphify |
+| :--- | :--- | :--- | :--- | :--- |
+| CLAUDE.md 275L → mauvais nœud | BN1 / I1 | ✅ SKILL.md = 1 responsabilité | — | — |
+| Skills orphelins sans arc | BN2 / I1 | ✅ install marketplace = arc auto | ✅ npx install = arc auto | ✅ pip install = arc auto |
+| WIP > 3 simultanément | I2 | ✅ worktree = isolation WIP | ✅ sessions séparées tracées | — |
+| Spec manquante avant code | I3 | ✅✅ brainstorm→writing-plans | — | — |
+| Drive/memory jamais chargée | BN4 / I1 | — | ✅✅ injection auto SessionStart | ✅ vault indexé = retrieval rapide |
+| Contamination inter-cerveaux | I4 | ✅ worktree = isolation physique | ✅ sessions séparément trackées | ✅ clusters = cerveaux séparables |
+| Vault 49 fichiers non navigable | — | — | — | ✅✅ 71.5x réduction |
+| "Check skills before task" manquant | I3/Δ₀ | ✅✅ mécanisme natif | — | — |
+| Pas de vérification avant déclaration "done" | I3 | ✅ verification-before-completion | — | — |
+
+### Actions recommandées
+
+| Action | Repo source | Priorité | Effort |
+| :--- | :--- | :--- | :--- |
+| Adopter claude-mem (remplace hook MEMORY.md) | claude-mem | P0 | 30 min |
+| Ajouter "check skills before task" dans /geo | superpowers | P1 | 15 min |
+| Ajouter "verification-before-completion" dans /geo | superpowers | P1 | 10 min |
+| Lancer graphify sur vault/2-CONCEPTS | graphify | P2 | 20 min |
+| Enrichir /router : skills recommandés contextuels | superpowers | P2 | 20 min |
+| Créer /drift-control (Δ₀ explicite) | superpowers + geo | P3 | 45 min |
+
+---
+
+## Vision système — capturée 2026-05-16
+
+### Trois axes
+
+**Axe 1 — Portabilité inter-machines**
+GitHub privé contient tout : CLAUDE.md + settings.json + skills/. Quand une nouvelle machine ouvre Claude Code → hook SessionStart détecte les dépendances manquantes → propose `git clone + install`. Modèle : claude-mem (npx install) + superpowers (marketplace). Nœud : `my-claude-config` (infrastructure privée).
+
+**Axe 2 — Agent de linéage**
+Tout artefact créé a un lien de traçabilité vers sa source. Format : `source → transformation → artefact → usage`. Permet de retrouver d'une machine à l'autre : qui a créé quoi, pourquoi, à partir de quoi. Modèle : graphify edges (EXTRACTED / INFERRED / AMBIGUOUS) + god-nodes. Possible skill : /lineage.
+
+**Axe 3 — Gestion de projet par projet (PM Dashboard)**
+Chaque projet dans ecosystem.html a son propre panneau : MRD + BRD + PRD + SRD (18 documents) + contrats PWF + métriques μA/μV. Switch entre projets = switch de contexte avec spec complète visible. SOLID strict : 1 projet = 1 panneau = 1 contrat. 
+
+### Pattern cross-projets (à extraire)
+Les éléments qui se répètent dans tous les projets de Yanis deviennent des primitifs de rang N4 (irréductibles). Exemples détectés : spec-first (I3), session isolation (I4), PWF 3 fichiers, /geo invariants. Ces primitifs vont dans `~/.claude/` (rang global), les spécificités projet restent dans le CLAUDE.md projet.
+
+### Ordre logique de construction
+1. Portabilité (my-claude-config complet + SessionStart hook)
+2. Linéage (skill /lineage tracant artefacts → sources)
+3. PM Dashboard (ecosystem.html enrichi par projet)
+4. Patterns cross-projets (extraire primitifs depuis usage réel)
