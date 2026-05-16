@@ -990,17 +990,25 @@
           <span class="env-level-sub">~/.claude/ · toutes sessions · toutes machines</span>
           <a class="env-gh-link" href="https://github.com/tactacboomboom/-my-claude-config" target="_blank" style="margin-left:auto">my-claude-config ↗</a>
         </div>
+        <div style="font-size:9px;color:#6e40c9;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Skills — cliquer pour détails</div>
         <div class="env-skills-row">
-          <span class="env-skill-chip">/geo</span>
-          <span class="env-skill-chip">/pwf</span>
-          <span class="env-skill-chip">/router</span>
-          <span class="env-skill-chip">/fmath</span>
-          <span class="env-skill-chip">/cpe-sprint</span>
-          <span class="env-skill-chip">/n1n4</span>
-          <span class="env-skill-chip">/decodeur-narratif</span>
-          <span class="env-skill-chip">/lineage</span>
+          <span class="env-skill-chip" onclick="openSkill('geo')" style="cursor:pointer" title="Voir /geo">/geo</span>
+          <span class="env-skill-chip" onclick="openSkill('pwf')" style="cursor:pointer" title="Voir /pwf">/pwf</span>
+          <span class="env-skill-chip" onclick="openSkill('router')" style="cursor:pointer" title="Voir /router">/router</span>
+          <span class="env-skill-chip" onclick="openSkill('fmath')" style="cursor:pointer" title="Voir /fmath">/fmath</span>
+          <span class="env-skill-chip" onclick="openSkill('cpe-sprint')" style="cursor:pointer" title="Voir /cpe-sprint">/cpe-sprint</span>
+          <span class="env-skill-chip" onclick="openSkill('n1n4')" style="cursor:pointer" title="Voir /n1n4">/n1n4</span>
+          <span class="env-skill-chip" onclick="openSkill('decodeur-narratif')" style="cursor:pointer" title="Voir /decodeur-narratif">/decodeur-narratif</span>
+          <span class="env-skill-chip" onclick="openSkill('lineage')" style="cursor:pointer" title="Voir /lineage">/lineage</span>
         </div>
         <div class="env-hooks-row">hooks : SessionStart (portabilité) · UserPromptSubmit (PWF + drive-memory) · PreToolUse (geo guard) · PostToolUse (progress) · Stop (phases check)</div>
+        <div style="height:1px;background:#6e40c922;margin:8px 0"></div>
+        <div style="font-size:9px;color:#484f58;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px">Outils globaux</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <span style="background:#1a1224;border:1px solid #6e40c9;border-radius:4px;padding:2px 8px;font-size:10px;color:#d2a8ff" title="obra/superpowers — check skills before task, spec-first">superpower ✅</span>
+          <span style="background:#0d1117;border:1px solid #30363d;border-radius:4px;padding:2px 8px;font-size:10px;color:#484f58" title="thedotmack/claude-mem — SQLite + Chroma, 10x token savings">claude-mem ○ à installer</span>
+          <span style="background:#0d1117;border:1px solid #30363d;border-radius:4px;padding:2px 8px;font-size:10px;color:#484f58" title="safishamsi/graphify — 71.5x token reduction, NetworkX + Leiden">graphify ○ à installer</span>
+        </div>
       </div>
 
       <div class="env-arrow">▼</div>
@@ -1080,20 +1088,23 @@
       <!-- N1 -->
       <div class="env-level env-level-n1">
         <div class="env-level-hdr">
-          <span class="env-level-lbl">N1 — SESSIONS</span>
-          <span class="env-level-sub">1 session = 1 tâche · WIP ≤ 3</span>
+          <span class="env-level-lbl">N1 — WIP GLOBAL</span>
+          <span class="env-level-sub">1 session = 1 tâche · max 3 · cliquer un projet ↑ → onglet 🎯 Sessions</span>
         </div>
         <div class="env-sess-row">
           <span class="env-sess-dot"></span>
-          <span class="env-sess-txt">Claire · feat/atlas-concepts · WIP:2</span>
+          <span class="env-sess-txt">Claire · feat/atlas-concepts</span>
+          <span style="font-size:10px;background:#0f2a14;border:1px solid #238636;border-radius:4px;padding:1px 6px;color:#56d364;margin-left:6px">WIP:2</span>
           <a class="env-sess-link" href="https://github.com/tactacboomboom/Claire/blob/feat/atlas-concepts/task_plan.md" target="_blank">task_plan.md ↗</a>
         </div>
+        <div style="font-size:10px;color:#484f58;margin-top:6px;padding-left:18px">Sessions détaillées → ouvrir un projet N2 → onglet 🎯 Sessions</div>
       </div>
 
     </div><!-- /env-pyr -->
 
     <!-- DRIVE TREE -->
-    <p class="env-section-title" style="margin-top:32px">📂 Drive — Structure réelle</p>
+    <p class="env-section-title" style="margin-top:32px">📂 Drive — Filesystem réel</p>
+    <p style="font-size:11px;color:#484f58;margin:-8px 0 12px">Ce qui existe physiquement sur le disque (≠ N2 qui montre l'intention PM). Dettes = ⚠️ orange.</p>
     <div class="env-tree">
       <div class="env-tree-root">📂 G:\Mon Drive\10 - Claude\</div>
 
@@ -4909,6 +4920,90 @@ const PM_DATA = {
     sessions:[{n:1,titre:'Rédiger Vision Document (MRD)',dur:'1h',skill:'/fmath',type:'spec'}],
     phase:'Séquences #6–8 · long terme · 2 ans',wip:0,next:'2 ans voyage → livre → masterclass → agence',mu_a:null,mu_v:null}
 };
+
+/* ── SKILL_DATA — architecture de chaque skill ── */
+const SKILL_DATA = {
+  geo:{name:'/geo',fullname:'Garde-fou Geoffrey',rang:'N4',version:'2.0',type:'protocol',
+    desc:'4 invariants : I1 nœud canonique · I2 WIP≤3 · I3 spec rang · I4 cerveau isolé. Bloque toute action prématurée.',
+    triggers:['action sans spec','nouveau fichier/dossier','> 3 sujets','urgence','mix cerveaux'],
+    theorems:['T016 Kahn','T022 BCNF','T036 Little','T007 Eckart-Young','T041 CAP'],
+    roles:['R047 Staff Engineer','R022 Solutions Architect'],tools:[],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/geo/SKILL.md'},
+  pwf:{name:'/pwf',fullname:'Planning with Files',rang:'N4',version:'1.0',type:'protocol',
+    desc:'Persistance de contexte : task_plan.md + findings.md + progress.md. Règle 2-actions, protocole 3-strikes.',
+    triggers:['tâche 3+ étapes','multi-sessions','contexte à persister'],
+    theorems:['T016 Kahn','T041 CAP'],roles:['R038 TPM','R016 AI Engineer'],
+    tools:['Read','Write','Edit'],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/pwf/SKILL.md'},
+  router:{name:'/router',fullname:'Dispatch Sémantique',rang:'N4',version:'1.0',type:'router',
+    desc:'Reconnaît cerveau (C1/C2/C3) + cluster + skill recommandé. Check I4 contamination inter-cerveaux.',
+    triggers:['début de session','ambiguïté cerveau','choix de skill'],
+    theorems:['T041 CAP','T016 Kahn'],roles:['R047 Staff Engineer'],tools:[],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/router/SKILL.md'},
+  fmath:{name:'/fmath',fullname:'Formalisme Mathématique',rang:'N3',version:'1.0',type:'analysis',
+    desc:'Analyse formelle via vecteur cognitif, décomposition nilpotente, score eigenvalue. Audit de repos.',
+    triggers:['analyse formelle','concept complexe','audit repo','score sémantique'],
+    theorems:['T009 Shannon','T007 Eckart-Young','T016 Kahn'],
+    roles:['R016 AI Engineer','R013 Data Engineer'],tools:['Read','Grep','Glob'],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/fmath/SKILL.md'},
+  'cpe-sprint':{name:'/cpe-sprint',fullname:'CPE Sprint',rang:'N3',version:'1.0',type:'protocol',
+    desc:'Lance un sprint CPE : MRD → BRD → PRD → SRD → DoD. Contrat de session avec proof-of-work.',
+    triggers:['lancer un sprint','rédiger une spec','démarrer un projet'],
+    theorems:['T022 BCNF','T007 Eckart-Young'],roles:['R038 TPM','R001 Product Owner'],
+    tools:['Write','Edit','Read'],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/cpe-sprint/SKILL.md'},
+  n1n4:{name:'/n1n4',fullname:'N1→N4 Vault Pipeline',rang:'N3',version:'1.0',type:'pipeline',
+    desc:'Traite conversation brute → note permanente vault/2-CONCEPTS. Extraction + classification nilpotente.',
+    triggers:['ranger une conversation','extraire concepts','alimenter le vault'],
+    theorems:['T016 Kahn','T009 Shannon'],roles:['R013 Data Engineer','R016 AI Engineer'],
+    tools:['Read','Write','Edit','Glob'],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/n1n4/SKILL.md'},
+  'decodeur-narratif':{name:'/decodeur-narratif',fullname:'Décodeur Narratif',rang:'N3',version:'1.0',type:'transform',
+    desc:'Transforme analyse formelle → narration experte compréhensible. Voix R047 Staff Engineer.',
+    triggers:['expliquer une analyse','vulgariser technique','document expert'],
+    theorems:['T009 Shannon','T007 Eckart-Young'],roles:['R047 Staff Engineer','R022 Solutions Architect'],
+    tools:['Read','Write'],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/decodeur-narratif/SKILL.md'},
+  lineage:{name:'/lineage',fullname:'Gouvernance & Linéage',rang:'N3',version:'1.0',type:'governance',
+    desc:'Crée/met à jour LINEAGE.md : Sources → Transformations → Artefacts → Dépendances. T022 BCNF strictement appliqué.',
+    triggers:['fin de sprint','nouveau projet','artefact déplacé','nouveau skill'],
+    theorems:['T016 Kahn','T022 BCNF','T009 Shannon','T041 CAP'],
+    roles:['R013 Data Engineer','R047 Staff Engineer','R016 AI Engineer'],
+    tools:['Read','Write','Edit','Glob'],
+    url:'https://github.com/tactacboomboom/-my-claude-config/blob/master/skills/lineage/SKILL.md'}
+};
+
+function openSkill(id) {
+  const s = SKILL_DATA[id]; if(!s) return;
+  const rc = {'N4':'#d2a8ff','N3':'#79c0ff','N2':'#56d364'}[s.rang]||'#8b949e';
+  const tc = {protocol:'#79c0ff',router:'#e3b341',analysis:'#f0883e',pipeline:'#56d364',transform:'#d2a8ff',governance:'#58a6ff'};
+  document.getElementById('pm-panel').innerHTML = `
+    <button class="pm-close" onclick="closePM()">✕</button>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:10px;color:${rc};font-weight:700;background:${rc}22;padding:2px 7px;border-radius:4px">${s.rang}</span>
+      <span style="font-size:10px;color:${tc[s.type]||'#8b949e'};background:${tc[s.type]||'#8b949e'}22;padding:2px 7px;border-radius:4px">${s.type}</span>
+      <span style="font-size:10px;color:#484f58;margin-left:auto">v${s.version}</span>
+    </div>
+    <div class="pm-title" style="font-family:monospace;letter-spacing:.02em">${s.name}</div>
+    <div style="font-size:11px;color:#8b949e;margin:-6px 0 10px">${s.fullname}</div>
+    <div style="height:1px;background:#21262d;margin:10px 0"></div>
+    <div class="pm-lbl">Description</div>
+    <div style="font-size:12px;color:#e6edf3;line-height:1.6;margin-bottom:12px">${s.desc}</div>
+    <div class="pm-sep"></div>
+    <div class="pm-lbl">Triggers — quand invoquer</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">${s.triggers.map(t=>`<span style="background:#161b22;border:1px solid #30363d;border-radius:4px;padding:2px 8px;font-size:10px;color:#8b949e">${t}</span>`).join('')}</div>
+    <div class="pm-sep"></div>
+    <div class="pm-lbl">Théorèmes fondateurs</div>
+    <div style="font-size:11px;color:#e3b341;line-height:1.8;margin-bottom:10px">${s.theorems.join(' · ')}</div>
+    <div class="pm-lbl">Rôles IT associés</div>
+    <div style="font-size:11px;color:#79c0ff;line-height:1.8;margin-bottom:10px">${s.roles.join(' · ')}</div>
+    ${s.tools.length?`<div class="pm-sep"></div><div class="pm-lbl">Outils autorisés</div><div style="font-size:11px;color:#56d364;margin-bottom:12px">${s.tools.join(' · ')}</div>`:''}
+    <div class="pm-sep"></div>
+    <a href="${s.url}" target="_blank" style="display:block;text-align:center;padding:9px;background:#161b22;border:1px solid #30363d;border-radius:6px;color:#58a6ff;font-size:11px;text-decoration:none;margin-top:4px">📄 SKILL.md complet ↗</a>
+  `;
+  document.getElementById('pm-overlay').style.display='flex';
+  document.body.style.overflow='hidden';
+}
 
 function switchPMTab(t,el) {
   document.querySelectorAll('#pm-panel .pm-tab').forEach(b=>b.classList.remove('active'));
